@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>King-Oil — оригинальные моторные масла с доставкой по России</title>
+<meta name="description" content="Более 2000 позиций в наличии. Самовывоз в Омске и Тюмени, отгрузка в день заказа. Только оригинал от авторизованных дистрибьюторов.">
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/modals.css">
+<link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<!-- ============ SVG-спрайт ============ -->
+<svg style="display:none" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 20s-7-4.5-7-9.5A3.5 3.5 0 0 1 12 8a3.5 3.5 0 0 1 7 2.5C19 15.5 12 20 12 20Z"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c0-3.3 3.1-5.5 7-5.5s7 2.2 7 5.5"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h2l2.5 11h10L20 7H6"/><circle cx="9" cy="19" r="1.4"/><circle cx="17" cy="19" r="1.4"/></symbol>
+  <symbol id="i-catalog" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h10M4 17h13"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12h16m0 0-6-6m6 6-6 6"/></symbol>
+  <symbol id="i-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12H4m0 0 6-6m-6 6 6 6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 11 12 4l8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="4" width="7" height="7"/><rect x="13" y="4" width="7" height="7"/><rect x="4" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/></symbol>
+  <symbol id="i-package" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9L12 3Zm0 0v18M4 7.5l8 4.5 8-4.5"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h16v11H9l-5 4V5Z"/></symbol>
+  <symbol id="i-percent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="m6 18 12-12"/><circle cx="8" cy="8" r="2"/><circle cx="16" cy="16" r="2"/></symbol>
+  <symbol id="i-question" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3 2.5v1.5"/><circle cx="12" cy="16.5" r=".6" fill="currentColor"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"/><circle cx="12" cy="12" r="2.5"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 12a8 8 0 1 1-2.3-5.6M20 4v4h-4"/></symbol>
+  <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7Z"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="currentColor"><path d="m12 3 2.6 5.6 6 .8-4.4 4.2 1.1 6L12 16.8 6.7 19.6l1.1-6L3.4 9.4l6-.8L12 3Z"/></symbol>
+  <symbol id="i-cookie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><circle cx="9.5" cy="10" r="1" fill="currentColor"/><circle cx="14" cy="9" r=".8" fill="currentColor"/><circle cx="13" cy="15" r="1" fill="currentColor"/><circle cx="9" cy="14.5" r=".7" fill="currentColor"/></symbol>
+  <symbol id="i-vk" viewBox="0 0 24 24" fill="#0077FF"><path d="M12.8 17c-5 0-8-3.5-8.1-9.2h2.5c.1 4.2 2 6 3.4 6.3V7.8h2.4v3.6c1.4-.2 2.9-1.8 3.4-3.6h2.3c-.4 2.2-1.9 3.8-3 4.4 1.1.5 2.9 1.9 3.5 4.6h-2.6c-.5-1.6-1.8-2.9-3.6-3.1V17h-.2Z"/></symbol>
+  <symbol id="i-wa" viewBox="0 0 24 24" fill="#25D366"><path d="M12 3a9 9 0 0 0-7.7 13.6L3 21l4.5-1.2A9 9 0 1 0 12 3Zm4.7 12.4c-.2.6-1.2 1.1-1.7 1.2-.5 0-1 .2-3.3-.7-2.8-1.2-4.5-4-4.6-4.2-.2-.2-1.1-1.5-1.1-2.8s.7-2 .9-2.2c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.5-.3.3c-.1.2-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.2.3-.2.6-.1l2 .9c.2.1.4.2.4.3.1.1.1.6 0 1.1Z"/></symbol>
+  <symbol id="i-tg" viewBox="0 0 24 24" fill="#2AABEE"><path d="M20.7 4.3 3.5 11c-1.1.4-1.1 1 0 1.4l4.4 1.4 1.7 5.1c.2.6.4.6.8.3l2.4-2 4.4 3.3c.8.5 1.4.2 1.6-.8l2.9-13.6c.2-.9-.4-1.4-1-1.1ZM9.4 13.5l8.8-5.5c.4-.3.8-.1.5.2L11.5 15l-.3 3-1.8-4.5Z"/></symbol>
+</svg>
+
+<!-- ============ ШАПКА ============ -->
+<header class="header" data-header>
+
+  <!-- Ряд 1: топ-бар -->
+  <div class="header__top">
+    <div class="container">
+      <div class="header__top-left">
+        <button class="city-btn" type="button">Город <svg><use href="#i-chevron"></use></svg></button>
+        <nav class="header__top-nav">
+          <a class="link" href="about.html">О нас</a>
+          <a class="link" href="delivery.html">Оплата</a>
+          <a class="link" href="delivery.html#faq">Вопросы и ответы</a>
+          <a class="link" href="contacts.html">Контакты</a>
+        </nav>
+      </div>
+      <div class="header__top-right">
+        <a class="link" href="tel:88009439988">8 800 943 99 88</a>
+        <a class="link" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ряд 2: логотип, каталог, поиск, действия -->
+  <div class="header__main">
+    <div class="container">
+      <a class="logo" href="index.html" aria-label="King-Oil, на главную">
+        <!-- TODO: заменить на настоящий логотип из Figma (SVG) -->
+        <svg viewBox="0 0 160 40" role="img">
+          <path d="M12 14 8 8l6 3 5-6 5 6 6-3-4 6v6H12v-6Z" fill="#f97316"/>
+          <text x="40" y="28" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#f97316">King-Oil</text>
+        </svg>
+      </a>
+
+      <button class="burger" type="button" data-toggle="mobile-menu" aria-label="Меню">
+        <svg><use href="#i-menu"></use></svg>
+      </button>
+
+      <button class="catalog-btn" type="button" data-toggle="mega" aria-expanded="false">
+        <svg><use href="#i-catalog"></use></svg><span>Каталог</span>
+      </button>
+
+      <div class="search" data-search>
+        <input class="search__input" type="search" placeholder="Поиск по сайту" aria-label="Поиск по сайту">
+        <button class="search__submit" type="button" aria-label="Найти"><svg><use href="#i-search"></use></svg></button>
+
+        <div class="search__panel" hidden data-search-panel>
+          <div class="search__group">
+            <div class="search__group-head"><span>Вы искали</span><button class="link" type="button">Очистить</button></div>
+            <button class="search__row" type="button"><span>Моторное масло 5W-30</span><svg><use href="#i-close"></use></svg></button>
+            <button class="search__row" type="button"><span>Castrol EDGE</span><svg><use href="#i-close"></use></svg></button>
+            <button class="search__row" type="button"><span>Антифриз G12</span><svg><use href="#i-close"></use></svg></button>
+          </div>
+          <div class="search__group">
+            <div class="search__group-head"><span>Популярные товары</span></div>
+            <a class="search__product" href="product.html">
+              <span class="placeholder" style="width:40px;height:40px"></span>
+              <span><span class="search__product-name">Castrol EDGE 5W-30 A3/B4</span><br><span class="search__product-cat">Моторные масла</span></span>
+            </a>
+            <a class="search__product" href="product.html">
+              <span class="placeholder" style="width:40px;height:40px"></span>
+              <span><span class="search__product-name">Mobil 1 X1 5W-40</span><br><span class="search__product-cat">Моторные масла</span></span>
+            </a>
+            <a class="search__product" href="product.html">
+              <span class="placeholder" style="width:40px;height:40px"></span>
+              <span><span class="search__product-name">Лукойл Genesis 5W-30</span><br><span class="search__product-cat">Моторные масла</span></span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="header__actions">
+        <div class="header__action-wrap">
+          <button class="icon-btn" type="button" data-toggle="fav" aria-label="Избранное"><svg><use href="#i-heart"></use></svg></button>
+          <div class="mini-modal" hidden data-panel="fav">
+            <button class="mini-modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+            <div class="mini-modal__icon"><svg><use href="#i-heart"></use></svg></div>
+            <p class="mini-modal__title">Нет товаров в избранном!</p>
+            <p class="mini-modal__text">Добавьте товары в избранное, чтобы перейти в раздел</p>
+          </div>
+        </div>
+
+        <div class="header__action-wrap">
+          <button class="icon-btn" type="button" data-toggle="account" aria-label="Личный кабинет"><svg><use href="#i-user"></use></svg></button>
+          <div class="mini-modal" hidden data-panel="account">
+            <button class="mini-modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+            <div class="mini-modal__icon"><svg><use href="#i-user"></use></svg></div>
+            <p class="mini-modal__title">Вход / Регистрация</p>
+            <p class="mini-modal__text">Войдите или зарегистрируйтесь, чтобы оформлять заказы и получать персональные предложения</p>
+            <div class="mini-modal__actions">
+              <button class="btn btn--primary" type="button" data-modal-open="register">Регистрация</button>
+              <button class="btn btn--secondary" type="button" data-modal-open="login">Вход</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="header__action-wrap">
+          <button class="icon-btn" type="button" data-toggle="cart" aria-label="Корзина" style="color:var(--ko-icon-brand)">
+            <svg><use href="#i-cart"></use></svg><span class="icon-btn__badge">1</span>
+          </button>
+          <div class="mini-modal" hidden data-panel="cart">
+            <button class="mini-modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+            <div class="mini-modal__icon"><svg><use href="#i-cart"></use></svg></div>
+            <p class="mini-modal__title">В корзине пусто!</p>
+            <p class="mini-modal__text">Добавьте товары в корзину, чтобы продолжить покупку</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ряд 3: категории -->
+  <nav class="header__nav">
+    <div class="container">
+      <a href="catalog.html">Моторные масла</a>
+      <a href="catalog.html">Трансмиссионные</a>
+      <a href="catalog.html">Антифриз</a>
+      <a href="catalog.html">Аккумуляторы</a>
+      <a href="catalog.html">Фильтры</a>
+      <a href="catalog.html">Лампы</a>
+      <a href="promo.html">Акции</a>
+      <a href="contacts.html">Контакты</a>
+    </div>
+  </nav>
+
+  <!-- Мега-меню каталога -->
+  <div class="mega" hidden data-panel="mega">
+    <div class="container">
+      <div class="mega__aside">
+        <button class="mega__cat is-active" type="button" data-mega-cat="0">Моторные масла</button>
+        <button class="mega__cat" type="button" data-mega-cat="1">Трансмиссионные масла</button>
+        <button class="mega__cat" type="button" data-mega-cat="2">Антифриз</button>
+        <button class="mega__cat" type="button" data-mega-cat="3">Аккумуляторы</button>
+        <button class="mega__cat" type="button" data-mega-cat="4">Фильтры</button>
+        <button class="mega__cat" type="button" data-mega-cat="5">Лампы</button>
+      </div>
+      <div class="mega__content">
+        <!-- TODO: контент — реальная структура подразделов от заказчика -->
+        <div class="mega__panel is-active" data-mega-panel="0">
+          <h3 class="h5 mega__title">Моторные масла</h3>
+          <div class="mega__links">
+            <a href="catalog.html">Синтетические</a><a href="catalog.html">Полусинтетические</a><a href="catalog.html">Минеральные</a>
+            <a href="catalog.html">0W-20</a><a href="catalog.html">5W-30</a><a href="catalog.html">5W-40</a>
+            <a href="catalog.html">10W-40</a><a href="catalog.html">Для дизельных двигателей</a><a href="catalog.html">Для бензиновых двигателей</a>
+            <a href="catalog.html">Castrol</a><a href="catalog.html">Mobil</a><a href="catalog.html">Shell</a>
+            <a href="catalog.html">Total</a><a href="catalog.html">Lukoil</a><a href="catalog.html">Liqui Moly</a>
+          </div>
+        </div>
+        <div class="mega__panel" data-mega-panel="1">
+          <h3 class="h5 mega__title">Трансмиссионные масла</h3>
+          <div class="mega__links">
+            <a href="catalog.html">Для МКПП</a><a href="catalog.html">Для АКПП</a><a href="catalog.html">Для мостов и редукторов</a>
+            <a href="catalog.html">ATF</a><a href="catalog.html">GL-4</a><a href="catalog.html">GL-5</a>
+          </div>
+        </div>
+        <div class="mega__panel" data-mega-panel="2">
+          <h3 class="h5 mega__title">Антифриз</h3>
+          <div class="mega__links">
+            <a href="catalog.html">G11</a><a href="catalog.html">G12</a><a href="catalog.html">G12+ / G12++</a>
+            <a href="catalog.html">Готовые составы</a><a href="catalog.html">Концентраты</a><a href="catalog.html">Промывки системы</a>
+          </div>
+        </div>
+        <div class="mega__panel" data-mega-panel="3">
+          <h3 class="h5 mega__title">Аккумуляторы</h3>
+          <div class="mega__links">
+            <a href="catalog.html">Для легковых авто</a><a href="catalog.html">Для грузовых авто</a><a href="catalog.html">AGM</a>
+            <a href="catalog.html">EFB</a><a href="catalog.html">55 А·ч</a><a href="catalog.html">60 А·ч</a>
+          </div>
+        </div>
+        <div class="mega__panel" data-mega-panel="4">
+          <h3 class="h5 mega__title">Фильтры</h3>
+          <div class="mega__links">
+            <a href="catalog.html">Масляные</a><a href="catalog.html">Воздушные</a><a href="catalog.html">Салонные</a><a href="catalog.html">Топливные</a>
+          </div>
+        </div>
+        <div class="mega__panel" data-mega-panel="5">
+          <h3 class="h5 mega__title">Лампы</h3>
+          <div class="mega__links">
+            <a href="catalog.html">Галогеновые</a><a href="catalog.html">LED</a><a href="catalog.html">Ксенон</a><a href="catalog.html">H4 / H7</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Мобильное меню -->
+<div class="mobile-menu" hidden data-panel="mobile-menu">
+  <button class="mobile-menu__close" type="button" data-close aria-label="Закрыть меню"><svg><use href="#i-close"></use></svg></button>
+  <div class="mobile-menu__user">
+    <span class="mobile-menu__avatar"></span>
+    <span><span class="text-base-m">Войти в аккаунт</span><br><span class="text-caption text-3">Заказы и избранное</span></span>
+  </div>
+  <a class="mobile-menu__link" href="#"><svg><use href="#i-package"></use></svg>Мои заказы</a>
+  <a class="mobile-menu__link" href="#"><svg><use href="#i-heart"></use></svg>Избранное</a>
+  <hr class="mobile-menu__sep">
+  <a class="mobile-menu__link" href="about.html">О нас</a>
+  <a class="mobile-menu__link" href="delivery.html">Оплата</a>
+  <a class="mobile-menu__link" href="delivery.html#faq">Вопросы и ответы</a>
+  <a class="mobile-menu__link" href="contacts.html">Контакты</a>
+  <div class="mobile-menu__contacts">
+    <a class="mobile-menu__phone" href="tel:88009439988">8 800 943 99 88</a>
+    <a class="text-small text-accent" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
+    <button class="city-btn" type="button" style="margin-top:8px">Город <svg><use href="#i-chevron"></use></svg></button>
+    <p class="text-caption text-3" style="margin-top:16px">Адрес компании<br>г. Омск, ул. 10 лет Октября, 180</p>
+  </div>
+</div>
+
+<main>
+
+  <!-- ============ 1. Главный слайдер ============ -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero__content">
+        <h1 class="h3">Оригинальные моторные масла с доставкой по России</h1>
+        <p class="hero__text">Более 2000 позиций в наличии. Самовывоз в Омске и Тюмени, отгрузка в день заказа. Только оригинал от авторизованных дистрибьюторов.</p>
+        <a class="btn btn--primary" href="catalog.html">Перейти в каталог</a>
+      </div>
+      <div class="hero__nav">
+        <button class="arrow-btn" type="button" aria-label="Назад"><svg><use href="#i-arrow-left"></use></svg></button>
+        <button class="arrow-btn" type="button" aria-label="Вперёд"><svg><use href="#i-arrow-right"></use></svg></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 2. Категории ============ -->
+  <section class="section">
+    <div class="container split">
+      <div class="split__head">
+        <p class="eyebrow">Ассортимент</p>
+        <h2 class="h2">Категории</h2>
+      </div>
+      <ul class="row-list">
+        <li><a class="row-list__item categories__row" href="catalog.html">
+          <span class="categories__name">Моторные масла</span>
+          <span class="categories__count">207 товаров</span>
+          <span class="categories__desc">Синтетика и полусинтетика 0W-20, 5W-40, ведущие бренды</span>
+          <svg class="categories__arrow"><use href="#i-arrow-right"></use></svg>
+        </a></li>
+        <li><a class="row-list__item categories__row" href="catalog.html">
+          <span class="categories__name">Трансмиссионные</span>
+          <span class="categories__count">60 товаров</span>
+          <span class="categories__desc">МКПП, АКПП и мосты — жидкости ATF, GL-4 / GL-5</span>
+          <svg class="categories__arrow"><use href="#i-arrow-right"></use></svg>
+        </a></li>
+        <li><a class="row-list__item categories__row" href="catalog.html">
+          <span class="categories__name">Антифриз</span>
+          <span class="categories__count">21 товар</span>
+          <span class="categories__desc">Готовые составы G11 / G12 и концентраты</span>
+          <svg class="categories__arrow"><use href="#i-arrow-right"></use></svg>
+        </a></li>
+        <li><a class="row-list__item categories__row" href="catalog.html">
+          <span class="categories__name">Аккумуляторы</span>
+          <span class="categories__count">46 товаров</span>
+          <span class="categories__desc">Стартерные АКБ для легковых и грузовых авто</span>
+          <svg class="categories__arrow"><use href="#i-arrow-right"></use></svg>
+        </a></li>
+        <li><a class="row-list__item categories__row" href="catalog.html">
+          <span class="categories__name">Фильтры</span>
+          <span class="categories__count">26 товаров</span>
+          <span class="categories__desc">Масляные, воздушные, салонные и топливные</span>
+          <svg class="categories__arrow"><use href="#i-arrow-right"></use></svg>
+        </a></li>
+        <li><a class="row-list__item categories__row" href="catalog.html">
+          <span class="categories__name">Лампы</span>
+          <span class="categories__count">46 товаров</span>
+          <span class="categories__desc">Галоген, LED и ксенон для автомобилей</span>
+          <svg class="categories__arrow"><use href="#i-arrow-right"></use></svg>
+        </a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 3. Хиты продаж ============ -->
+  <section class="section hits">
+    <div class="container">
+      <div class="section-head"><h2 class="h3">Хиты продаж</h2></div>
+
+      <div class="hits__grid">
+        <a class="product-card" href="product.html">
+          <div class="product-card__media"></div>
+          <div class="product-card__price">3 750 ₽</div>
+          <div class="product-card__title">Takayama 5W-30 ILSAC-GF5 ЖБ 4 л</div>
+        </a>
+        <a class="product-card" href="product.html">
+          <div class="product-card__media"></div>
+          <div class="product-card__price">4 190 ₽</div>
+          <div class="product-card__title">Mobil 1 X1 5W-40 синтетическое 4 л</div>
+        </a>
+        <a class="product-card" href="product.html">
+          <div class="product-card__media">
+            <span class="badge badge--hit product-card__badge-hit">Хит продаж</span>
+            <span class="badge badge--sale product-card__badge-sale">−15%</span>
+          </div>
+          <div class="product-card__price">3 190 ₽ <span class="product-card__price-old">3 750 ₽</span></div>
+          <div class="product-card__title">Shell Helix Ultra 5W-40 4 л</div>
+        </a>
+      </div>
+
+      <div class="hits__grid--small hits__grid">
+        <a class="product-card" href="product.html">
+          <div class="product-card__media"></div>
+          <div class="product-card__price">3 450 ₽</div>
+          <div class="product-card__title">Total Quartz 9000 5W-40</div>
+        </a>
+        <a class="product-card" href="product.html">
+          <div class="product-card__media"></div>
+          <div class="product-card__price">2 690 ₽</div>
+          <div class="product-card__title">Лукойл Genesis 5W-30</div>
+        </a>
+        <a class="product-card" href="product.html">
+          <div class="product-card__media"></div>
+          <div class="product-card__price">4 850 ₽</div>
+          <div class="product-card__title">Motul 8100 X-clean 5W-40</div>
+        </a>
+        <a class="product-card" href="product.html">
+          <div class="product-card__media"></div>
+          <div class="product-card__price">2 350 ₽</div>
+          <div class="product-card__title">ZIC X7 LS 5W-30</div>
+        </a>
+      </div>
+
+      <a class="btn btn--primary" href="catalog.html" style="margin-top:48px">Перейти в каталог</a>
+    </div>
+  </section>
+
+  <!-- ============ 4. Магазин в цифрах ============ -->
+  <section class="section">
+    <div class="container split">
+      <div class="split__head">
+        <p class="eyebrow">Почему King-Oil</p>
+        <h2 class="h2">Магазин в цифрах</h2>
+      </div>
+      <ul class="row-list">
+        <li class="row-list__item numbers__row">
+          <span class="numbers__label">Позиций в наличии</span>
+          <span class="numbers__value">2000+</span>
+          <span class="numbers__note">Реальные остатки склада отражаются на сайте — сегодня в отгрузку</span>
+        </li>
+        <li class="row-list__item numbers__row">
+          <span class="numbers__label">Точки самовывоза</span>
+          <span class="numbers__value">4</span>
+          <span class="numbers__note">Три адреса в Омске и точка в Тюмени, выдача в день заказа</span>
+        </li>
+        <li class="row-list__item numbers__row">
+          <span class="numbers__label">Лет на рынке</span>
+          <span class="numbers__value">20+</span>
+          <span class="numbers__note">Работаем с 2004 года — знаем масла и отличаем подделку</span>
+        </li>
+        <li class="row-list__item numbers__row">
+          <span class="numbers__label">Оригинал продукции</span>
+          <span class="numbers__value">100%</span>
+          <span class="numbers__note">Только авторизованные поставки, сертификаты по запросу</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ 5. Сертификаты ============ -->
+  <section class="section certificates" data-carousel>
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Продаём только оригинал</p>
+        <h2 class="h3">Сертификаты и гарантии</h2>
+      </div>
+
+      <div class="carousel" data-carousel-track>
+        <figure class="certificate"><div class="certificate__img placeholder"></div><figcaption class="certificate__caption">Shell</figcaption></figure>
+        <figure class="certificate"><div class="certificate__img placeholder"></div><figcaption class="certificate__caption">Mobil</figcaption></figure>
+        <figure class="certificate"><div class="certificate__img placeholder"></div><figcaption class="certificate__caption">Castrol</figcaption></figure>
+        <figure class="certificate"><div class="certificate__img placeholder"></div><figcaption class="certificate__caption">Liqui Moly</figcaption></figure>
+        <figure class="certificate"><div class="certificate__img placeholder"></div><figcaption class="certificate__caption">Lukoil</figcaption></figure>
+        <figure class="certificate"><div class="certificate__img placeholder"></div><figcaption class="certificate__caption">Total</figcaption></figure>
+        <figure class="certificate"><div class="certificate__img placeholder"></div><figcaption class="certificate__caption">Motul</figcaption></figure>
+        <figure class="certificate"><div class="certificate__img placeholder"></div><figcaption class="certificate__caption">ZIC</figcaption></figure>
+      </div>
+
+      <div class="carousel-foot">
+        <div class="carousel-progress"><div class="carousel-progress__bar" data-carousel-bar></div></div>
+        <div class="carousel-nav">
+          <button class="arrow-btn" type="button" data-carousel-prev aria-label="Назад"><svg><use href="#i-arrow-left"></use></svg></button>
+          <button class="arrow-btn" type="button" data-carousel-next aria-label="Вперёд"><svg><use href="#i-arrow-right"></use></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. Тёмный блок с заявкой ============ -->
+  <!-- TODO: контент — в макете Lorem ipsum и карточки из другого проекта, тексты ниже временные -->
+  <section class="section section--dark promo-dark">
+    <div class="container">
+      <div class="promo-dark__content">
+        <h2 class="h3">Подберём масло под ваш двигатель и допуски</h2>
+        <p class="promo-dark__text">Оставьте заявку — перезвоним, уточним марку, модель и год выпуска, проверим допуски производителя и предложим оригинал из наличия. Рассчитаем доставку в ваш регион.</p>
+        <button class="btn btn--primary" type="button" data-modal-open="callback">Оставить заявку</button>
+      </div>
+      <div class="promo-dark__cards">
+        <article class="icon-card">
+          <div class="icon-card__icon"><svg><use href="#i-bolt"></use></svg></div>
+          <h3 class="icon-card__title">Отгрузка в день заказа</h3>
+          <p class="icon-card__text">Позиции из наличия резервируем сразу и передаём в доставку в тот же день</p>
+        </article>
+        <article class="icon-card icon-card--accent">
+          <div class="icon-card__icon"><svg><use href="#i-bolt"></use></svg></div>
+          <h3 class="icon-card__title">Подбор по VIN</h3>
+          <p class="icon-card__text">Проверим допуски по вашему автомобилю и подберём аналог, если позиции нет</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 7. Отзывы ============ -->
+  <!-- TODO: контент — реальные отзывы покупателей -->
+  <section class="section reviews" data-carousel>
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Послушайте мнение покупателей</p>
+        <h2 class="h2">Отзывы покупателей</h2>
+      </div>
+
+      <div class="carousel" data-carousel-track>
+        <article class="review">
+          <div class="review__stars">
+            <svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg class="is-empty"><use href="#i-star"></use></svg>
+          </div>
+          <p class="review__text">Брал Castrol EDGE 5W-30 на замену — забрал самовывозом на 10 лет Октября через два часа после заказа. Упаковка заводская, код на канистре проверил через сервис производителя, всё сошлось.</p>
+          <button class="review__more" type="button">Читать полностью</button>
+          <div class="review__author">
+            <span class="review__avatar"></span>
+            <span><span class="review__name">Евгений Раскудаев</span><br><span class="review__date">21 марта 2026</span></span>
+          </div>
+        </article>
+        <article class="review">
+          <div class="review__stars">
+            <svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg>
+          </div>
+          <p class="review__text">Заказывал антифриз и масляный фильтр в Тюмень, доставили за два дня. Менеджер сам позвонил и уточнил допуск по VIN — оказалось, я взял не ту вязкость. Поменяли до отгрузки.</p>
+          <button class="review__more" type="button">Читать полностью</button>
+          <div class="review__author">
+            <span class="review__avatar"></span>
+            <span><span class="review__name">Марина Ковалёва</span><br><span class="review__date">14 февраля 2026</span></span>
+          </div>
+        </article>
+        <article class="review">
+          <div class="review__stars">
+            <svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg class="is-empty"><use href="#i-star"></use></svg>
+          </div>
+          <p class="review__text">Берём масло на автосервис партиями, работаем по безналу с НДС. Документы приходят вовремя, по сертификатам вопросов не возникало. Цена ниже, чем у местных поставщиков.</p>
+          <button class="review__more" type="button">Читать полностью</button>
+          <div class="review__author">
+            <span class="review__avatar"></span>
+            <span><span class="review__name">Сергей Плотников</span><br><span class="review__date">2 февраля 2026</span></span>
+          </div>
+        </article>
+        <article class="review">
+          <div class="review__stars">
+            <svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg><svg><use href="#i-star"></use></svg>
+          </div>
+          <p class="review__text">Нашёл дешевле в другом магазине, отправил ссылку через форму на сайте — снизили цену без лишних вопросов. Забрал в тот же вечер.</p>
+          <button class="review__more" type="button">Читать полностью</button>
+          <div class="review__author">
+            <span class="review__avatar"></span>
+            <span><span class="review__name">Артём Гусев</span><br><span class="review__date">19 января 2026</span></span>
+          </div>
+        </article>
+      </div>
+
+      <div class="carousel-foot">
+        <div class="carousel-progress"><div class="carousel-progress__bar" data-carousel-bar></div></div>
+        <div class="carousel-nav">
+          <button class="arrow-btn" type="button" data-carousel-prev aria-label="Назад"><svg><use href="#i-arrow-left"></use></svg></button>
+          <button class="arrow-btn" type="button" data-carousel-next aria-label="Вперёд"><svg><use href="#i-arrow-right"></use></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 8. Акции и предложения ============ -->
+  <section class="section promo-articles">
+    <div class="container">
+      <div class="section-head">
+        <p class="eyebrow">Выгодно</p>
+        <h2 class="h2">Акции и предложения</h2>
+      </div>
+      <div class="promo-articles__grid">
+        <a class="article-card" href="promo.html">
+          <div class="article-card__media"></div>
+          <div class="article-card__meta"><span class="article-card__rubric">Акции</span><span class="article-card__date">5 августа 2026</span></div>
+          <h3 class="article-card__title">Второй литр со скидкой 20 % на моторные масла Castrol</h3>
+          <p class="article-card__lead">До конца месяца при покупке двух канистр одной серии скидка на вторую составит 20 %. Действует на позиции из наличия.</p>
+        </a>
+        <a class="article-card" href="promo.html">
+          <div class="article-card__media"></div>
+          <div class="article-card__meta"><span class="article-card__rubric">Полезное</span><span class="article-card__date">28 июля 2026</span></div>
+          <h3 class="article-card__title">Как отличить оригинальное масло от подделки по упаковке</h3>
+          <p class="article-card__lead">Разбираем защитные элементы канистр ведущих брендов и показываем, как проверить код на сайте производителя.</p>
+        </a>
+        <a class="article-card" href="promo.html">
+          <div class="article-card__media"></div>
+          <div class="article-card__meta"><span class="article-card__rubric">Полезное</span><span class="article-card__date">12 июля 2026</span></div>
+          <h3 class="article-card__title">Какую вязкость выбрать для зимней эксплуатации в Сибири</h3>
+          <p class="article-card__lead">Объясняем маркировку SAE простыми словами и подсказываем, когда стоит переходить на 0W-.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ ФУТЕР ============ -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__cols">
+      <div class="footer__brand">
+        <a class="logo footer__logo" href="index.html" aria-label="King-Oil">
+          <svg viewBox="0 0 160 40" role="img">
+            <path d="M12 14 8 8l6 3 5-6 5 6 6-3-4 6v6H12v-6Z" fill="#f97316"/>
+            <text x="40" y="28" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#f97316">King-Oil</text>
+          </svg>
+        </a>
+        <p class="footer__about">Оригинальные моторные масла, антифризы и автотовары. Прямые поставки от авторизованных дистрибьюторов.</p>
+        <div>
+          <a class="footer__phone" href="tel:+73812390606">+7 (3812) 39-06-06</a><br>
+          <a class="footer__mail" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
+        </div>
+        <p class="footer__hours">Пн–Сб 9–20, Вс 10–19</p>
+      </div>
+
+      <nav>
+        <p class="footer__col-title">Каталог</p>
+        <ul class="footer__links">
+          <li><a href="catalog.html">Моторные масла</a></li>
+          <li><a href="catalog.html">Трансмиссионные масла</a></li>
+          <li><a href="catalog.html">Антифриз</a></li>
+          <li><a href="catalog.html">Аккумуляторы</a></li>
+          <li><a href="catalog.html">Фильтры</a></li>
+          <li><a href="catalog.html">Лампы</a></li>
+        </ul>
+      </nav>
+
+      <nav>
+        <p class="footer__col-title">Покупателям</p>
+        <ul class="footer__links">
+          <li><a href="delivery.html">Как купить</a></li>
+          <li><a href="delivery.html">Доставка</a></li>
+          <li><a href="delivery.html">Оплата</a></li>
+          <li><a href="delivery.html">Возврат и обмен</a></li>
+          <li><a href="promo.html">Акции</a></li>
+          <li><a href="contacts.html">Контакты</a></li>
+        </ul>
+      </nav>
+
+      <div>
+        <p class="footer__col-title">Контакты</p>
+        <ul class="footer__addresses">
+          <li>Омск, ул. 10 лет Октября, 180</li>
+          <li>Омск, пр. Мира, 30</li>
+          <li>Омск, ул. Заозёрная, 5</li>
+          <li>Тюмень, ул. Республики, 250</li>
+        </ul>
+        <div class="footer__social">
+          <a href="#" aria-label="ВКонтакте"><svg><use href="#i-vk"></use></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg><use href="#i-wa"></use></svg></a>
+          <a href="#" aria-label="Telegram"><svg><use href="#i-tg"></use></svg></a>
+        </div>
+      </div>
+    </div>
+
+    <hr class="footer__divider">
+
+    <div class="footer__bottom">
+      <div class="footer__legal">
+        <!-- TODO: реквизиты — в макете два разных набора, нужны настоящие -->
+        <span>© 2004–<span data-year>2026</span> King-Oil. Все права защищены.</span>
+        <span>ООО «Сити Ойл» · ОГРН 1205500020318 · ИНН 5503193478</span>
+      </div>
+      <div class="footer__payments">
+        <span class="placeholder" style="width:51px;height:32px"></span>
+        <span class="placeholder" style="width:51px;height:32px"></span>
+        <span class="placeholder" style="width:51px;height:32px"></span>
+        <span class="placeholder" style="width:51px;height:32px"></span>
+        <span class="placeholder" style="width:51px;height:32px"></span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ ТАББАР (мобильный) ============ -->
+<nav class="tabbar">
+  <a class="is-active" href="index.html" aria-label="Главная"><svg><use href="#i-home"></use></svg></a>
+  <a href="#" aria-label="Избранное"><svg><use href="#i-heart"></use></svg></a>
+  <a href="catalog.html" aria-label="Каталог"><svg><use href="#i-grid"></use></svg></a>
+  <a href="#" aria-label="Корзина"><svg><use href="#i-cart"></use></svg><span class="tabbar__badge">1</span></a>
+  <a href="#" aria-label="Профиль" data-modal-open="login"><svg><use href="#i-user"></use></svg></a>
+</nav>
+
+<!-- ============ МОДАЛКИ ============ -->
+
+<!-- Вход -->
+<div class="modal" hidden data-modal="login">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="login-title">Вход в King-Oil</h2>
+
+    <div class="modal__tabs">
+      <button class="modal__tab" type="button">Телефон</button>
+      <button class="modal__tab is-active" type="button">E-mail</button>
+    </div>
+
+    <form class="modal__body">
+      <label class="field">
+        <span class="field__label">E-mail</span>
+        <input class="input" type="email" placeholder="mail@example.com" autocomplete="email">
+      </label>
+      <label class="field field--password">
+        <span class="field__label">Пароль</span>
+        <input class="input" type="password" autocomplete="current-password">
+        <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
+      </label>
+      <a class="modal__link" href="#">Забыли пароль?</a>
+      <div class="modal__actions">
+        <button class="btn btn--primary btn--block" type="submit">Войти</button>
+        <button class="btn btn--secondary btn--block" type="button" data-modal-open="register">Регистрация</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Регистрация -->
+<div class="modal" hidden data-modal="register">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="register-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="register-title">Регистрация в King-Oil</h2>
+
+    <form class="modal__body">
+      <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" placeholder="Александр Федосенко" autocomplete="name"></label>
+      <label class="field"><span class="field__label">E-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email"></label>
+      <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel"></label>
+      <label class="field field--password">
+        <span class="field__label">Придумайте пароль</span>
+        <input class="input" type="password" autocomplete="new-password">
+        <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
+      </label>
+      <label class="field field--password">
+        <span class="field__label">Повторите пароль</span>
+        <input class="input" type="password" autocomplete="new-password">
+        <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
+      </label>
+      <label class="field"><span class="field__label">Дата рождения</span><input class="input" type="date"></label>
+
+      <label class="switch"><input type="checkbox" data-toggle-company>Аккаунт для компании</label>
+
+      <div class="modal__body" hidden data-company-fields>
+        <label class="field"><span class="field__label">Название компании</span><input class="input" type="text" placeholder="ООО «Компания»"></label>
+        <label class="field"><span class="field__label">ИНН</span><input class="input" type="text" inputmode="numeric" placeholder="5503193478"></label>
+      </div>
+
+      <div class="modal__actions">
+        <button class="btn btn--primary btn--block" type="submit">Зарегистрироваться</button>
+        <button class="btn btn--secondary btn--block" type="button" data-modal-open="login">Войти</button>
+      </div>
+
+      <label class="checkbox">
+        <input type="checkbox">
+        <span>Я даю согласие на обработку моих персональных данных в порядке и на условиях, указанных в <a href="#">Согласии на обработку персональных данных</a>, и подтверждаю ознакомление с <a href="#">Политикой конфиденциальности</a> и <a href="#">Пользовательским соглашением</a></span>
+      </label>
+    </form>
+  </div>
+</div>
+
+<!-- Заказать звонок -->
+<div class="modal" hidden data-modal="callback">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="callback-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="callback-title">Заказать звонок</h2>
+    <p class="modal__subtitle">Заполните форму — наш менеджер перезвонит в ближайшие 15 минут в рабочее время.</p>
+
+    <form class="modal__body" data-form>
+      <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" autocomplete="name" required></label>
+      <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel" required></label>
+      <label class="field"><span class="field__label">Комментарий</span><textarea class="input" placeholder="Марка, модель и год автомобиля"></textarea></label>
+      <label class="checkbox"><input type="checkbox" required><span>Я согласен с <a href="#">политикой конфиденциальности</a> и <a href="#">пользовательским соглашением</a></span></label>
+      <div class="modal__actions"><button class="btn btn--primary btn--block" type="submit">Отправить</button></div>
+    </form>
+
+    <div hidden data-form-success>
+      <div class="modal__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4 10-10"/></svg></div>
+      <h3 class="h5" style="text-align:center">Заявка отправлена!</h3>
+      <p class="modal__subtitle" style="text-align:center;margin-top:8px">Ваша заявка успешно отправлена. В ближайшее время с вами свяжется менеджер.</p>
+      <button class="btn btn--primary btn--block" type="button" data-close>Отлично!</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ COOKIES ============ -->
+<div class="cookies" hidden data-cookies>
+  <svg class="cookies__icon"><use href="#i-cookie"></use></svg>
+  <p class="cookies__text">Мы используем данные cookie, чтобы улучшить работу сайта, в соответствии с <a href="#">политикой использования cookie</a>.</p>
+  <div class="cookies__actions">
+    <button class="btn btn--primary" type="button" data-cookies-accept>Согласен</button>
+    <button class="btn btn--secondary" type="button" data-cookies-decline>Не согласен</button>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>

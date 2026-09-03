@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "king-oil",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "5173", "-d", "src"],
+      "port": 5173
+    }
+  ]
+}

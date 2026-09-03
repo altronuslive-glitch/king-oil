@@ -1,0 +1,11 @@
+# Доступы — в репозиторий не попадают
+ACCESS.md
+
+# Системное
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Сборка и зависимости
+node_modules/
+dist/

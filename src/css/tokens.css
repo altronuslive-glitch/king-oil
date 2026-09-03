@@ -1,0 +1,180 @@
+/* ============================================================
+   King-Oil — дизайн-токены из Figma
+   Файл: fUUdaKDxudos0ygbHbKCNF, страница «▶ Design»
+   Сгенерировано 2026-09-03 из Figma Variables
+   ============================================================ */
+
+:root {
+  /* ---------- Цвета: фоны ---------- */
+  --ko-bg-0: #ffffff;   /* основной фон, карточки, модалки */
+  --ko-bg-1: #f5f6f8;   /* секции-подложки, инпуты, вторичные кнопки */
+  --ko-bg-2: #ebedf0;   /* плейсхолдеры изображений */
+  --ko-bg-3: #d2d5db;   /* заглушки, неактивные элементы */
+  --ko-bg-4: #131927;   /* тёмные секции: герой, CTA-полоса */
+  --ko-bg-brand: #f97316;
+  --ko-bg-error: #fdecec;
+
+  /* ---------- Цвета: текст ---------- */
+  --ko-text-0: #ffffff; /* на тёмном фоне */
+  --ko-text-1: #131927; /* заголовки и основной текст */
+  --ko-text-2: #4d5461; /* вторичный текст */
+  --ko-text-3: #6d717f; /* подписи, плейсхолдеры */
+  --ko-text-accent: #f97316;
+  --ko-text-links: #f97316;
+
+  /* ---------- Цвета: иконки ---------- */
+  --ko-icon-2: #6d717f; /* по умолчанию */
+  --ko-icon-3: #131927; /* активная */
+  --ko-icon-brand: #f97316;
+
+  /* ---------- Цвета: границы ---------- */
+  --ko-border-0: #ffffff;
+  --ko-border-1: #ebedf0; /* инпуты, разделители */
+  --ko-border-4: #6d717f;
+  --ko-border-brand: #f97316; /* фокус */
+  --ko-border-error: #ee443f;
+
+  /* ---------- Цвета: кнопки ---------- */
+  --ko-btn-brand: #f97316;
+  --ko-btn-white: #ffffff;
+  --ko-btn-grey: #f5f6f8;
+
+  /* ---------- Цвета: статусные ---------- */
+  --ko-other-1: #3da755; /* «Хит продаж», успех */
+  --ko-other-2: #e11d6b; /* бейдж скидки */
+
+  /* ---------- Типографика ---------- */
+  --ko-font: "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --ko-h1-size: 80px;   --ko-h1-lh: 100px;
+  --ko-h2-size: 64px;   --ko-h2-lh: 72px;
+  --ko-h3-size: 48px;   --ko-h3-lh: 52px;
+  --ko-h5-size: 32px;   --ko-h5-lh: 38px;
+  --ko-h6-size: 24px;   --ko-h6-lh: 32px;
+
+  --ko-large-xl-size: 24px; --ko-large-xl-lh: 34px; /* Semi Bold 600 */
+  --ko-large-size: 20px;    --ko-large-lh: 28px;
+  --ko-base-size: 18px;     --ko-base-lh: 24px;  --ko-base-lh-long: 28px;
+  --ko-small-size: 16px;    --ko-small-lh: 24px; --ko-small-lh-long: 28px;
+  --ko-caption-xl-size: 15px; --ko-caption-xl-lh: 22px;
+  --ko-caption-size: 14px;  --ko-caption-lh: 20px;
+
+  /* ---------- Отступы ---------- */
+  --ko-space-0: 0px;
+  --ko-space-4: 4px;
+  --ko-space-8: 8px;
+  --ko-space-10: 10px;
+  --ko-space-12: 12px;
+  --ko-space-16: 16px;
+  --ko-space-18: 18px;
+  --ko-space-20: 20px;
+  --ko-space-24: 24px;
+  --ko-space-32: 32px;
+  --ko-space-40: 40px;
+  --ko-space-48: 48px;
+  --ko-space-64: 64px;
+  --ko-space-80: 80px;
+  --ko-space-120: 120px;
+  --ko-space-160: 160px;
+  --ko-space-240: 240px;
+
+  /* ---------- Радиусы ---------- */
+  /* В макете ВСЕ радиусы = 0, кроме круглых элементов */
+  --ko-radius: 0px;
+  --ko-radius-max: 9999px;
+
+  /* ---------- Иконки ---------- */
+  --ko-icon-md: 20px;
+  --ko-icon-normal: 24px;
+  --ko-icon-lg: 32px;
+
+  /* ---------- Контролы ---------- */
+  --ko-control-pad-y: 14px;   /* вертикальный паддинг кнопки и инпута */
+  --ko-control-h: 52px;       /* высота кнопки/инпута/иконки в шапке */
+  --ko-tabs-pad-y: 6px;
+
+  /* ---------- Сетка ---------- */
+  --ko-container: 1420px;
+  --ko-gutter: 240px;         /* боковое поле на десктопе 1900 */
+  --ko-grid-gap-x: 20px;
+  --ko-grid-gap-y: 48px;
+}
+
+/* ============================================================
+   Базовые текстовые стили
+   ============================================================ */
+
+.ko-h1 { font: 500 var(--ko-h1-size)/var(--ko-h1-lh) var(--ko-font); }
+.ko-h2 { font: 500 var(--ko-h2-size)/var(--ko-h2-lh) var(--ko-font); }
+.ko-h3 { font: 500 var(--ko-h3-size)/var(--ko-h3-lh) var(--ko-font); }
+.ko-h5 { font: 500 var(--ko-h5-size)/var(--ko-h5-lh) var(--ko-font); }
+.ko-h6 { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); }
+
+.ko-large-xl  { font: 600 var(--ko-large-xl-size)/var(--ko-large-xl-lh) var(--ko-font); }
+.ko-large-m   { font: 500 var(--ko-large-size)/var(--ko-large-lh) var(--ko-font); }
+.ko-base-r    { font: 400 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font); }
+.ko-base-m    { font: 500 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font); }
+.ko-base-long { font: 400 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font); }
+.ko-small-r   { font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); }
+.ko-small-long{ font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font); }
+.ko-caption-xl{ font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font); }
+.ko-caption   { font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font); }
+
+/* ============================================================
+   Контейнер
+   ============================================================ */
+
+.ko-container {
+  width: 100%;
+  max-width: var(--ko-container);
+  margin-inline: auto;
+  padding-inline: 20px;
+}
+
+/* ============================================================
+   Кнопки
+   ============================================================ */
+
+.ko-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ko-space-8);
+  padding: var(--ko-control-pad-y) var(--ko-space-24);
+  border: 0;
+  border-radius: var(--ko-radius);
+  font: 500 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  cursor: pointer;
+  transition: background-color .15s ease, color .15s ease;
+}
+
+.ko-btn--primary { background: var(--ko-btn-brand); color: var(--ko-text-0); }
+.ko-btn--primary:hover { background: #e2620a; }
+
+.ko-btn--secondary { background: var(--ko-btn-grey); color: var(--ko-text-1); }
+.ko-btn--secondary:hover { background: var(--ko-bg-2); }
+
+.ko-btn--white { background: var(--ko-btn-white); color: var(--ko-text-1); }
+
+/* ============================================================
+   Поля ввода
+   ============================================================ */
+
+.ko-input {
+  width: 100%;
+  padding: var(--ko-control-pad-y) var(--ko-space-16);
+  background: var(--ko-bg-1);
+  border: 1px solid var(--ko-border-1);
+  border-radius: var(--ko-radius);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-1);
+}
+.ko-input::placeholder { color: var(--ko-text-3); }
+.ko-input:focus { outline: none; border-color: var(--ko-border-brand); background: var(--ko-bg-0); }
+.ko-input--error { background: var(--ko-bg-error); border-color: var(--ko-border-error); }
+
+.ko-input-error-text {
+  margin-top: var(--ko-space-4);
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-border-error);
+}

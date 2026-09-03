@@ -1,0 +1,171 @@
+/* ============================================================
+   base.css — сброс, шрифты, типографика, контейнер
+   ============================================================ */
+
+/* ---------- Шрифт ----------
+   Файлы кладём в src/fonts/. Пока их нет — работает системный фолбэк.
+   Нужны: Inter-Regular.woff2 (400), Inter-Medium.woff2 (500), Inter-SemiBold.woff2 (600) с кириллицей.
+*/
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../fonts/Inter-SemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Сброс ---------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--ko-bg-0);
+  color: var(--ko-text-1);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd { margin: 0; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+img, svg, video { display: block; max-width: 100%; }
+img { height: auto; }
+
+a { color: inherit; text-decoration: none; }
+
+button, input, select, textarea {
+  font: inherit;
+  color: inherit;
+  margin: 0;
+}
+button { background: none; border: 0; padding: 0; cursor: pointer; }
+
+:focus-visible { outline: 2px solid var(--ko-border-brand); outline-offset: 2px; }
+
+[hidden] { display: none !important; }
+
+/* ---------- Контейнер ---------- */
+.container {
+  width: 100%;
+  max-width: calc(var(--ko-container) + var(--ko-page-pad) * 2);
+  margin-inline: auto;
+  padding-inline: var(--ko-page-pad);
+}
+
+:root { --ko-page-pad: 40px; }
+
+@media (max-width: 1024px) { :root { --ko-page-pad: 32px; } }
+@media (max-width: 768px)  { :root { --ko-page-pad: 20px; } }
+@media (max-width: 480px)  { :root { --ko-page-pad: 16px; } }
+
+/* ---------- Типографика ---------- */
+.h1 { font: 500 var(--ko-h1-size)/var(--ko-h1-lh) var(--ko-font); letter-spacing: -0.02em; }
+.h2 { font: 500 var(--ko-h2-size)/var(--ko-h2-lh) var(--ko-font); letter-spacing: -0.02em; }
+.h3 { font: 500 var(--ko-h3-size)/var(--ko-h3-lh) var(--ko-font); letter-spacing: -0.01em; }
+.h5 { font: 500 var(--ko-h5-size)/var(--ko-h5-lh) var(--ko-font); }
+.h6 { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); }
+
+.text-base   { font: 400 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font); }
+.text-base-m { font: 500 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font); }
+.text-long   { font: 400 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font); }
+.text-small  { font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); }
+.text-caption-xl { font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font); }
+.text-caption    { font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font); }
+
+.text-2 { color: var(--ko-text-2); }
+.text-3 { color: var(--ko-text-3); }
+.text-accent { color: var(--ko-text-accent); }
+
+@media (max-width: 1024px) {
+  .h1 { font-size: 56px; line-height: 64px; }
+  .h2 { font-size: 44px; line-height: 52px; }
+  .h3 { font-size: 36px; line-height: 42px; }
+  .h5 { font-size: 28px; line-height: 34px; }
+}
+@media (max-width: 768px) {
+  .h1 { font-size: 40px; line-height: 48px; }
+  .h2 { font-size: 32px; line-height: 38px; }
+  .h3 { font-size: 28px; line-height: 34px; }
+  .h5 { font-size: 24px; line-height: 30px; }
+  .h6 { font-size: 20px; line-height: 26px; }
+}
+
+/* ---------- Секции ---------- */
+.section { padding-block: 80px; }
+.section--tight { padding-block: 56px; }
+.section--grey { background: var(--ko-bg-1); }
+.section--dark { background: var(--ko-bg-4); color: var(--ko-text-0); }
+
+@media (max-width: 768px) {
+  .section { padding-block: 48px; }
+  .section--tight { padding-block: 32px; }
+}
+
+/* Надзаголовок «▪ Ассортимент» */
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: var(--ko-space-8);
+  color: var(--ko-text-3);
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+}
+.eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+}
+.eyebrow--accent {
+  color: var(--ko-text-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+.eyebrow--accent::before { border-radius: var(--ko-radius-max); }
+
+/* Двухколоночный заголовок секции: слева шапка, справа контент */
+.split {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: var(--ko-space-64);
+  align-items: start;
+}
+.split__head { display: grid; gap: var(--ko-space-16); }
+
+@media (max-width: 1024px) {
+  .split { grid-template-columns: 1fr; gap: var(--ko-space-32); }
+}
+
+.section-head { display: grid; gap: var(--ko-space-16); margin-bottom: var(--ko-space-48); }
+
+/* ---------- Служебное ---------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.no-scroll { overflow: hidden; }
+
+.placeholder { background: var(--ko-bg-2); }
