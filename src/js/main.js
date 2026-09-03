@@ -468,20 +468,33 @@
      Страницы нет в макете — поведение стандартное.
      --------------------------------------------------------- */
   (function () {
-    const list = $('.cart__list');
+    const list = $('[data-cart-list]');
     if (!list) return;
-    const empty = $('[data-cart-empty]', list);
+    const empty = $('[data-cart-empty]');
     const summary = $('[data-cart-summary]');
 
+    function sync() {
+      const left = $$('.cart-row', list).length;
+      list.hidden = left === 0;
+      if (empty) empty.hidden = left > 0;
+      if (summary) summary.hidden = left === 0;
+    }
+
     list.addEventListener('click', (e) => {
+      if (e.target.closest('[data-cart-clear]')) {
+        $$('.cart-row', list).forEach((row) => row.remove());
+        sync();
+        return;
+      }
       const btn = e.target.closest('[data-cart-remove]');
       if (!btn) return;
       btn.closest('.cart-row').remove();
-
-      const left = $$('.cart-row', list).length;
-      if (empty) empty.hidden = left > 0;
-      if (summary) summary.hidden = left === 0;
+      sync();
     });
+
+    // TODO: интеграция — проверка промокода на бэкенде
+    const promo = $('[data-promo]');
+    if (promo) promo.addEventListener('submit', (e) => e.preventDefault());
   })();
 
   /* ---------------------------------------------------------

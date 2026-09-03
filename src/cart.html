@@ -287,19 +287,29 @@
   <section class="section section--pt-0 section--pb-120">
     <div class="container cart">
 
-      <div class="cart__list">
+      <div class="cart__list" data-cart-list>
+        <div class="cart-head">
+          <span class="cart-head__cell cart-head__cell--product">Товар</span>
+          <span class="cart-head__cell cart-head__cell--num">Цена</span>
+          <span class="cart-head__cell cart-head__cell--qty">Количество</span>
+          <span class="cart-head__cell cart-head__cell--num">Сумма</span>
+          <span></span>
+        </div>
+
         <article class="cart-row">
           <a class="cart-row__media" href="product.html"></a>
           <div class="cart-row__info">
             <a class="cart-row__title" href="product.html">Castrol Magnatec 5W-30 A5 синтетическое, 4 л</a>
-            <p class="cart-row__meta">Артикул 15C9C3 · В наличии</p>
+            <p class="cart-row__meta">Артикул 15C9C3</p>
+            <p class="cart-row__stock">В наличии</p>
           </div>
-          <div class="stepper" data-stepper>
+          <p class="cart-row__unit"><span class="cart-row__label">Цена</span>2 990 ₽</p>
+          <div class="stepper stepper--sm" data-stepper>
             <button class="stepper__btn" type="button" data-step="-1" aria-label="Меньше"><svg><use href="#i-minus"></use></svg></button>
             <input class="stepper__input" type="number" value="2" min="1" max="18" aria-label="Количество">
             <button class="stepper__btn stepper__btn--plus" type="button" data-step="1" aria-label="Больше"><svg><use href="#i-plus"></use></svg></button>
           </div>
-          <p class="cart-row__price">5 980 ₽</p>
+          <p class="cart-row__price"><span class="cart-row__label">Сумма</span>5 980 ₽</p>
           <button class="cart-row__remove" type="button" data-cart-remove aria-label="Убрать из корзины"><svg><use href="#i-close"></use></svg></button>
         </article>
 
@@ -307,14 +317,16 @@
           <a class="cart-row__media" href="product.html"></a>
           <div class="cart-row__info">
             <a class="cart-row__title" href="product.html">Антифриз G12+ красный, готовый состав, 5 кг</a>
-            <p class="cart-row__meta">Артикул 44A1B7 · В наличии</p>
+            <p class="cart-row__meta">Артикул 44A1B7</p>
+            <p class="cart-row__stock">В наличии</p>
           </div>
-          <div class="stepper" data-stepper>
+          <p class="cart-row__unit"><span class="cart-row__label">Цена</span>1 340 ₽</p>
+          <div class="stepper stepper--sm" data-stepper>
             <button class="stepper__btn" type="button" data-step="-1" aria-label="Меньше"><svg><use href="#i-minus"></use></svg></button>
             <input class="stepper__input" type="number" value="1" min="1" max="24" aria-label="Количество">
             <button class="stepper__btn stepper__btn--plus" type="button" data-step="1" aria-label="Больше"><svg><use href="#i-plus"></use></svg></button>
           </div>
-          <p class="cart-row__price">1 340 ₽</p>
+          <p class="cart-row__price"><span class="cart-row__label">Сумма</span>1 340 ₽</p>
           <button class="cart-row__remove" type="button" data-cart-remove aria-label="Убрать из корзины"><svg><use href="#i-close"></use></svg></button>
         </article>
 
@@ -322,42 +334,52 @@
           <a class="cart-row__media" href="product.html"></a>
           <div class="cart-row__info">
             <a class="cart-row__title" href="product.html">Масляный фильтр для двигателей 1.6–2.0</a>
-            <p class="cart-row__meta">Артикул 08F2D5 · Осталось 3 шт.</p>
+            <p class="cart-row__meta">Артикул 08F2D5</p>
+            <p class="cart-row__stock cart-row__stock--low">Осталось 3 шт.</p>
           </div>
-          <div class="stepper" data-stepper>
+          <p class="cart-row__unit"><span class="cart-row__label">Цена</span>690 ₽</p>
+          <div class="stepper stepper--sm" data-stepper>
             <button class="stepper__btn" type="button" data-step="-1" aria-label="Меньше"><svg><use href="#i-minus"></use></svg></button>
             <input class="stepper__input" type="number" value="1" min="1" max="3" aria-label="Количество">
             <button class="stepper__btn stepper__btn--plus" type="button" data-step="1" aria-label="Больше"><svg><use href="#i-plus"></use></svg></button>
           </div>
-          <p class="cart-row__price">690 ₽</p>
+          <p class="cart-row__price"><span class="cart-row__label">Сумма</span>690 ₽</p>
           <button class="cart-row__remove" type="button" data-cart-remove aria-label="Убрать из корзины"><svg><use href="#i-close"></use></svg></button>
         </article>
 
-        <!-- Пустое состояние: показывается, когда убраны все позиции -->
-        <div class="cart__empty" hidden data-cart-empty>
-          <div class="mini-modal__icon"><svg><use href="#i-cart"></use></svg></div>
-          <p class="h5">В корзине пусто</p>
-          <p class="cart__empty-text">Добавьте товары из каталога, чтобы оформить заказ.</p>
-          <a class="btn btn--primary" href="catalog.html">Перейти в каталог</a>
+        <div class="cart__actions">
+          <a class="link cart__back" href="catalog.html"><svg><use href="#i-arrow-left"></use></svg>Продолжить покупки</a>
+          <button class="link cart__clear" type="button" data-cart-clear>Очистить корзину</button>
         </div>
       </div>
 
+      <!-- Пустое состояние: показывается, когда убраны все позиции -->
+      <div class="cart__empty" hidden data-cart-empty>
+        <div class="mini-modal__icon"><svg><use href="#i-cart"></use></svg></div>
+        <p class="h5">В корзине пусто</p>
+        <p class="cart__empty-text">Добавьте товары из каталога, чтобы оформить заказ.</p>
+        <a class="btn btn--primary" href="catalog.html">Перейти в каталог</a>
+      </div>
+
       <aside class="cart__summary" data-cart-summary>
-        <p class="h5 cart__summary-title">Ваш заказ</p>
+        <p class="cart__summary-title">Ваш заказ</p>
         <dl class="cart__totals">
           <div><dt>Товары, 4 шт.</dt><dd>8 010 ₽</dd></div>
           <div><dt>Скидка</dt><dd class="cart__discount">−480 ₽</dd></div>
-          <div><dt>Доставка</dt><dd>по Омску 200 ₽</dd></div>
+          <div><dt>Доставка по Омску</dt><dd>200 ₽</dd></div>
         </dl>
-        <div class="cart__grand"><span>Итого</span><span>7 730 ₽</span></div>
+        <div class="cart__grand"><span>Итого</span><span class="cart__grand-value">7 730 ₽</span></div>
 
-        <div class="cart__promo">
+        <form class="cart__promo" data-promo>
           <input class="input" type="text" placeholder="Промокод" aria-label="Промокод">
-          <button class="btn btn--secondary" type="button">Применить</button>
-        </div>
+          <button class="btn btn--secondary" type="submit">Применить</button>
+        </form>
 
-        <a class="btn btn--primary btn--block" href="checkout.html">Оформить заказ</a>
-        <p class="cart__note">Доставка до терминала транспортной компании бесплатна при заказе масел и фильтров от 5000 ₽.</p>
+        <a class="btn btn--primary btn--block cart__submit" href="checkout.html">Оформить заказ</a>
+        <p class="cart__note">
+          <svg class="cart__note-icon"><use href="#i-truck"></use></svg>
+          <span>До бесплатной доставки в регионы не хватает <b>заказа от 5000 ₽</b> по маслам и фильтрам.</span>
+        </p>
       </aside>
 
     </div>

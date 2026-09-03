@@ -558,6 +558,15 @@ textarea.input { min-height: 96px; resize: vertical; }
 .stepper__input::-webkit-inner-spin-button { appearance: none; margin: 0; }
 .stepper__input:focus { outline: none; }
 
+/* Компактный вариант для строки корзины: 128×44 */
+.stepper--sm {
+  width: 128px;
+  height: 44px;
+  grid-template-columns: 40px 1fr 40px;
+  justify-self: center;
+}
+.stepper--sm .stepper__btn svg { width: 16px; height: 16px; }
+
 @media (max-width: 480px) {
   .stepper { width: 100%; }
 }

@@ -292,91 +292,102 @@
 
         <fieldset class="checkout__block">
           <legend class="checkout__legend"><span class="checkout__num">01</span> Контактные данные</legend>
-          <div class="checkout__grid">
-            <label class="field"><span class="field__label">Имя и фамилия</span><input class="input" type="text" autocomplete="name" required></label>
-            <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7" autocomplete="tel" required></label>
-            <label class="field"><span class="field__label">Электронная почта</span><input class="input" type="email" autocomplete="email"></label>
-            <label class="field"><span class="field__label">Кто получает</span>
-              <span class="select"><select><option>Частное лицо</option><option>Организация</option></select></span>
-            </label>
+          <div class="checkout__body">
+            <div class="checkout__grid">
+              <label class="field"><span class="field__label">Имя и фамилия</span><input class="input" type="text" autocomplete="name" required></label>
+              <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7" autocomplete="tel" required></label>
+              <label class="field"><span class="field__label">Электронная почта</span><input class="input" type="email" autocomplete="email"></label>
+              <label class="field"><span class="field__label">Кто получает</span>
+                <span class="select"><select><option>Частное лицо</option><option>Организация</option></select></span>
+              </label>
+            </div>
           </div>
         </fieldset>
 
         <fieldset class="checkout__block">
           <legend class="checkout__legend"><span class="checkout__num">02</span> Способ получения</legend>
-          <div class="checkout__options">
-            <label class="option">
-              <input type="radio" name="shipping" value="pickup" checked>
-              <span class="option__body">
-                <span class="option__title">Самовывоз</span>
-                <span class="option__text">Три точки в Омске и точка в Тюмени. При наличии — в день заказа.</span>
-              </span>
-              <span class="option__price">бесплатно</span>
-            </label>
-            <label class="option">
-              <input type="radio" name="shipping" value="courier">
-              <span class="option__body">
-                <span class="option__title">Курьером по Омску</span>
-                <span class="option__text">Срок — 1 день. Оплата курьеру при получении возможна.</span>
-              </span>
-              <span class="option__price">200 ₽</span>
-            </label>
-            <label class="option">
-              <input type="radio" name="shipping" value="tk">
-              <span class="option__body">
-                <span class="option__title">Транспортной компанией</span>
-                <span class="option__text">В любой населённый пункт России, 1–5 дней. От 5000 ₽ — бесплатно.</span>
-              </span>
-              <span class="option__price">по расчёту</span>
-            </label>
-          </div>
+          <div class="checkout__body">
+            <div class="checkout__options">
+              <label class="option">
+                <input type="radio" name="shipping" value="pickup" checked>
+                <span class="option__body">
+                  <span class="option__title">Самовывоз</span>
+                  <span class="option__text">Три точки в Омске и точка в Тюмени. При наличии — в день заказа.</span>
+                </span>
+                <span class="option__price">бесплатно</span>
+              </label>
+              <label class="option">
+                <input type="radio" name="shipping" value="courier">
+                <span class="option__body">
+                  <span class="option__title">Курьером по Омску</span>
+                  <span class="option__text">Срок — 1 день. Оплата курьеру при получении возможна.</span>
+                </span>
+                <span class="option__price">200 ₽</span>
+              </label>
+              <label class="option">
+                <input type="radio" name="shipping" value="tk">
+                <span class="option__body">
+                  <span class="option__title">Транспортной компанией</span>
+                  <span class="option__text">В любой населённый пункт России, 1–5 дней. От 5000 ₽ — бесплатно.</span>
+                </span>
+                <span class="option__price">по расчёту</span>
+              </label>
+            </div>
 
-          <div class="checkout__grid checkout__grid--shipping">
-            <label class="field"><span class="field__label">Пункт самовывоза</span>
-              <span class="select"><select>
-                <option>Омск, ул. Герцена, 197А</option>
-                <option>Омск, ул. Енисейская, 1</option>
-                <option>Омск, ул. Энтузиастов, 2/2</option>
-                <option>Тюмень, ул. 50 лет Октября, 211</option>
-              </select></span>
-            </label>
-            <label class="field"><span class="field__label">Удобная дата</span><input class="input" type="date"></label>
+            <!-- Уточнение к выбранному способу: визуально привязано к блоку выше -->
+            <div class="checkout__sub">
+              <div class="checkout__grid checkout__grid--shipping">
+                <label class="field"><span class="field__label">Пункт самовывоза</span>
+                  <span class="select"><select>
+                    <option>Омск, ул. Герцена, 197А</option>
+                    <option>Омск, ул. Енисейская, 1</option>
+                    <option>Омск, ул. Энтузиастов, 2/2</option>
+                    <option>Тюмень, ул. 50 лет Октября, 211</option>
+                  </select></span>
+                </label>
+                <label class="field"><span class="field__label">Удобная дата</span><input class="input" type="date"></label>
+              </div>
+            </div>
           </div>
         </fieldset>
 
         <fieldset class="checkout__block">
           <legend class="checkout__legend"><span class="checkout__num">03</span> Оплата</legend>
-          <div class="checkout__options">
-            <label class="option">
-              <input type="radio" name="payment" value="card" checked>
-              <span class="option__body">
-                <span class="option__title">Картой онлайн</span>
-                <span class="option__text">Visa, Mastercard и МИР — сразу после оформления заказа.</span>
-              </span>
-            </label>
-            <label class="option">
-              <input type="radio" name="payment" value="cash">
-              <span class="option__body">
-                <span class="option__title">Наличными при получении</span>
-                <span class="option__text">Курьеру в пределах Омска или на точке самовывоза.</span>
-              </span>
-            </label>
-            <label class="option">
-              <input type="radio" name="payment" value="invoice">
-              <span class="option__body">
-                <span class="option__title">По счёту</span>
-                <span class="option__text">Безналичный расчёт для организаций, счёт пришлём на почту.</span>
-              </span>
-            </label>
+          <div class="checkout__body">
+            <div class="checkout__options">
+              <label class="option">
+                <input type="radio" name="payment" value="card" checked>
+                <span class="option__body">
+                  <span class="option__title">Картой онлайн</span>
+                  <span class="option__text">Visa, Mastercard и МИР — сразу после оформления заказа.</span>
+                </span>
+              </label>
+              <label class="option">
+                <input type="radio" name="payment" value="cash">
+                <span class="option__body">
+                  <span class="option__title">Наличными при получении</span>
+                  <span class="option__text">Курьеру в пределах Омска или на точке самовывоза.</span>
+                </span>
+              </label>
+              <label class="option">
+                <input type="radio" name="payment" value="invoice">
+                <span class="option__body">
+                  <span class="option__title">По счёту</span>
+                  <span class="option__text">Безналичный расчёт для организаций, счёт пришлём на почту.</span>
+                </span>
+              </label>
+            </div>
           </div>
         </fieldset>
 
         <fieldset class="checkout__block">
           <legend class="checkout__legend"><span class="checkout__num">04</span> Комментарий</legend>
-          <label class="field"><textarea class="input" placeholder="Марка и модель автомобиля, пожелания к доставке"></textarea></label>
+          <div class="checkout__body">
+            <label class="field"><textarea class="input" placeholder="Марка и модель автомобиля, пожелания к доставке"></textarea></label>
+          </div>
         </fieldset>
 
-        <label class="checkbox">
+        <label class="checkbox checkout__consent">
           <input type="checkbox" required>
           <span>Я согласен с <a href="legal.html">политикой конфиденциальности</a> и обработкой персональных данных</span>
         </label>
@@ -384,7 +395,7 @@
       </form>
 
       <aside class="cart__summary">
-        <p class="h5 cart__summary-title">Ваш заказ</p>
+        <p class="cart__summary-title">Ваш заказ</p>
         <ul class="checkout__items">
           <li><span>Castrol Magnatec 5W-30, 4 л × 2</span><span>5 980 ₽</span></li>
           <li><span>Антифриз G12+ 5 кг × 1</span><span>1 340 ₽</span></li>

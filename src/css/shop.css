@@ -13,53 +13,121 @@
   align-items: start;
 }
 
-/* ---------- Корзина: строка товара ---------- */
+/* ---------- Корзина: таблица позиций ----------
+   Одна сетка на шапку и строки, чтобы колонки стояли ровно:
+   фото | название | цена | количество | сумма | удалить */
 .cart__list { display: grid; }
 
+.cart-head,
 .cart-row {
   display: grid;
-  grid-template-columns: 100px 1fr 156px 120px 24px;
+  grid-template-columns: 88px minmax(0, 1fr) 110px 128px 120px 32px;
   align-items: center;
   gap: var(--ko-space-20);
-  padding: var(--ko-space-24) 0;
+}
+
+.cart-head {
+  padding-bottom: var(--ko-space-12);
   border-bottom: 1px solid var(--ko-border-1);
 }
-.cart-row:first-child { padding-top: 0; }
+.cart-head__cell {
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+.cart-head__cell--product { grid-column: 1 / 3; }
+.cart-head__cell--num { text-align: right; }
+.cart-head__cell--qty { text-align: center; }
+
+.cart-row {
+  padding: var(--ko-space-20) 0;
+  border-bottom: 1px solid var(--ko-border-1);
+}
 
 .cart-row__media {
-  width: 100px;
-  height: 100px;
+  width: 88px;
+  height: 88px;
   background: var(--ko-bg-1);
 }
 .cart-row__media img { width: 100%; height: 100%; object-fit: contain; }
 
+.cart-row__info { display: grid; gap: var(--ko-space-4); }
 .cart-row__title {
-  font: 600 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  font: 500 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-1);
 }
 .cart-row__title:hover { color: var(--ko-text-accent); }
 .cart-row__meta {
-  margin-top: var(--ko-space-8);
   font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
   color: var(--ko-text-3);
 }
+.cart-row__stock {
+  display: flex;
+  align-items: center;
+  gap: var(--ko-space-4);
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-other-1);
+}
+.cart-row__stock::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: var(--ko-radius-max);
+  background: currentColor;
+}
+.cart-row__stock--low { color: var(--ko-text-accent); }
 
+/* Подписи колонок внутри строки — видны только на мобильном */
+.cart-row__label { display: none; }
+
+.cart-row__unit {
+  text-align: right;
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-2);
+}
 .cart-row__price {
   text-align: right;
-  font: 600 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font);
+  font: 600 var(--ko-large-xl-size)/var(--ko-large-xl-lh) var(--ko-font);
   color: var(--ko-text-1);
+  white-space: nowrap;
 }
 
-.cart-row__remove { display: grid; place-items: center; width: 24px; height: 24px; }
-.cart-row__remove svg { width: 16px; height: 16px; color: var(--ko-icon-2); }
-.cart-row__remove:hover svg { color: var(--ko-icon-3); }
+.cart-row__remove {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  justify-self: end;
+  color: var(--ko-icon-2);
+  transition: background-color .15s ease, color .15s ease;
+}
+.cart-row__remove svg { width: 16px; height: 16px; }
+.cart-row__remove:hover { background: var(--ko-bg-1); color: var(--ko-icon-3); }
+
+/* Список без управления (страница оформленного заказа): фото, название, сумма */
+.cart-row--static { grid-template-columns: 88px minmax(0, 1fr) auto; }
+.cart__list--static .cart-row:first-child { padding-top: 0; }
+
+/* Ряд действий под списком */
+.cart__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ko-space-16);
+  padding-top: var(--ko-space-24);
+}
+.cart__back { display: inline-flex; align-items: center; gap: var(--ko-space-8); color: var(--ko-text-2); }
+.cart__back svg { width: 16px; height: 16px; }
+.cart__back:hover { color: var(--ko-text-accent); }
+.cart__clear { color: var(--ko-text-3); }
+.cart__clear:hover { color: var(--ko-border-error); }
 
 /* ---------- Корзина: пустое состояние ---------- */
 .cart__empty {
+  grid-column: 1 / -1;
   display: grid;
   justify-items: center;
   gap: var(--ko-space-16);
-  padding: var(--ko-space-64) var(--ko-space-24);
+  padding: var(--ko-space-80) var(--ko-space-24);
   text-align: center;
   background: var(--ko-bg-1);
 }
@@ -76,12 +144,16 @@
   padding: var(--ko-space-32);
   background: var(--ko-bg-1);
 }
-.cart__summary-title { margin-bottom: var(--ko-space-24); }
+.cart__summary-title {
+  margin-bottom: var(--ko-space-24);
+  font: 600 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font);
+  color: var(--ko-text-1);
+}
 
 .cart__totals { display: grid; gap: var(--ko-space-12); }
-.cart__totals div { display: flex; justify-content: space-between; gap: var(--ko-space-16); }
+.cart__totals div { display: flex; align-items: baseline; justify-content: space-between; gap: var(--ko-space-16); }
 .cart__totals dt { color: var(--ko-text-3); }
-.cart__totals dd { color: var(--ko-text-1); }
+.cart__totals dd { color: var(--ko-text-1); white-space: nowrap; }
 .cart__totals,
 .checkout__items {
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
@@ -90,28 +162,39 @@
 
 .cart__grand {
   display: flex;
+  align-items: baseline;
   justify-content: space-between;
   gap: var(--ko-space-16);
   margin: var(--ko-space-20) 0 var(--ko-space-24);
   padding-top: var(--ko-space-20);
   border-top: 1px solid var(--ko-border-1);
-  font: 600 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font);
+  font: 600 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-1);
 }
+.cart__grand-value { font: 600 var(--ko-h5-size)/var(--ko-h5-lh) var(--ko-font); }
 
 .cart__promo {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   gap: var(--ko-space-8);
-  margin-bottom: var(--ko-space-16);
+  margin-bottom: var(--ko-space-20);
 }
-.cart__promo .input { height: var(--ko-control-h); }
+.cart__promo .input,
+.cart__promo .btn { height: var(--ko-control-h); }
+.cart__promo .input { background: var(--ko-bg-0); }
+
+.cart__submit { height: var(--ko-control-h); }
 
 .cart__note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ko-space-8);
   margin-top: var(--ko-space-16);
   font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
   color: var(--ko-text-3);
 }
+.cart__note-icon { flex: none; width: 16px; height: 16px; margin-top: 2px; color: var(--ko-icon-2); }
+.cart__note b { font-weight: 600; color: var(--ko-text-2); }
 
 .checkout__items {
   display: grid;
@@ -123,47 +206,78 @@
 .checkout__items li { display: flex; justify-content: space-between; gap: var(--ko-space-16); }
 .checkout__items li span:first-child { color: var(--ko-text-3); }
 
-/* ---------- Оформление заказа ---------- */
-.checkout { display: grid; gap: var(--ko-space-48); }
+/* ---------- Оформление заказа ----------
+   Каждый шаг — карточка с рамкой: видно, где кончается один блок
+   и начинается следующий. Номер шага не спорит с заголовком по весу. */
+.checkout { display: grid; gap: var(--ko-space-20); }
 
-.checkout__block { display: grid; gap: var(--ko-space-24); border: 0; padding: 0; }
+.checkout__block {
+  margin: 0;
+  padding: var(--ko-space-32);
+  border: 1px solid var(--ko-border-1);
+}
+/* legend по умолчанию разрывает верхнюю рамку fieldset — float убирает вырез */
 .checkout__legend {
+  float: left;
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: var(--ko-space-16);
-  font: 600 var(--ko-h5-size)/var(--ko-h5-lh) var(--ko-font);
+  gap: var(--ko-space-12);
+  margin-bottom: var(--ko-space-24);
+  padding: 0;
+  font: 600 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font);
   color: var(--ko-text-1);
 }
+.checkout__body { clear: both; display: grid; gap: var(--ko-space-20); }
 .checkout__num {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   background: var(--ko-bg-brand);
   color: var(--ko-text-0);
-  font: 600 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  font: 600 var(--ko-caption-size)/1 var(--ko-font);
 }
 
 .checkout__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ko-space-20); }
 .checkout__grid--shipping { grid-template-columns: 2fr 1fr; }
 
-.checkout__options { display: grid; gap: var(--ko-space-12); }
+/* Уточняющие поля под списком способов получения */
+.checkout__sub {
+  padding: var(--ko-space-20);
+  background: var(--ko-bg-1);
+}
+
+.checkout__options { display: grid; gap: var(--ko-space-8); }
 
 .option {
   display: grid;
-  grid-template-columns: 24px 1fr auto;
+  grid-template-columns: 20px minmax(0, 1fr) auto;
   align-items: start;
   gap: var(--ko-space-16);
-  padding: var(--ko-space-20);
+  padding: var(--ko-space-16) var(--ko-space-20);
+  border: 1px solid var(--ko-border-1);
+  cursor: pointer;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.option:hover { border-color: var(--ko-border-4); }
+.option:has(input:checked) {
+  border-color: var(--ko-border-brand);
   background: var(--ko-bg-1);
+}
+.option input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--ko-bg-brand);
   cursor: pointer;
 }
-.option:has(input:checked) { outline: 1px solid var(--ko-border-brand); }
-.option input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--ko-bg-brand); }
 .option__body { display: grid; gap: var(--ko-space-4); }
-.option__title { font: 600 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); color: var(--ko-text-1); }
-.option__text { font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font); color: var(--ko-text-3); }
+.option__title { font: 500 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); color: var(--ko-text-1); }
+.option__text { font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font); color: var(--ko-text-3); }
 .option__price { font: 600 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); color: var(--ko-text-1); white-space: nowrap; }
+
+.checkout__consent { padding: 0 var(--ko-space-4); }
 
 /* ---------- Личный кабинет ---------- */
 .account {
@@ -358,19 +472,54 @@
   .account { grid-template-columns: 1fr; }
   .account__cards { grid-template-columns: 1fr 1fr; }
 }
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  /* Таблица разворачивается в карточки: подписи колонок переезжают внутрь строк */
+  .cart-head { display: none; }
+
   .cart-row {
-    grid-template-columns: 80px 1fr 24px;
+    /* третья колонка держит и крестик, и сумму — поэтому auto, а не 32px */
+    grid-template-columns: 72px minmax(0, 1fr) auto;
     grid-template-areas:
-      "media info remove"
-      "media step price";
+      "media info   remove"
+      "media unit   unit"
+      "media step   price";
+    column-gap: var(--ko-space-16);
     row-gap: var(--ko-space-12);
+    align-items: start;
   }
-  .cart-row__media { grid-area: media; width: 80px; height: 80px; }
-  .cart-row__info { grid-area: info; }
-  .cart-row .stepper { grid-area: step; }
-  .cart-row__price { grid-area: price; text-align: right; }
+  .cart-row--static {
+    grid-template-columns: 72px minmax(0, 1fr) auto;
+    grid-template-areas: "media info price";
+    align-items: center;
+  }
+
+  .cart-row__media { grid-area: media; width: 72px; height: 72px; }
+  .cart-row__info  { grid-area: info; }
+  .cart-row__unit  { grid-area: unit; text-align: left; }
+  .cart-row .stepper { grid-area: step; justify-self: start; }
+  .cart-row__price { grid-area: price; align-self: center; }
   .cart-row__remove { grid-area: remove; }
+
+  .cart-row__label {
+    display: inline;
+    margin-right: var(--ko-space-8);
+    font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+    color: var(--ko-text-3);
+  }
+  .cart-row__price .cart-row__label { display: none; }
+
+  .cart__actions { flex-direction: column; align-items: flex-start; gap: var(--ko-space-12); }
+}
+
+@media (max-width: 768px) {
+  .checkout__block { padding: var(--ko-space-20); }
+  .checkout__sub { padding: var(--ko-space-16); }
+  /* Цена способа доставки уходит под описание, чтобы не сжимать текст */
+  .option {
+    grid-template-columns: 20px minmax(0, 1fr);
+    padding: var(--ko-space-16);
+  }
+  .option__price { grid-column: 2; }
 
   .checkout__grid,
   .checkout__grid--shipping { grid-template-columns: 1fr; }
