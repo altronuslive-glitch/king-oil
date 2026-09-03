@@ -106,20 +106,39 @@
      Sticky-шапка: схлопывается при скролле вниз
      --------------------------------------------------------- */
   const header = $('[data-header]');
-  if (header) {
-    const threshold = 160;
-    let ticking = false;
+  const headerSpacer = $('[data-header-spacer]');
 
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        header.classList.toggle('is-stuck', window.scrollY > threshold);
-        ticking = false;
-      });
+  if (header) {
+    let fullHeight = 160;
+
+    // Место под фиксированную шапку. Меряем всегда в развёрнутом виде,
+    // иначе после переключения запомним компактную высоту.
+    const measure = () => {
+      const wasStuck = header.classList.contains('is-stuck');
+      header.classList.remove('is-stuck');
+      fullHeight = header.offsetHeight;
+      if (headerSpacer) headerSpacer.style.height = `${fullHeight}px`;
+      if (wasStuck) header.classList.add('is-stuck');
     };
 
+    // Без rAF: чтение scrollY и переключение класса не вызывают пересчёт вёрстки,
+    // а троттлинг через кадры залипает, если вкладка не отрисовывается
+    const onScroll = () => {
+      const stuck = header.classList.contains('is-stuck');
+      // Гистерезис: включаем ниже шапки, выключаем заметно выше,
+      // чтобы на границе не было мерцания
+      if (!stuck && window.scrollY > fullHeight) header.classList.add('is-stuck');
+      else if (stuck && window.scrollY < fullHeight - 48) header.classList.remove('is-stuck');
+    };
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => { measure(); onScroll(); }, 150);
+    });
+
     window.addEventListener('scroll', onScroll, { passive: true });
+    measure();
     onScroll();
   }
 
@@ -240,10 +259,9 @@
       if (prev) prev.disabled = track.scrollLeft <= 1;
       if (next) next.disabled = track.scrollLeft >= max - 1;
       if (bar) {
-        // Индикатор — полоса фиксированной ширины (79 по макету), едет по треку
-        const rail = bar.parentElement.clientWidth - bar.offsetWidth;
-        const pos = max > 0 ? track.scrollLeft / max : 0;
-        bar.style.left = `${Math.round(pos * rail)}px`;
+        // Индикатор стоит на месте и заполняется: доля просмотренного от общей ширины ленты
+        const seen = (track.scrollLeft + track.clientWidth) / track.scrollWidth;
+        bar.style.width = `${Math.min(100, Math.round(seen * 100))}%`;
       }
     };
 

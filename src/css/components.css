@@ -428,19 +428,23 @@ textarea.input { min-height: 96px; resize: vertical; }
   height: 48px;
   margin-top: var(--ko-space-48);
 }
+/* Индикатор: трек 79×6 на месте, заливка растёт по мере прокрутки */
 .carousel-progress {
   position: relative;
-  flex: 1;
+  flex: none;
   align-self: flex-start;
+  width: 79px;
   height: 6px;
+  background: var(--ko-bg-2);
 }
 .carousel-progress__bar {
   position: absolute;
   top: 0; bottom: 0;
   left: 0;
-  width: 79px;
-  background: var(--ko-text-1);
-  transition: left .2s ease;
+  width: 0;
+  background: var(--ko-icon-2);
+  /* без transition: за пределами экрана браузер не проигрывает анимацию
+     и полоса застревает на нулевой ширине */
 }
 
 /* ---------- Аккордеон FAQ ---------- */

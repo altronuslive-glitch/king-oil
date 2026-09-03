@@ -33,7 +33,11 @@
 *::before,
 *::after { box-sizing: border-box; }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* якорные ссылки не должны уезжать под фиксированную шапку */
+  scroll-padding-top: 180px;
+}
 
 body {
   margin: 0;
