@@ -47,7 +47,7 @@
   <symbol id="i-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(3.0 1.0)"><path d="M17 7L11 1H3C2.46957 1 1.96086 1.21071 1.58579 1.58579C1.21071 1.96086 1 2.46957 1 3V19C1 19.5304 1.21071 20.0391 1.58579 20.4142C1.96086 20.7893 2.46957 21 3 21H15C15.5304 21 16.0391 20.7893 16.4142 20.4142C16.7893 20.0391 17 19.5304 17 19V7ZM11 1V7H17M13 16H5M13 12H5M7 8H5"/></g></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
   <symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7Z"/></symbol>
-  <symbol id="i-cookie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="9" cy="9" r="1.1" fill="currentColor"/><circle cx="15.5" cy="8" r=".9" fill="currentColor"/><circle cx="14" cy="15.5" r="1.1" fill="currentColor"/><circle cx="8.5" cy="14.5" r=".8" fill="currentColor"/><circle cx="12" cy="11.5" r=".7" fill="currentColor"/></symbol>
+  <symbol id="i-cookie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M15.4 3.1A10 10 0 1 0 20.9 8.6a3.2 3.2 0 0 1-3-2.5 3.2 3.2 0 0 1-2.5-3Z"/><circle cx="9" cy="9" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.2" cy="15.4" r="1.1" fill="currentColor" stroke="none"/><circle cx="8.4" cy="14.6" r=".8" fill="currentColor" stroke="none"/><circle cx="12" cy="11.6" r=".7" fill="currentColor" stroke="none"/></symbol>
   <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4 10-10"/></symbol>
   <symbol id="i-cash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6h20v12H2z"/><path d="M6 6a4 4 0 0 1-4 4M18 6a4 4 0 0 0 4 4M2 14a4 4 0 0 1 4 4M22 14a4 4 0 0 0-4 4"/><circle cx="12" cy="12" r="2"/></symbol>
   <symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>
@@ -65,7 +65,15 @@
   <div class="header__top">
     <div class="container">
       <div class="header__top-left">
-        <button class="city-btn" type="button">Город <svg><use href="#i-chevron"></use></svg></button>
+        <div class="city" data-city>
+          <button class="city-btn" type="button" data-toggle="city" aria-expanded="false">
+            <span data-city-label>Омск</span> <svg><use href="#i-chevron"></use></svg>
+          </button>
+          <div class="city__list" hidden data-panel="city">
+            <button class="city__item is-active" type="button" data-city-set="omsk">Омск</button>
+            <button class="city__item" type="button" data-city-set="tyumen">Тюмень</button>
+          </div>
+        </div>
         <nav class="header__top-nav">
           <a class="link" href="about.html">О нас</a>
           <a class="link" href="delivery.html">Оплата</a>
@@ -74,8 +82,8 @@
         </nav>
       </div>
       <div class="header__top-right">
-        <a class="link" href="tel:88009439988">8 800 943 99 88</a>
-        <a class="link" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
+        <a class="link" href="tel:+73812475777" data-city-phone>8 (3812) 475-777</a>
+        <a class="link" href="tel:+78007007874">8 800 700 7874</a>
       </div>
     </div>
   </div>
@@ -110,15 +118,15 @@
             <div class="search__group-head"><span>Популярные товары</span></div>
             <a class="search__product" href="product.html">
               <span class="placeholder" style="width:40px;height:40px"></span>
-              <span><span class="search__product-name">Castrol EDGE 5W-30 A3/B4</span><br><span class="search__product-cat">Моторные масла</span></span>
+              <span><span class="search__product-name">Honda HCF-2 (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
             </a>
             <a class="search__product" href="product.html">
               <span class="placeholder" style="width:40px;height:40px"></span>
-              <span><span class="search__product-name">Mobil 1 X1 5W-40</span><br><span class="search__product-cat">Моторные масла</span></span>
+              <span><span class="search__product-name">Mazda ATF M-V (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
             </a>
             <a class="search__product" href="product.html">
               <span class="placeholder" style="width:40px;height:40px"></span>
-              <span><span class="search__product-name">Лукойл Genesis 5W-30</span><br><span class="search__product-cat">Моторные масла</span></span>
+              <span><span class="search__product-name">Nissan ATF Matic D (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
             </a>
           </div>
         </div>
@@ -190,36 +198,38 @@
         <button class="mega__cat" type="button" data-mega-cat="5">Лампы</button>
       </div>
       <div class="mega__content">
-        <!-- TODO: контент — реальная структура подразделов от заказчика -->
+        <!-- Бренды взяты из меню тестового сайта kingoil.itb-dev.ru -->
         <div class="mega__panel is-active" data-mega-panel="0">
           <h3 class="h5 mega__title">Моторные масла</h3>
           <div class="mega__links">
-            <a href="catalog.html">Синтетические</a><a href="catalog.html">Полусинтетические</a><a href="catalog.html">Минеральные</a>
-            <a href="catalog.html">0W-20</a><a href="catalog.html">5W-30</a><a href="catalog.html">5W-40</a>
-            <a href="catalog.html">10W-40</a><a href="catalog.html">Для дизельных двигателей</a><a href="catalog.html">Для бензиновых двигателей</a>
-            <a href="catalog.html">Castrol</a><a href="catalog.html">Mobil</a><a href="catalog.html">Shell</a>
-            <a href="catalog.html">Total</a><a href="catalog.html">Lukoil</a><a href="catalog.html">Liqui Moly</a>
+            <a href="catalog.html">Оригинальные масла</a><a href="catalog.html">ЛУКОЙЛ</a><a href="catalog.html">BARDAHL</a>
+            <a href="catalog.html">CASTROL</a><a href="catalog.html">CHAMPION</a><a href="catalog.html">ENI</a>
+            <a href="catalog.html">ELF</a><a href="catalog.html">ENEOS</a><a href="catalog.html">FQ</a>
+            <a href="catalog.html">G-ENERGY</a><a href="catalog.html">IDEMITSU</a><a href="catalog.html">KIXX</a>
           </div>
         </div>
         <div class="mega__panel" data-mega-panel="1">
           <h3 class="h5 mega__title">Трансмиссионные масла</h3>
           <div class="mega__links">
-            <a href="catalog.html">Для МКПП</a><a href="catalog.html">Для АКПП</a><a href="catalog.html">Для мостов и редукторов</a>
-            <a href="catalog.html">ATF</a><a href="catalog.html">GL-4</a><a href="catalog.html">GL-5</a>
+            <a href="catalog.html">NGN</a><a href="catalog.html">TOYOTA</a><a href="catalog.html">TOTACHI</a>
+            <a href="catalog.html">NISSAN</a><a href="catalog.html">HONDA</a><a href="catalog.html">MITSUBISHI</a>
+            <a href="catalog.html">KIA / HYUNDAI</a><a href="catalog.html">MAZDA</a><a href="catalog.html">GM</a>
+            <a href="catalog.html">ZIC</a><a href="catalog.html">MERCEDES</a><a href="catalog.html">ЛУКОЙЛ</a>
           </div>
         </div>
         <div class="mega__panel" data-mega-panel="2">
           <h3 class="h5 mega__title">Антифриз</h3>
           <div class="mega__links">
             <a href="catalog.html">G11</a><a href="catalog.html">G12</a><a href="catalog.html">G12+ / G12++</a>
-            <a href="catalog.html">Готовые составы</a><a href="catalog.html">Концентраты</a><a href="catalog.html">Промывки системы</a>
+            <a href="catalog.html">G13</a><a href="catalog.html">Готовые составы</a><a href="catalog.html">Концентраты</a>
           </div>
         </div>
         <div class="mega__panel" data-mega-panel="3">
           <h3 class="h5 mega__title">Аккумуляторы</h3>
           <div class="mega__links">
-            <a href="catalog.html">Для легковых авто</a><a href="catalog.html">Для грузовых авто</a><a href="catalog.html">AGM</a>
-            <a href="catalog.html">EFB</a><a href="catalog.html">55 А·ч</a><a href="catalog.html">60 А·ч</a>
+            <a href="catalog.html">Tubor</a><a href="catalog.html">Topla</a><a href="catalog.html">Tyumen</a>
+            <a href="catalog.html">Mutlu</a><a href="catalog.html">BORG / UNO / Dominator</a><a href="catalog.html">Zeus</a>
+            <a href="catalog.html">XTREME</a><a href="catalog.html">Forse / Sebang</a>
           </div>
         </div>
         <div class="mega__panel" data-mega-panel="4">
@@ -257,10 +267,18 @@
   <a class="mobile-menu__link" href="delivery.html#faq">Вопросы и ответы</a>
   <a class="mobile-menu__link" href="contacts.html">Контакты</a>
   <div class="mobile-menu__contacts">
-    <a class="mobile-menu__phone" href="tel:88009439988">8 800 943 99 88</a>
-    <a class="text-small text-accent" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
-    <button class="city-btn" type="button" style="margin-top:8px">Город <svg><use href="#i-chevron"></use></svg></button>
-    <p class="text-caption text-3" style="margin-top:16px">Адрес компании<br>г. Омск, ул. 10 лет Октября, 180</p>
+    <a class="mobile-menu__phone" href="tel:+73812475777" data-city-phone>8 (3812) 475-777</a>
+    <a class="text-small text-accent" href="tel:+78007007874">8 800 700 7874 — по РФ бесплатно</a>
+    <div class="city" data-city style="margin-top:8px">
+      <button class="city-btn" type="button" data-toggle="city-mobile" aria-expanded="false">
+        <span data-city-label>Омск</span> <svg><use href="#i-chevron"></use></svg>
+      </button>
+      <div class="city__list" hidden data-panel="city-mobile">
+        <button class="city__item is-active" type="button" data-city-set="omsk">Омск</button>
+        <button class="city__item" type="button" data-city-set="tyumen">Тюмень</button>
+      </div>
+    </div>
+    <p class="text-caption text-3" style="margin-top:16px">Адрес компании<br>г. Омск, ул. Герцена, 197А</p>
   </div>
 </div>
 <!-- /@shared:header -->
@@ -349,13 +367,23 @@
     </div>
 
     <div class="filters" data-filters>
-      <button class="btn btn--secondary filters__toggle" type="button" data-filters-toggle>Фильтры</button>
+      <button class="btn btn--secondary filters__toggle" type="button" data-filters-toggle aria-expanded="false">Фильтры</button>
+      <!-- На мобильном этот блок превращается в шторку: макета нет, решение согласовано -->
+      <div class="filters__drawer">
+      <div class="filters__drawer-head">
+        <span class="h6">Фильтры</span>
+        <button class="filters__drawer-close" type="button" data-filters-close aria-label="Закрыть фильтры"><svg><use href="#i-close"></use></svg></button>
+      </div>
       <div class="filters__row">
         <span class="select"><select><option>Вязкость</option><option>0W-20</option><option>5W-30</option><option>5W-40</option><option>10W-40</option></select></span>
         <span class="select"><select><option>Тип масла</option><option>Синтетическое</option><option>Полусинтетическое</option><option>Минеральное</option></select></span>
         <span class="select"><select><option>Объём</option><option>1 л</option><option>4 л</option><option>5 л</option><option>20 л</option></select></span>
         <span class="select"><select><option>Бренд</option><option>Castrol</option><option>Mobil</option><option>Shell</option><option>Lukoil</option></select></span>
         <span class="select"><select><option>Допуск</option><option>API SN</option><option>ACEA A3/B4</option><option>VW 502.00</option><option>BMW LL-01</option></select></span>
+      </div>
+      <div class="filters__drawer-foot">
+        <button class="btn btn--primary btn--block" type="button" data-filters-close>Показать товары</button>
+      </div>
       </div>
       <div class="filters__active">
         <button class="chip chip--removable" type="button" data-chip-remove>5W-30 <svg><use href="#i-close"></use></svg></button>
@@ -534,8 +562,8 @@
         </a>
         <p class="footer__about">Оригинальные моторные масла, антифризы и автотовары. Прямые поставки от авторизованных дистрибьюторов.</p>
         <div class="footer__contacts">
-          <a class="footer__phone" href="tel:+73812390606">+7 (3812) 39-06-06</a><br>
-          <a class="footer__mail" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
+          <a class="footer__phone" href="tel:+73812475777" data-city-phone>8 (3812) 475-777</a><br>
+          <a class="footer__mail" href="tel:+78007007874">8 800 700 7874 — по РФ бесплатно</a>
         </div>
         <p class="footer__hours">Пн–Сб 9–20, Вс 10–19</p>
       </div>
@@ -567,10 +595,10 @@
       <div>
         <p class="footer__col-title">Контакты</p>
         <ul class="footer__addresses">
-          <li>Омск, ул. 10 лет Октября, 180</li>
-          <li>Омск, пр. Мира, 30</li>
-          <li>Омск, ул. Заозёрная, 5</li>
-          <li>Тюмень, ул. Республики, 250</li>
+          <li>Омск, ул. Герцена, 197А</li>
+          <li>Омск, ул. Енисейская, 1</li>
+          <li>Омск, ул. Энтузиастов, 2/2</li>
+          <li>Тюмень, ул. 50 лет Октября, 211</li>
         </ul>
         <div class="footer__social">
           <a href="#" aria-label="ВКонтакте"><img src="img/icons/vk.svg" width="24" height="24" alt=""></a>
@@ -584,7 +612,7 @@
 
     <div class="footer__bottom">
       <div class="footer__legal">
-        <!-- TODO: реквизиты — в макете два разных набора, нужны настоящие -->
+        <!-- Реквизиты сверены с king-oil.ru (страница «Контакты», блок «О нас») -->
         <span>© 2004–<span data-year>2026</span> King-Oil. Все права защищены.</span>
         <span>ООО «Сити Ойл» · ОГРН 1205500020318 · ИНН 5503193478</span>
       </div>

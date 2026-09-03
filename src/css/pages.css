@@ -220,10 +220,13 @@
 .contacts__map {
   aspect-ratio: 1020 / 400;
   background: var(--ko-bg-2);
-  display: grid;
-  place-items: center;
-  color: var(--ko-text-3);
-  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  overflow: hidden;
+}
+.contacts__map iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 @media (max-width: 1024px) {
@@ -280,6 +283,38 @@
 @media (max-width: 1024px) {
   .promo-featured { grid-template-columns: 1fr; gap: var(--ko-space-24); }
   .promo-featured__media { aspect-ratio: 16 / 9; }
+}
+
+/* ---------- Страница акции: шапка материала ----------
+   Макет 26885:5176 — две колонки 686, гэп 48. Слева мета (24), заголовок (156),
+   лид (84) и кнопка (52) с отступами 40 / 24 / 40, справа картинка 686×400. */
+.promo-detail__crumbs { padding-bottom: var(--ko-space-10); }
+
+.promo-article {
+  display: grid;
+  grid-template-columns: 686px 686px;
+  justify-content: space-between;
+  gap: var(--ko-space-48);
+  align-items: start;
+}
+.promo-article__body { display: grid; justify-items: start; gap: var(--ko-space-40); }
+/* В карточках листинга у меты своя высота строки и отступ, здесь ряд ровно 24 */
+.promo-article .article-card__meta { margin-bottom: 0; line-height: var(--ko-small-lh); }
+.promo-article__text { display: grid; gap: var(--ko-space-24); }
+.promo-article__title { margin: 0; }
+.promo-article__lead {
+  font: 400 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font);
+  color: var(--ko-text-2);
+}
+.promo-article__media { aspect-ratio: 686 / 400; background: var(--ko-bg-2); }
+.promo-article__media img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (max-width: 1440px) {
+  .promo-article { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 1024px) {
+  .promo-article { grid-template-columns: 1fr; gap: var(--ko-space-32); }
+  .promo-article__media { aspect-ratio: 16 / 9; }
 }
 
 /* ---------- Акции: сетка статей — 3 колонки, гэп 20 / 48 ---------- */

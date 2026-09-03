@@ -123,37 +123,7 @@
 .product-info__actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-12); }
 .product-info__actions .btn { height: var(--ko-control-h); }
 
-/* Степпер количества 216×52: «−», поле, «+» (плюс брендового цвета) */
-.stepper {
-  display: grid;
-  grid-template-columns: 52px 1fr 52px;
-  align-items: center;
-  width: 216px;
-  height: var(--ko-control-h);
-  border: 1px solid var(--ko-border-1);
-}
-.stepper__btn {
-  display: grid;
-  place-items: center;
-  height: 100%;
-  color: var(--ko-icon-3);
-  transition: color .15s ease;
-}
-.stepper__btn svg { width: var(--ko-icon-md); height: var(--ko-icon-md); }
-.stepper__btn--plus { color: var(--ko-icon-brand); }
-.stepper__btn:disabled { color: var(--ko-bg-3); cursor: not-allowed; }
-.stepper__input {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  text-align: center;
-  background: none;
-  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
-  appearance: textfield;
-}
-.stepper__input::-webkit-outer-spin-button,
-.stepper__input::-webkit-inner-spin-button { appearance: none; margin: 0; }
-.stepper__input:focus { outline: none; }
+/* Степпер количества переехал в components.css — он нужен ещё и в корзине */
 
 @media (max-width: 1024px) {
   .product { grid-template-columns: 1fr; gap: var(--ko-space-32); }
@@ -161,8 +131,7 @@
 }
 @media (max-width: 480px) {
   .gallery__thumb { width: 72px; height: 72px; padding: var(--ko-space-10); }
-  .product-info__actions .btn,
-  .stepper { width: 100%; }
+  .product-info__actions .btn { width: 100%; }
 }
 
 /* ---------- Характеристики — 1900×568 ----------

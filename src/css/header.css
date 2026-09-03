@@ -49,6 +49,30 @@
 }
 .city-btn svg { width: 16px; height: 16px; color: var(--ko-icon-2); }
 
+/* Выбор города: Омск / Тюмень. Управляет телефонами, адресами и точками на карте */
+.city { position: relative; }
+.city__list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 60;
+  min-width: 160px;
+  padding: var(--ko-space-8) 0;
+  background: var(--ko-bg-0);
+  border: 1px solid var(--ko-border-1);
+  box-shadow: 0 8px 24px rgb(19 25 39 / 12%);
+}
+.city__item {
+  display: block;
+  width: 100%;
+  padding: var(--ko-space-8) var(--ko-space-16);
+  text-align: left;
+  color: var(--ko-text-1);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+}
+.city__item:hover { background: var(--ko-bg-1); }
+.city__item.is-active { color: var(--ko-text-accent); }
+
 /* ---------- Ряд 2: основной (52) ---------- */
 /* Гэпы по макету: логотип —32— «Каталог» —12— поиск —24— иконки */
 .header__main { height: 52px; }

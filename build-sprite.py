@@ -72,7 +72,8 @@ ICONS = {
 HANDMADE = {
     "i-menu": '<symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>',
     "i-bolt": '<symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7Z"/></symbol>',
-    "i-cookie": '<symbol id="i-cookie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="9" cy="9" r="1.1" fill="currentColor"/><circle cx="15.5" cy="8" r=".9" fill="currentColor"/><circle cx="14" cy="15.5" r="1.1" fill="currentColor"/><circle cx="8.5" cy="14.5" r=".8" fill="currentColor"/><circle cx="12" cy="11.5" r=".7" fill="currentColor"/></symbol>',
+    # Печенье с надкусом справа сверху, как в макете плашки cookies
+    "i-cookie": '<symbol id="i-cookie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M15.4 3.1A10 10 0 1 0 20.9 8.6a3.2 3.2 0 0 1-3-2.5 3.2 3.2 0 0 1-2.5-3Z"/><circle cx="9" cy="9" r="1.1" fill="currentColor" stroke="none"/><circle cx="14.2" cy="15.4" r="1.1" fill="currentColor" stroke="none"/><circle cx="8.4" cy="14.6" r=".8" fill="currentColor" stroke="none"/><circle cx="12" cy="11.6" r=".7" fill="currentColor" stroke="none"/></symbol>',
     "i-check": '<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4 10-10"/></symbol>',
     # Купюра: прямоугольник 20×12 на (2,6), четверти круга r=4 по углам и круг r=2
     # в центре — координаты из метаданных Figma (26847:25877). Радиус скругления

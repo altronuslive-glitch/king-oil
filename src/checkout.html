@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>О компании | King-Oil</title>
-<meta name="description" content="King-Oil — официальный поставщик моторных и трансмиссионных масел. Более 2000 позиций на собственном складе, самовывоз в Омске и Тюмени, доставка по России.">
+<title>Оформление заказа | King-Oil</title>
+<meta name="robots" content="noindex">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/components.css">
@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="css/footer.css">
 <link rel="stylesheet" href="css/modals.css">
 <link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="css/shop.css">
 </head>
 <body>
 
@@ -284,115 +285,138 @@
 
 <main>
 
-  <!-- ============ 1. Герой ============
-       Единственная страница без отдельной секции крошек — они входят в первый блок -->
-  <section class="section section--pt-0 section--pb-120 about-hero">
-    <div class="container">
-      <div>
-        <ol class="breadcrumbs">
-          <li><a href="index.html">Главная</a></li>
-          <li>О компании</li>
-        </ol>
-        <p class="eyebrow eyebrow--accent about-hero__eyebrow">О компании</p>
-        <h1 class="h2">King-Oil — оригинальные моторные и трансмиссионные масла</h1>
-        <p class="about-hero__text">Официальный поставщик. Более 2000 позиций в наличии, самовывоз в Омске и Тюмени, доставка по всей России. Продаём только оригинал — с документами и гарантией подлинности.</p>
-        <a class="btn btn--primary" href="catalog.html">Смотреть каталог</a>
-      </div>
-      <div class="about-hero__media"></div>
-    </div>
-  </section>
+  <!-- ============ 1–2. Крошки и заголовок ============ -->
+  <div class="container page-head--pb-48">
+    <ol class="breadcrumbs">
+      <li><a href="index.html">Главная</a></li>
+      <li><a href="cart.html">Корзина</a></li>
+      <li>Оформление заказа</li>
+    </ol>
+    <h1 class="h2 page-head__title">Оформление заказа</h1>
+  </div>
 
-  <!-- ============ 2. Цифры ============ -->
-  <section class="section section--grey">
-    <div class="container">
-      <div class="section-head"><h2 class="h3">Цифры, за которыми — реальный склад и логистика</h2></div>
-      <!-- Цифры — со страницы «О компании» тестового сайта -->
-      <ul class="col-list">
-        <li>
-          <p class="col-list__value">2006</p>
-          <p class="col-list__note">год основания компании</p>
-        </li>
-        <li>
-          <p class="col-list__value">70 000+</p>
-          <p class="col-list__note">товаров продали нашим клиентам</p>
-        </li>
-        <li>
-          <p class="col-list__value">72%</p>
-          <p class="col-list__note">клиентов возвращаются за повторной покупкой</p>
-        </li>
-        <li>
-          <p class="col-list__value">25 000+</p>
-          <p class="col-list__note">клиентов за время работы</p>
-        </li>
-      </ul>
-    </div>
-  </section>
+  <!-- ============ 3. Форма и сводка ============
+       Страницы нет в макете — собрана из компонентов форм и модалок -->
+  <section class="section section--pt-0 section--pb-120">
+    <div class="container cart">
 
-  <!-- ============ 3. Гарантия подлинности ============ -->
-  <section class="section section--pt-120 section--pb-120">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow eyebrow--accent">Гарантия подлинности</p>
-        <h2 class="h3">Только оригинал и официальные поставки</h2>
-        <p class="section-head__lead">Мы работаем с производителями и авторизованными дистрибьюторами напрямую, без серых схем. На любую партию предоставляем сертификаты и документы, а подлинность легко проверить по оригинальной упаковке и коду.</p>
-      </div>
-      <ul class="col-list col-list--3">
-        <li>
-          <p class="col-list__title">Официальный поставщик</p>
-          <p class="col-list__note">Прямые поставки от производителей и авторизованных дистрибьюторов.</p>
-        </li>
-        <li>
-          <p class="col-list__title">Сертификаты по запросу</p>
-          <p class="col-list__note">Предоставим документы и сертификаты соответствия на любую партию.</p>
-        </li>
-        <li>
-          <p class="col-list__title">Проверка подлинности</p>
-          <p class="col-list__note">Оригинальная упаковка и защитные коды — подделку видно сразу.</p>
-        </li>
-      </ul>
-    </div>
-  </section>
+      <form class="checkout" id="checkout-form" data-form>
 
-  <!-- ============ 4. Пункты самовывоза ============ -->
-  <section class="section section--grey">
-    <div class="container">
-      <div class="section-head">
-        <p class="eyebrow eyebrow--accent">Где купить</p>
-        <h2 class="h3">Пункты самовывоза</h2>
-      </div>
-      <ul class="col-list">
-        <li>
-          <p class="col-list__title">Омск</p>
-          <p class="col-list__note">ул. Герцена, 197А</p>
-          <p class="col-list__note col-list__note--3">Пн–Сб 9:00–20:00, Вс 10:00–19:00</p>
-        </li>
-        <li>
-          <p class="col-list__title">Омск</p>
-          <p class="col-list__note">ул. Енисейская, 1</p>
-          <p class="col-list__note col-list__note--3">Пн–Сб 9:00–20:00, Вс 10:00–19:00</p>
-        </li>
-        <li>
-          <p class="col-list__title">Омск</p>
-          <p class="col-list__note">ул. Энтузиастов, 2/2</p>
-          <p class="col-list__note col-list__note--3">Пн–Сб 9:00–20:00, Вс 10:00–19:00</p>
-        </li>
-        <li>
-          <p class="col-list__title">Тюмень</p>
-          <p class="col-list__note">ул. 50 лет Октября, 211</p>
-          <p class="col-list__note col-list__note--3">Пн–Пт 9:00–20:00, Сб–Вс 10:00–19:00</p>
-        </li>
-      </ul>
-    </div>
-  </section>
+        <fieldset class="checkout__block">
+          <legend class="checkout__legend"><span class="checkout__num">01</span> Контактные данные</legend>
+          <div class="checkout__grid">
+            <label class="field"><span class="field__label">Имя и фамилия</span><input class="input" type="text" autocomplete="name" required></label>
+            <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7" autocomplete="tel" required></label>
+            <label class="field"><span class="field__label">Электронная почта</span><input class="input" type="email" autocomplete="email"></label>
+            <label class="field"><span class="field__label">Кто получает</span>
+              <span class="select"><select><option>Частное лицо</option><option>Организация</option></select></span>
+            </label>
+          </div>
+        </fieldset>
 
-  <!-- ============ 5. Тёмная CTA-полоса ============ -->
-  <section class="section section--dark cta-bar">
-    <div class="container">
-      <div>
-        <h2 class="h3">Готовы подобрать масло для вашего авто?</h2>
-        <p class="cta-bar__text">Поможем выбрать оригинал под ваш двигатель и допуски.</p>
-      </div>
-      <a class="btn btn--primary" href="catalog.html">Перейти в каталог</a>
+        <fieldset class="checkout__block">
+          <legend class="checkout__legend"><span class="checkout__num">02</span> Способ получения</legend>
+          <div class="checkout__options">
+            <label class="option">
+              <input type="radio" name="shipping" value="pickup" checked>
+              <span class="option__body">
+                <span class="option__title">Самовывоз</span>
+                <span class="option__text">Три точки в Омске и точка в Тюмени. При наличии — в день заказа.</span>
+              </span>
+              <span class="option__price">бесплатно</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="shipping" value="courier">
+              <span class="option__body">
+                <span class="option__title">Курьером по Омску</span>
+                <span class="option__text">Срок — 1 день. Оплата курьеру при получении возможна.</span>
+              </span>
+              <span class="option__price">200 ₽</span>
+            </label>
+            <label class="option">
+              <input type="radio" name="shipping" value="tk">
+              <span class="option__body">
+                <span class="option__title">Транспортной компанией</span>
+                <span class="option__text">В любой населённый пункт России, 1–5 дней. От 5000 ₽ — бесплатно.</span>
+              </span>
+              <span class="option__price">по расчёту</span>
+            </label>
+          </div>
+
+          <div class="checkout__grid checkout__grid--shipping">
+            <label class="field"><span class="field__label">Пункт самовывоза</span>
+              <span class="select"><select>
+                <option>Омск, ул. Герцена, 197А</option>
+                <option>Омск, ул. Енисейская, 1</option>
+                <option>Омск, ул. Энтузиастов, 2/2</option>
+                <option>Тюмень, ул. 50 лет Октября, 211</option>
+              </select></span>
+            </label>
+            <label class="field"><span class="field__label">Удобная дата</span><input class="input" type="date"></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="checkout__block">
+          <legend class="checkout__legend"><span class="checkout__num">03</span> Оплата</legend>
+          <div class="checkout__options">
+            <label class="option">
+              <input type="radio" name="payment" value="card" checked>
+              <span class="option__body">
+                <span class="option__title">Картой онлайн</span>
+                <span class="option__text">Visa, Mastercard и МИР — сразу после оформления заказа.</span>
+              </span>
+            </label>
+            <label class="option">
+              <input type="radio" name="payment" value="cash">
+              <span class="option__body">
+                <span class="option__title">Наличными при получении</span>
+                <span class="option__text">Курьеру в пределах Омска или на точке самовывоза.</span>
+              </span>
+            </label>
+            <label class="option">
+              <input type="radio" name="payment" value="invoice">
+              <span class="option__body">
+                <span class="option__title">По счёту</span>
+                <span class="option__text">Безналичный расчёт для организаций, счёт пришлём на почту.</span>
+              </span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="checkout__block">
+          <legend class="checkout__legend"><span class="checkout__num">04</span> Комментарий</legend>
+          <label class="field"><textarea class="input" placeholder="Марка и модель автомобиля, пожелания к доставке"></textarea></label>
+        </fieldset>
+
+        <label class="checkbox">
+          <input type="checkbox" required>
+          <span>Я согласен с <a href="#">политикой конфиденциальности</a> и <a href="#">пользовательским соглашением</a></span>
+        </label>
+
+        <div hidden data-form-success>
+          <div class="modal__icon"><svg><use href="#i-check"></use></svg></div>
+          <p class="h5">Заказ принят!</p>
+          <p class="cart__note">Номер заказа придёт в СМС. Менеджер позвонит, чтобы подтвердить наличие и сроки.</p>
+        </div>
+      </form>
+
+      <aside class="cart__summary">
+        <p class="h5 cart__summary-title">Ваш заказ</p>
+        <ul class="checkout__items">
+          <li><span>Castrol Magnatec 5W-30, 4 л × 2</span><span>5 980 ₽</span></li>
+          <li><span>Антифриз G12+ 5 кг × 1</span><span>1 340 ₽</span></li>
+          <li><span>Масляный фильтр × 1</span><span>690 ₽</span></li>
+        </ul>
+        <dl class="cart__totals">
+          <div><dt>Товары, 4 шт.</dt><dd>8 010 ₽</dd></div>
+          <div><dt>Скидка</dt><dd class="cart__discount">−480 ₽</dd></div>
+          <div><dt>Доставка</dt><dd>бесплатно</dd></div>
+        </dl>
+        <div class="cart__grand"><span>Итого</span><span>7 530 ₽</span></div>
+        <button class="btn btn--primary btn--block" type="submit" form="checkout-form">Подтвердить заказ</button>
+        <p class="cart__note">Нажимая кнопку, вы подтверждаете состав заказа. Менеджер перезвонит для согласования.</p>
+      </aside>
+
     </div>
   </section>
 

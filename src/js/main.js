@@ -357,9 +357,25 @@
      --------------------------------------------------------- */
   $$('[data-filters]').forEach((root) => {
     const toggle = $('[data-filters-toggle]', root);
-    if (toggle) toggle.addEventListener('click', () => root.classList.toggle('is-open'));
+
+    // На мобильном селекты уезжают в шторку: открываем её с оверлеем и блокируем прокрутку
+    function setOpen(open) {
+      root.classList.toggle('is-open', open);
+      if (toggle) toggle.setAttribute('aria-expanded', String(open));
+      document.body.classList.toggle('no-scroll', open);
+      if (open) showOverlay(() => setOpen(false)); else hideOverlay();
+    }
+
+    if (toggle) toggle.addEventListener('click', () => setOpen(!root.classList.contains('is-open')));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && root.classList.contains('is-open')) setOpen(false);
+    });
 
     root.addEventListener('click', (e) => {
+      if (e.target.closest('[data-filters-close]')) {
+        setOpen(false);
+        return;
+      }
       // TODO: интеграция — снятие фильтра должно перезапрашивать выдачу
       if (e.target.closest('[data-chip-remove]')) {
         e.target.closest('[data-chip-remove]').remove();
@@ -441,6 +457,90 @@
       }
     });
   });
+
+  /* ---------------------------------------------------------
+     Корзина: удаление позиции и пустое состояние.
+     Страницы нет в макете — поведение стандартное.
+     --------------------------------------------------------- */
+  (function () {
+    const list = $('.cart__list');
+    if (!list) return;
+    const empty = $('[data-cart-empty]', list);
+    const summary = $('[data-cart-summary]');
+
+    list.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-cart-remove]');
+      if (!btn) return;
+      btn.closest('.cart-row').remove();
+
+      const left = $$('.cart-row', list).length;
+      if (empty) empty.hidden = left > 0;
+      if (summary) summary.hidden = left === 0;
+    });
+  })();
+
+  /* ---------------------------------------------------------
+     Выбор города: подставляет телефон, адрес, часы и точки на карте.
+     Данные — с king-oil.ru, координаты точек получены геокодером по адресам.
+     --------------------------------------------------------- */
+  const CITIES = {
+    omsk: {
+      name: 'Омск',
+      phone: '8 (3812) 475-777',
+      tel: '+73812475777',
+      address: 'г. Омск, ул. Герцена, 197А',
+      hours: 'Пн–Сб: 9:00 – 20:00, Вс: 10:00 – 19:00',
+      pointsCount: '3 точки самовывоза',
+      // Запятые в pt нельзя кодировать — виджет тогда не рисует метки
+      map: 'https://yandex.ru/map-widget/v1/?ll=73.327,55.018&z=11'
+         + '&pt=73.3748215,55.0176798,pm2rdm~73.3313739,54.9877034,pm2rdm~73.2796678,55.0473865,pm2rdm'
+    },
+    tyumen: {
+      name: 'Тюмень',
+      phone: '8 (3452) 931-444',
+      tel: '+73452931444',
+      address: 'г. Тюмень, ул. 50 лет Октября, 211',
+      hours: 'Пн–Пт: 9:00 – 20:00, Сб–Вс: 10:00 – 19:00',
+      pointsCount: '1 точка самовывоза',
+      map: 'https://yandex.ru/map-widget/v1/?ll=65.6285146,57.1203743&z=15'
+         + '&pt=65.6285146,57.1203743,pm2rdm'
+    }
+  };
+
+  const CITY_KEY = 'ko-city';
+
+  function applyCity(key) {
+    const city = CITIES[key];
+    if (!city) return;
+
+    $$('[data-city-label]').forEach((el) => { el.textContent = city.name; });
+    $$('[data-city-phone]').forEach((el) => {
+      el.textContent = city.phone;
+      el.setAttribute('href', 'tel:' + city.tel);
+    });
+    $$('[data-city-address]').forEach((el) => { el.textContent = city.address; });
+    $$('[data-city-hours]').forEach((el) => { el.textContent = city.hours; });
+    $$('[data-city-points-count]').forEach((el) => { el.textContent = city.pointsCount; });
+    $$('[data-city-map]').forEach((el) => { el.setAttribute('src', city.map); });
+    $$('[data-city-set]').forEach((btn) => {
+      btn.classList.toggle('is-active', btn.dataset.citySet === key);
+    });
+
+    try { localStorage.setItem(CITY_KEY, key); } catch (err) { /* приватный режим */ }
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-city-set]');
+    if (!btn) return;
+    applyCity(btn.dataset.citySet);
+    closePanel();
+  });
+
+  if ($('[data-city]')) {
+    let saved = 'omsk';
+    try { saved = localStorage.getItem(CITY_KEY) || 'omsk'; } catch (err) { /* приватный режим */ }
+    applyCity(CITIES[saved] ? saved : 'omsk');
+  }
 
   /* ---------------------------------------------------------
      Год в копирайте

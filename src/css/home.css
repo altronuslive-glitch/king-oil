@@ -157,7 +157,17 @@
    Левая колонка 700 сверху, правая 700 с карточками 340×316, прижатыми к низу.
    Высота контента 960 при паддингах 120.
 */
+/* Фон — фото из макета плюс градиент 163°, чёрный 29% → прозрачный */
+.promo-dark {
+  position: relative;
+  background-image:
+    linear-gradient(163deg, rgba(0, 0, 0, .29), rgba(0, 0, 0, 0)),
+    url("../img/services-bg.jpg");
+  background-size: cover, cover;
+  background-position: center, center;
+}
 .promo-dark .container {
+  position: relative;
   display: grid;
   grid-template-columns: 700px 700px;
   justify-content: space-between;

@@ -115,17 +115,57 @@
 /* Отступ до сетки товаров */
 .filters { margin-bottom: var(--ko-space-48); }
 
-/* Кнопка «Фильтры» — только мобильная: в макете мобильного вида фильтров нет,
-   решение стандартное и требует согласования (см. docs/13-open-questions.md) */
+/* Мобильная шторка фильтров: макета нет, вид согласован с заказчиком.
+   На десктопе обёртка прозрачная — сетка селектов остаётся прямым потомком .filters */
 .filters__toggle { display: none; }
+.filters__drawer { display: contents; }
+.filters__drawer-head,
+.filters__drawer-foot { display: none; }
 
 @media (max-width: 1024px) {
   .filters__row { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
   .filters__toggle { display: inline-flex; width: 100%; }
-  .filters__row { display: none; grid-template-columns: 1fr; }
-  .filters.is-open .filters__row { display: grid; margin-top: var(--ko-space-12); }
+
+  .filters__drawer {
+    position: fixed;
+    inset: 0 0 0 auto;
+    z-index: 95;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    width: min(360px, calc(100vw - 48px));
+    background: var(--ko-bg-0);
+    transform: translateX(100%);
+    transition: transform .25s ease;
+    visibility: hidden;
+  }
+  .filters.is-open .filters__drawer { transform: translateX(0); visibility: visible; }
+
+  .filters__drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--ko-space-16);
+    padding: var(--ko-space-20) var(--ko-space-20) var(--ko-space-16);
+    border-bottom: 1px solid var(--ko-border-1);
+  }
+  .filters__drawer-close { display: grid; place-items: center; width: 32px; height: 32px; }
+  .filters__drawer-close svg { width: 20px; height: 20px; color: var(--ko-icon-2); }
+
+  .filters__row {
+    grid-template-columns: 1fr;
+    align-content: start;
+    padding: var(--ko-space-20);
+    overflow-y: auto;
+  }
+
+  .filters__drawer-foot {
+    display: block;
+    padding: var(--ko-space-16) var(--ko-space-20) var(--ko-space-20);
+    border-top: 1px solid var(--ko-border-1);
+  }
+
   .filters__active { flex-wrap: wrap; }
   .filters__reset { margin-left: 0; }
 }
