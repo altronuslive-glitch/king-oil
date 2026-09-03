@@ -134,13 +134,7 @@
 
       <div class="header__actions">
         <div class="header__action-wrap">
-          <button class="icon-btn" type="button" data-toggle="fav" aria-label="Избранное"><svg><use href="#i-heart"></use></svg></button>
-          <div class="mini-modal" hidden data-panel="fav">
-            <button class="mini-modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
-            <div class="mini-modal__icon"><svg><use href="#i-heart"></use></svg></div>
-            <p class="mini-modal__title">Нет товаров в избранном!</p>
-            <p class="mini-modal__text">Добавьте товары в избранное, чтобы перейти в раздел</p>
-          </div>
+          <a class="icon-btn" href="wishlist.html" aria-label="Избранное"><svg><use href="#i-heart"></use></svg></a>
         </div>
 
         <div class="header__action-wrap">
@@ -158,15 +152,9 @@
         </div>
 
         <div class="header__action-wrap">
-          <button class="icon-btn" type="button" data-toggle="cart" aria-label="Корзина" style="color:var(--ko-icon-brand)">
+          <a class="icon-btn" href="cart.html" aria-label="Корзина" style="color:var(--ko-icon-brand)">
             <svg><use href="#i-cart"></use></svg><span class="icon-btn__badge">1</span>
-          </button>
-          <div class="mini-modal" hidden data-panel="cart">
-            <button class="mini-modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
-            <div class="mini-modal__icon"><svg><use href="#i-cart"></use></svg></div>
-            <p class="mini-modal__title">В корзине пусто!</p>
-            <p class="mini-modal__text">Добавьте товары в корзину, чтобы продолжить покупку</p>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -255,12 +243,12 @@
 <!-- Мобильное меню -->
 <div class="mobile-menu" hidden data-panel="mobile-menu">
   <button class="mobile-menu__close" type="button" data-close aria-label="Закрыть меню"><svg><use href="#i-close"></use></svg></button>
-  <div class="mobile-menu__user">
+  <a class="mobile-menu__user" href="account.html">
     <span class="mobile-menu__avatar"></span>
     <span><span class="text-base-m">Войти в аккаунт</span><br><span class="text-caption text-3">Заказы и избранное</span></span>
-  </div>
-  <a class="mobile-menu__link" href="#"><svg><use href="#i-package"></use></svg>Мои заказы</a>
-  <a class="mobile-menu__link" href="#"><svg><use href="#i-heart"></use></svg>Избранное</a>
+  </a>
+  <a class="mobile-menu__link" href="account.html"><svg><use href="#i-package"></use></svg>Мои заказы</a>
+  <a class="mobile-menu__link" href="wishlist.html"><svg><use href="#i-heart"></use></svg>Избранное</a>
   <hr class="mobile-menu__sep">
   <a class="mobile-menu__link" href="about.html">О нас</a>
   <a class="mobile-menu__link" href="delivery.html">Оплата</a>
@@ -346,6 +334,7 @@
           <li><a href="delivery.html">Возврат и обмен</a></li>
           <li><a href="promo.html">Акции</a></li>
           <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="legal.html">Политика конфиденциальности</a></li>
         </ul>
       </nav>
 
@@ -482,7 +471,7 @@
       <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" autocomplete="name" required></label>
       <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel" required></label>
       <label class="field"><span class="field__label">Комментарий</span><textarea class="input" placeholder="Марка, модель и год автомобиля"></textarea></label>
-      <label class="checkbox"><input type="checkbox" required><span>Я согласен с <a href="#">политикой конфиденциальности</a> и <a href="#">пользовательским соглашением</a></span></label>
+      <label class="checkbox"><input type="checkbox" required><span>Я согласен с <a href="legal.html">политикой конфиденциальности</a> и обработкой персональных данных</span></label>
       <div class="modal__actions"><button class="btn btn--primary btn--block" type="submit">Отправить</button></div>
     </form>
 
@@ -498,7 +487,7 @@
 <!-- ============ COOKIES ============ -->
 <div class="cookies" hidden data-cookies>
   <svg class="cookies__icon"><use href="#i-cookie"></use></svg>
-  <p class="cookies__text">Мы используем данные cookie, чтобы улучшить работу сайта, в соответствии с <a href="#">политикой использования cookie</a>.</p>
+  <p class="cookies__text">Мы используем данные cookie, чтобы улучшить работу сайта, в соответствии с <a href="legal.html">политикой конфиденциальности</a>.</p>
   <div class="cookies__actions">
     <button class="btn btn--primary" type="button" data-cookies-accept>Согласен</button>
     <button class="btn btn--secondary" type="button" data-cookies-decline>Не согласен</button>

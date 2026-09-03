@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Как купить: доставка и оплата | King-Oil</title>
-<meta name="description" content="Доставка по Омску, Тюмени и всей России, самовывоз со склада, оплата наличными, картой и по счёту для юрлиц. Как оформить заказ за четыре шага.">
+<title>Избранное | King-Oil</title>
+<meta name="robots" content="noindex">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/components.css">
@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="css/footer.css">
 <link rel="stylesheet" href="css/modals.css">
 <link rel="stylesheet" href="css/pages.css">
+<link rel="stylesheet" href="css/catalog.css">
+<link rel="stylesheet" href="css/shop.css">
 </head>
 <body>
 
@@ -276,167 +278,71 @@
   <div class="container page-head--pb-48">
     <ol class="breadcrumbs">
       <li><a href="index.html">Главная</a></li>
-      <li>Доставка и оплата</li>
+      <li>Избранное</li>
     </ol>
-    <h1 class="h2 page-head__title">Как купить</h1>
+    <h1 class="h2 page-head__title">Избранное</h1>
   </div>
 
-  <!-- ============ 3. Как доставим заказ ============ -->
-  <!-- Тексты и цифры — со страниц «Оплата и доставка» и «Как купить товар» тестового сайта -->
-  <section class="section section--pt-40 section--pb-40">
-    <div class="container">
-      <div class="section-head section-head--tight"><h2 class="h3">Как доставим заказ</h2></div>
-      <div class="features features--delivery">
-        <article class="feature">
-          <div class="feature__icon feature__icon--brand"><svg><use href="#i-truck"></use></svg></div>
-          <h3 class="feature__title">Курьером по Омску</h3>
-          <p class="feature__text">Доставка в пределах города — 200 ₽, срок 1 день. Оплатить можно курьеру при получении.</p>
-        </article>
-        <article class="feature">
-          <div class="feature__icon feature__icon--brand"><svg><use href="#i-pin"></use></svg></div>
-          <h3 class="feature__title">Самовывоз</h3>
-          <p class="feature__text">Четыре точки выдачи: три в Омске и одна в Тюмени. Самовывоз бесплатный, при наличии — в день заказа.</p>
-        </article>
-        <article class="feature">
-          <div class="feature__icon feature__icon--brand"><svg><use href="#i-package"></use></svg></div>
-          <h3 class="feature__title">Транспортной компанией</h3>
-          <p class="feature__text">Доставляем в любой населённый пункт России. Стоимость считается по весу заказа и пункту назначения.</p>
-        </article>
-        <article class="feature">
-          <div class="feature__icon feature__icon--brand"><svg><use href="#i-percent"></use></svg></div>
-          <h3 class="feature__title">Бесплатно от 5000 ₽</h3>
-          <p class="feature__text">Масла и фильтры на сумму от 5000 ₽ доставляем до терминала ТК бесплатно в 22 города России.</p>
-        </article>
+  <!-- ============ 3. Сетка избранного ============
+       Страницы нет в макете — используем карточки товара из каталога.
+       Кнопка-сердце убирает карточку; когда пусто — показываем заглушку. -->
+  <section class="section section--pt-0 section--pb-120">
+    <div class="container" data-wishlist>
+      <div class="catalog-grid">
+        <div class="product-card product-card--wish">
+          <div class="product-card__media">
+            <button class="wish-btn is-active" type="button" data-wish-remove aria-label="Убрать из избранного"><svg><use href="#i-heart"></use></svg></button>
+          </div>
+          <a class="product-card__link" href="product.html">
+            <div class="product-card__price">2 990 ₽</div>
+            <div class="product-card__title">Castrol Magnatec 5W-30 A5, 4 л</div>
+          </a>
+          <button class="btn btn--primary product-card__buy" type="button"><svg><use href="#i-cart"></use></svg>В корзину</button>
+        </div>
+
+        <div class="product-card product-card--wish">
+          <div class="product-card__media">
+            <button class="wish-btn is-active" type="button" data-wish-remove aria-label="Убрать из избранного"><svg><use href="#i-heart"></use></svg></button>
+          </div>
+          <a class="product-card__link" href="product.html">
+            <div class="product-card__price">1 500 ₽</div>
+            <div class="product-card__title">Honda HCF-2 (розлив), 1 л</div>
+          </a>
+          <button class="btn btn--primary product-card__buy" type="button"><svg><use href="#i-cart"></use></svg>В корзину</button>
+        </div>
+
+        <div class="product-card product-card--wish">
+          <div class="product-card__media">
+            <button class="wish-btn is-active" type="button" data-wish-remove aria-label="Убрать из избранного"><svg><use href="#i-heart"></use></svg></button>
+          </div>
+          <a class="product-card__link" href="product.html">
+            <div class="product-card__price">1 340 ₽</div>
+            <div class="product-card__title">Антифриз G12+ красный, 5 кг</div>
+          </a>
+          <button class="btn btn--primary product-card__buy" type="button"><svg><use href="#i-cart"></use></svg>В корзину</button>
+        </div>
+
+        <div class="product-card product-card--wish">
+          <div class="product-card__media">
+            <button class="wish-btn is-active" type="button" data-wish-remove aria-label="Убрать из избранного"><svg><use href="#i-heart"></use></svg></button>
+          </div>
+          <a class="product-card__link" href="product.html">
+            <div class="product-card__price">690 ₽</div>
+            <div class="product-card__title">Масляный фильтр 1.6–2.0</div>
+          </a>
+          <button class="btn btn--primary product-card__buy" type="button"><svg><use href="#i-cart"></use></svg>В корзину</button>
+        </div>
+      </div>
+
+      <!-- Пустое состояние: показывается, когда убраны все товары -->
+      <div class="cart__empty" hidden data-wishlist-empty>
+        <div class="mini-modal__icon"><svg><use href="#i-heart"></use></svg></div>
+        <p class="h5">В избранном пусто</p>
+        <p class="cart__empty-text">Нажимайте на сердечко в карточке товара, чтобы сохранить его здесь.</p>
+        <a class="btn btn--primary" href="catalog.html">Перейти в каталог</a>
       </div>
     </div>
   </section>
-
-  <!-- ============ 4. Как оплатить ============ -->
-  <!-- В макете заголовок этой секции продублирован («Как доставим заказ») — опечатка,
-       см. docs/13-open-questions.md -->
-  <section class="section section--pt-40 section--pb-40">
-    <div class="container">
-      <div class="section-head section-head--tight"><h2 class="h3">Как оплатить</h2></div>
-      <div class="features features--3">
-        <article class="feature">
-          <div class="feature__icon"><svg><use href="#i-cash"></use></svg></div>
-          <h3 class="feature__title">Наличными</h3>
-          <p class="feature__text">Курьеру при получении в пределах Омска или на точке самовывоза.</p>
-        </article>
-        <article class="feature">
-          <div class="feature__icon"><svg><use href="#i-card"></use></svg></div>
-          <h3 class="feature__title">Картой онлайн</h3>
-          <p class="feature__text">Visa, Mastercard, МИР — сразу после оформления заказа или при получении.</p>
-        </article>
-        <article class="feature">
-          <div class="feature__icon"><svg><use href="#i-doc"></use></svg></div>
-          <h3 class="feature__title">По счёту</h3>
-          <p class="feature__text">Безналичный расчёт для организаций: выставим счёт, оплатите и согласуем дату выдачи.</p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- ============ 5. Как оформить заказ ============ -->
-  <section class="section section--pb-120">
-    <div class="container">
-      <div class="section-head"><h2 class="h3">Как оформить заказ</h2></div>
-      <ol class="features features--steps">
-        <li class="feature">
-          <div class="feature__icon"><span class="feature__num">01</span></div>
-          <h3 class="feature__title">Выберите товар</h3>
-          <p class="feature__text">Найдите нужное масло через каталог или поиск и добавьте в корзину.</p>
-        </li>
-        <li class="feature">
-          <div class="feature__icon"><span class="feature__num">02</span></div>
-          <h3 class="feature__title">Оформите заказ</h3>
-          <p class="feature__text">Заполните контактные данные и выберите способ доставки и оплаты.</p>
-        </li>
-        <li class="feature">
-          <div class="feature__icon"><span class="feature__num">03</span></div>
-          <h3 class="feature__title">Подтверждение</h3>
-          <p class="feature__text">Менеджер свяжется, уточнит детали и подтвердит наличие.</p>
-        </li>
-        <li class="feature">
-          <div class="feature__icon"><span class="feature__num">04</span></div>
-          <h3 class="feature__title">Получите заказ</h3>
-          <p class="feature__text">Заберите сами или дождитесь курьера. Оплатите удобным способом.</p>
-        </li>
-      </ol>
-    </div>
-  </section>
-
-  <!-- ============ 6. Форма «Напишите нам» ============ -->
-  <!-- @shared:cta-form -->
-  <section class="section section--grey cta-form">
-    <div class="container">
-      <div class="cta-form__intro">
-        <p class="eyebrow eyebrow--accent">Обратная связь</p>
-        <h2 class="h2 cta-form__title">Напишите нам</h2>
-        <p class="cta-form__text">Оставьте заявку — перезвоним, поможем подобрать масло и рассчитаем стоимость доставки в ваш регион.</p>
-      </div>
-
-      <form class="cta-form__form" data-form>
-        <div class="cta-form__row">
-          <input class="input input--white" type="text" placeholder="Ваше имя" autocomplete="name" required>
-          <input class="input input--white" type="tel" placeholder="+7" autocomplete="tel" required>
-        </div>
-        <textarea class="input input--white" placeholder="Опишите вопрос"></textarea>
-        <label class="checkbox">
-          <input type="checkbox" required>
-          <span>Я согласен с <a href="legal.html">политикой конфиденциальности</a> и обработкой персональных данных</span>
-        </label>
-        <button class="btn btn--primary" type="submit">Отправить заявку</button>
-      </form>
-
-      <div hidden data-form-success>
-        <div class="modal__icon"><svg><use href="#i-check"></use></svg></div>
-        <p class="h5">Заявка отправлена!</p>
-        <p class="cta-form__text">В ближайшее время с вами свяжется менеджер.</p>
-      </div>
-    </div>
-  </section>
-  <!-- /@shared:cta-form -->
-
-  <!-- ============ 7. Частые вопросы ============ -->
-  <!-- TODO: контент — реальные вопросы и ответы от заказчика.
-       Надзаголовок «Ассортимент» стоит так в макете, см. docs/13-open-questions.md -->
-  <!-- @shared:faq -->
-  <section class="section section--pb-120" id="faq">
-    <div class="container split">
-      <div class="split__head">
-        <p class="eyebrow">Вопросы и ответы</p>
-        <h2 class="h3">Частые вопросы</h2>
-      </div>
-      <div class="accordion">
-        <div class="accordion__item">
-          <button class="accordion__btn" type="button" aria-expanded="false">Сколько идёт доставка по России?<svg class="accordion__chevron"><use href="#i-chevron"></use></svg></button>
-          <div class="accordion__panel"><div><p class="accordion__text">Транспортные компании доставляют заказ за 1–5 дней в зависимости от региона. По Омску курьер привозит заказ на следующий день, стоимость — 200 ₽.</p></div></div>
-        </div>
-        <div class="accordion__item">
-          <button class="accordion__btn" type="button" aria-expanded="false">Когда доставка бесплатная?<svg class="accordion__chevron"><use href="#i-chevron"></use></svg></button>
-          <div class="accordion__panel"><div><p class="accordion__text">При заказе масел и фильтров на сумму от 5000 ₽ доставка до терминала транспортной компании бесплатна в 22 города, включая Москву, Санкт-Петербург, Тюмень, Екатеринбург и Новосибирск. До 5000 ₽ доставка стоит 300–1000 ₽ в зависимости от региона.</p></div></div>
-        </div>
-        <div class="accordion__item">
-          <button class="accordion__btn" type="button" aria-expanded="false">Как можно оплатить заказ?<svg class="accordion__chevron"><use href="#i-chevron"></use></svg></button>
-          <div class="accordion__panel"><div><p class="accordion__text">Наличными курьеру при получении (в пределах Омска), картой Visa, Mastercard или МИР на сайте, по квитанции Сбербанка, через мобильный телефон и по безналичному расчёту для организаций.</p></div></div>
-        </div>
-        <div class="accordion__item">
-          <button class="accordion__btn" type="button" aria-expanded="false">Можно ли забрать заказ самому?<svg class="accordion__chevron"><use href="#i-chevron"></use></svg></button>
-          <div class="accordion__panel"><div><p class="accordion__text">Да, самовывоз бесплатный: три точки в Омске (Герцена 197А, Енисейская 1, Энтузиастов 2/2) и точка в Тюмени на 50 лет Октября, 211. При наличии товара выдаём в день заказа.</p></div></div>
-        </div>
-        <div class="accordion__item">
-          <button class="accordion__btn" type="button" aria-expanded="false">Как проверить, что масло оригинальное?<svg class="accordion__chevron"><use href="#i-chevron"></use></svg></button>
-          <div class="accordion__panel"><div><p class="accordion__text">Все позиции приходят от авторизованных поставщиков. На любую партию предоставим сертификаты, а код на канистре можно проверить через сервис производителя.</p></div></div>
-        </div>
-        <div class="accordion__item">
-          <button class="accordion__btn" type="button" aria-expanded="false">Поможете подобрать масло по автомобилю?<svg class="accordion__chevron"><use href="#i-chevron"></use></svg></button>
-          <div class="accordion__panel"><div><p class="accordion__text">Да. Оставьте заявку или воспользуйтесь подбором по автомобилю в каталоге — проверим допуски производителя и предложим оригинал из наличия.</p></div></div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- /@shared:faq -->
 
 </main>
 

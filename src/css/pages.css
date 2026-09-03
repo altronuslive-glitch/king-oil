@@ -216,18 +216,27 @@
   font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
   color: var(--ko-text-3);
 }
-/* Карта — плейсхолдер: сервис (Яндекс / 2ГИС) и число точек пока не выбраны */
+/* Карта Яндекс.Карт: контейнер под JS API. Метки кликабельны (js/main.js) */
 .contacts__map {
   aspect-ratio: 1020 / 400;
   background: var(--ko-bg-2);
   overflow: hidden;
 }
-.contacts__map iframe {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border: 0;
-}
+.contacts__map iframe { display: block; width: 100%; height: 100%; border: 0; }
+
+/* Запасной вид без ключа карты: список адресов на сером фоне */
+.contacts__map--fallback { display: grid; place-items: center; padding: var(--ko-space-32); }
+.map-fallback { display: grid; gap: var(--ko-space-16); }
+.map-fallback li { display: grid; gap: var(--ko-space-4); }
+.map-fallback strong { font: 600 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); color: var(--ko-text-1); }
+.map-fallback span { font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font); color: var(--ko-text-3); }
+.map-fallback a { font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); color: var(--ko-text-accent); }
+
+/* Балун точки самовывоза */
+.map-balloon { display: grid; gap: var(--ko-space-4); }
+.map-balloon__title { font: 600 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); color: var(--ko-text-1); }
+.map-balloon__row { font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font); color: var(--ko-text-2); }
+a.map-balloon__row { color: var(--ko-text-accent); }
 
 @media (max-width: 1024px) {
   .contacts .container { grid-template-columns: 1fr; gap: var(--ko-space-32); }
@@ -250,6 +259,37 @@
   .requisites__table th, .requisites__table td { display: block; width: auto; }
   .requisites__table td { padding-top: 0; }
 }
+
+/* ---------- Юридические страницы (политика конфиденциальности) ---------- */
+.legal { max-width: 900px; }
+.legal p {
+  margin-bottom: var(--ko-space-12);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
+  color: var(--ko-text-2);
+}
+.legal__intro { margin-bottom: var(--ko-space-24); }
+.legal__h {
+  margin: var(--ko-space-40) 0 var(--ko-space-16);
+  font: 600 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font);
+  color: var(--ko-text-1);
+}
+.legal__list { margin: 0 0 var(--ko-space-12); display: grid; gap: var(--ko-space-8); }
+.legal__list li {
+  position: relative;
+  padding-left: var(--ko-space-20);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
+  color: var(--ko-text-2);
+}
+.legal__list li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 10px;
+  width: 6px;
+  height: 6px;
+  background: var(--ko-bg-brand);
+}
+.legal a { color: var(--ko-text-accent); }
 
 /* ---------- Акции: главная (горизонтальная) карточка ----------
    Макет 1900×448: слева изображение ~555×250, справа рубрика, дата,
