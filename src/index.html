@@ -256,7 +256,7 @@
   <section class="hero">
     <div class="container">
       <div class="hero__content">
-        <h1 class="h3">Оригинальные моторные масла с доставкой по России</h1>
+        <h1 class="h2">Оригинальные моторные масла с доставкой по России</h1>
         <p class="hero__text">Более 2000 позиций в наличии. Самовывоз в Омске и Тюмени, отгрузка в день заказа. Только оригинал от авторизованных дистрибьюторов.</p>
         <a class="btn btn--primary" href="catalog.html">Перейти в каталог</a>
       </div>
@@ -268,11 +268,11 @@
   </section>
 
   <!-- ============ 2. Категории ============ -->
-  <section class="section">
+  <section class="section section--pt-120">
     <div class="container split">
       <div class="split__head">
         <p class="eyebrow">Ассортимент</p>
-        <h2 class="h2">Категории</h2>
+        <h2 class="h3">Категории</h2>
       </div>
       <ul class="row-list">
         <li><a class="row-list__item categories__row" href="catalog.html">
@@ -370,10 +370,10 @@
 
   <!-- ============ 4. Магазин в цифрах ============ -->
   <section class="section">
-    <div class="container split">
-      <div class="split__head">
+    <div class="container">
+      <div class="section-head">
         <p class="eyebrow">Почему King-Oil</p>
-        <h2 class="h2">Магазин в цифрах</h2>
+        <h2 class="h3">Магазин в цифрах</h2>
       </div>
       <ul class="row-list">
         <li class="row-list__item numbers__row">
@@ -401,7 +401,7 @@
   </section>
 
   <!-- ============ 5. Сертификаты ============ -->
-  <section class="section certificates" data-carousel>
+  <section class="section section--pb-120 certificates" data-carousel>
     <div class="container">
       <div class="section-head">
         <p class="eyebrow">Продаём только оригинал</p>
@@ -431,7 +431,7 @@
 
   <!-- ============ 6. Тёмный блок с заявкой ============ -->
   <!-- TODO: контент — в макете Lorem ipsum и карточки из другого проекта, тексты ниже временные -->
-  <section class="section section--dark promo-dark">
+  <section class="section section--dark section--pt-120 section--pb-120 promo-dark">
     <div class="container">
       <div class="promo-dark__content">
         <h2 class="h3">Подберём масло под ваш двигатель и допуски</h2>
@@ -455,11 +455,11 @@
 
   <!-- ============ 7. Отзывы ============ -->
   <!-- TODO: контент — реальные отзывы покупателей -->
-  <section class="section reviews" data-carousel>
+  <section class="section section--pt-160 reviews" data-carousel>
     <div class="container">
       <div class="section-head">
         <p class="eyebrow">Послушайте мнение покупателей</p>
-        <h2 class="h2">Отзывы покупателей</h2>
+        <h2 class="h3">Отзывы покупателей</h2>
       </div>
 
       <div class="carousel" data-carousel-track>
@@ -520,13 +520,13 @@
   </section>
 
   <!-- ============ 8. Акции и предложения ============ -->
-  <section class="section promo-articles">
+  <section class="section section--pb-160 promo-articles" data-carousel>
     <div class="container">
       <div class="section-head">
         <p class="eyebrow">Выгодно</p>
-        <h2 class="h2">Акции и предложения</h2>
+        <h2 class="h3">Акции и предложения</h2>
       </div>
-      <div class="promo-articles__grid">
+      <div class="carousel" data-carousel-track>
         <a class="article-card" href="promo.html">
           <div class="article-card__media"></div>
           <div class="article-card__meta"><span class="article-card__rubric">Акции</span><span class="article-card__date">5 августа 2026</span></div>
@@ -546,6 +546,14 @@
           <p class="article-card__lead">Объясняем маркировку SAE простыми словами и подсказываем, когда стоит переходить на 0W-.</p>
         </a>
       </div>
+
+      <div class="carousel-foot">
+        <div class="carousel-progress"><div class="carousel-progress__bar" data-carousel-bar></div></div>
+        <div class="carousel-nav">
+          <button class="arrow-btn" type="button" data-carousel-prev aria-label="Назад"><svg><use href="#i-arrow-left"></use></svg></button>
+          <button class="arrow-btn" type="button" data-carousel-next aria-label="Вперёд"><svg><use href="#i-arrow-right"></use></svg></button>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -563,7 +571,7 @@
           </svg>
         </a>
         <p class="footer__about">Оригинальные моторные масла, антифризы и автотовары. Прямые поставки от авторизованных дистрибьюторов.</p>
-        <div>
+        <div class="footer__contacts">
           <a class="footer__phone" href="tel:+73812390606">+7 (3812) 39-06-06</a><br>
           <a class="footer__mail" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
         </div>

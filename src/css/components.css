@@ -57,22 +57,23 @@
   color: var(--ko-text-1);
 }
 
-/* Стрелки каруселей */
+/* Стрелки каруселей — по макету 48×48, вплотную друг к другу */
 .arrow-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border: 1px solid var(--ko-border-1);
   color: var(--ko-icon-3);
   transition: border-color .15s ease, color .15s ease;
 }
-.arrow-btn:hover { border-color: var(--ko-border-4); }
+.arrow-btn + .arrow-btn { border-left: 0; }
+.arrow-btn:hover { border-color: var(--ko-border-4); z-index: 1; }
 .arrow-btn:disabled { opacity: .4; cursor: default; }
-.arrow-btn svg { width: 20px; height: 20px; }
+.arrow-btn svg { width: var(--ko-icon-normal); height: var(--ko-icon-normal); }
 
-.carousel-nav { display: flex; gap: var(--ko-space-8); }
+.carousel-nav { display: flex; }
 
 /* ---------- Поля ввода ---------- */
 .field { display: grid; gap: var(--ko-space-8); }
@@ -215,12 +216,17 @@ textarea.input { min-height: 96px; resize: vertical; }
 .badge--hit { background: var(--ko-other-1); }
 .badge--sale { background: var(--ko-other-2); }
 
-/* ---------- Карточка товара ---------- */
-.product-card { display: grid; gap: var(--ko-space-12); }
+/* ---------- Карточка товара ----------
+   Макет: плитка 460×450 = подложка 460×360 + 20 + блок текста 70.
+   Изображение внутри подложки с полями 40.
+*/
+.product-card { display: grid; gap: var(--ko-space-8); }
 
 .product-card__media {
   position: relative;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 460 / 360;
+  margin-bottom: var(--ko-space-12); /* 12 + gap 8 = 20 до цены */
+  padding: var(--ko-space-40);
   background: var(--ko-bg-2);
   overflow: hidden;
 }
@@ -235,6 +241,8 @@ textarea.input { min-height: 96px; resize: vertical; }
 .product-card__badge-hit  { position: absolute; top: 0; left: 0; }
 .product-card__badge-sale { position: absolute; bottom: 0; left: 0; }
 
+.product-card__info { display: grid; gap: var(--ko-space-8); }
+
 .product-card__price {
   display: flex;
   align-items: baseline;
@@ -247,38 +255,41 @@ textarea.input { min-height: 96px; resize: vertical; }
   text-decoration: line-through;
 }
 .product-card__title {
-  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
   color: var(--ko-text-2);
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  white-space: nowrap;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* ---------- Карточка статьи ---------- */
-.article-card { display: grid; gap: var(--ko-space-12); }
+/* ---------- Карточка статьи ----------
+   Макет: 460×452 = картинка 460×260 + 20 + текст 172
+*/
+.article-card { display: grid; gap: var(--ko-space-12); align-content: start; }
 .article-card__media {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 460 / 260;
+  margin-bottom: var(--ko-space-8); /* 8 + gap 12 = 20 */
   background: var(--ko-bg-2);
   overflow: hidden;
 }
 .article-card__media img { width: 100%; height: 100%; object-fit: cover; }
 .article-card__meta {
   display: flex;
-  gap: var(--ko-space-12);
-  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  gap: var(--ko-space-16);
+  margin-bottom: var(--ko-space-8);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
 }
 .article-card__rubric { color: var(--ko-text-accent); }
 .article-card__date { color: var(--ko-text-3); }
 .article-card__title {
-  font: 500 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font);
+  font: 500 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font);
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .article-card__lead {
-  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
   color: var(--ko-text-3);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -318,50 +329,67 @@ textarea.input { min-height: 96px; resize: vertical; }
 .row-list__item {
   display: grid;
   align-items: center;
-  gap: var(--ko-space-24);
-  padding-block: var(--ko-space-24);
+  gap: var(--ko-space-32);
   border-top: 1px solid var(--ko-border-1);
   transition: color .15s ease;
 }
+.row-list > li:last-child .row-list__item,
 .row-list__item:last-child { border-bottom: 1px solid var(--ko-border-1); }
 
-/* ---------- Отзывы ---------- */
+/* ---------- Отзывы ----------
+   Макет: карточка 650×384, паддинг 32, звёзды 24 с шагом 28
+*/
 .review {
-  display: grid;
-  gap: var(--ko-space-16);
-  align-content: start;
-  padding: var(--ko-space-24);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ko-space-8);
+  min-height: 384px;
+  padding: var(--ko-space-32);
   background: var(--ko-bg-1);
 }
-.review__stars { display: flex; gap: 2px; color: var(--ko-icon-brand); }
-.review__stars svg { width: 16px; height: 16px; }
+.review__stars { display: flex; gap: var(--ko-space-4); color: var(--ko-icon-brand); }
+.review__stars svg { width: var(--ko-icon-normal); height: var(--ko-icon-normal); }
 .review__stars .is-empty { color: var(--ko-bg-3); }
 .review__text {
-  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  margin-top: var(--ko-space-12); /* 12 + gap 8 = 20 после звёзд */
+  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
   color: var(--ko-text-2);
   display: -webkit-box;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-.review__more { color: var(--ko-text-accent); font: 400 var(--ko-caption-xl-size)/1 var(--ko-font); }
-.review__author { display: flex; align-items: center; gap: var(--ko-space-12); }
+.review__more {
+  align-self: flex-start;
+  color: var(--ko-text-accent);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
+}
+.review__author {
+  display: flex;
+  align-items: center;
+  gap: var(--ko-space-20);
+  margin-top: auto;
+  padding-top: var(--ko-space-32);
+}
 .review__avatar {
-  width: 40px; height: 40px;
+  width: 60px; height: 60px;
+  flex: none;
   border-radius: var(--ko-radius-max);
   background: var(--ko-bg-3);
   object-fit: cover;
 }
-.review__name { font: 500 var(--ko-caption-xl-size)/1.4 var(--ko-font); }
-.review__date { font: 400 var(--ko-caption-size)/1.4 var(--ko-font); color: var(--ko-text-3); }
+.review__name { font: 500 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font); }
+.review__date { font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); color: var(--ko-text-3); }
 
-/* ---------- Сертификаты ---------- */
-.certificate { display: grid; gap: var(--ko-space-12); }
+/* ---------- Сертификаты ----------
+   Макет: карточка 186×310 = картинка + подпись
+*/
+.certificate { display: grid; grid-template-rows: 1fr auto; gap: var(--ko-space-12); height: 310px; }
 .certificate__img {
-  aspect-ratio: 184 / 260;
   background: var(--ko-bg-2);
   object-fit: cover;
   width: 100%;
+  height: 100%;
   transition: opacity .15s ease;
 }
 .certificate:hover .certificate__img { opacity: .85; }
@@ -375,7 +403,6 @@ textarea.input { min-height: 96px; resize: vertical; }
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
-  padding-bottom: var(--ko-space-4);
 }
 .carousel::-webkit-scrollbar { display: none; }
 .carousel > * { scroll-snap-align: start; }
@@ -392,24 +419,28 @@ textarea.input { min-height: 96px; resize: vertical; }
   .carousel--6 { grid-auto-columns: 45%; }
 }
 
+/* Подвал карусели: слева индикатор 79×6, справа стрелки. Высота ряда 48 */
 .carousel-foot {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--ko-space-24);
-  margin-top: var(--ko-space-24);
+  height: 48px;
+  margin-top: var(--ko-space-48);
 }
 .carousel-progress {
   position: relative;
   flex: 1;
-  height: 2px;
-  background: var(--ko-bg-2);
+  align-self: flex-start;
+  height: 6px;
 }
 .carousel-progress__bar {
   position: absolute;
-  left: 0; top: 0; bottom: 0;
+  top: 0; bottom: 0;
+  left: 0;
+  width: 79px;
   background: var(--ko-text-1);
-  transition: width .2s ease, left .2s ease;
+  transition: left .2s ease;
 }
 
 /* ---------- Аккордеон FAQ ---------- */

@@ -240,10 +240,10 @@
       if (prev) prev.disabled = track.scrollLeft <= 1;
       if (next) next.disabled = track.scrollLeft >= max - 1;
       if (bar) {
-        const visible = track.clientWidth / track.scrollWidth;
+        // Индикатор — полоса фиксированной ширины (79 по макету), едет по треку
+        const rail = bar.parentElement.clientWidth - bar.offsetWidth;
         const pos = max > 0 ? track.scrollLeft / max : 0;
-        bar.style.width = `${visible * 100}%`;
-        bar.style.left = `${pos * (100 - visible * 100)}%`;
+        bar.style.left = `${Math.round(pos * rail)}px`;
       }
     };
 

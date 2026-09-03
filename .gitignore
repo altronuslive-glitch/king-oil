@@ -9,3 +9,6 @@ desktop.ini
 # Сборка и зависимости
 node_modules/
 dist/
+
+# Рендеры для просмотра
+preview/

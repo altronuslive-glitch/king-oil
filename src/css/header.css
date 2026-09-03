@@ -29,33 +29,49 @@
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-2);
 }
-.header__top-nav { display: flex; gap: var(--ko-space-24); margin-left: var(--ko-space-40); }
+.header__top-left { gap: 0; }
+.header__top-nav { display: flex; gap: var(--ko-space-24); margin-left: var(--ko-space-64); }
 
+/* Дропдаун города — блок 90×32 по макету */
 .city-btn {
   display: inline-flex;
   align-items: center;
   gap: var(--ko-space-4);
+  min-width: 90px;
+  height: 32px;
   color: var(--ko-text-1);
 }
 .city-btn svg { width: 16px; height: 16px; color: var(--ko-icon-2); }
 
 /* ---------- Ряд 2: основной (52) ---------- */
+/* Гэпы по макету: логотип —32— «Каталог» —12— поиск —24— иконки */
 .header__main { height: 52px; }
 .header__main .container {
   display: flex;
   align-items: center;
-  gap: var(--ko-space-32);
+  gap: var(--ko-space-12);
   height: 100%;
 }
+.header__main .logo { margin-right: var(--ko-space-20); }
+.header__main .search { margin-right: var(--ko-space-12); }
 
-.logo { flex: none; display: block; width: 160px; }
+/* Логотип по макету занимает блок 160×52 */
+.logo {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 160px;
+  height: 52px;
+}
 .logo img, .logo svg { width: 100%; height: auto; }
 
 .catalog-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--ko-space-12);
   height: 52px;
+  min-width: 155px;
   padding-inline: var(--ko-space-20);
   background: var(--ko-bg-1);
   font: 500 var(--ko-small-size)/1 var(--ko-font);

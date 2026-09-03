@@ -108,24 +108,37 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   .h6 { font-size: 20px; line-height: 26px; }
 }
 
-/* ---------- Секции ---------- */
+/* ---------- Секции ----------
+   Вертикальные отступы в макете нерегулярные, поэтому задаём их модификаторами.
+*/
 .section { padding-block: 80px; }
-.section--tight { padding-block: 56px; }
 .section--grey { background: var(--ko-bg-1); }
 .section--dark { background: var(--ko-bg-4); color: var(--ko-text-0); }
 
+.section--pt-120 { padding-top: 120px; }
+.section--pt-160 { padding-top: 160px; }
+.section--pb-120 { padding-bottom: 120px; }
+.section--pb-160 { padding-bottom: 160px; }
+
+@media (max-width: 1024px) {
+  .section { padding-block: 64px; }
+  .section--pt-120, .section--pt-160 { padding-top: 64px; }
+  .section--pb-120, .section--pb-160 { padding-bottom: 64px; }
+}
 @media (max-width: 768px) {
   .section { padding-block: 48px; }
-  .section--tight { padding-block: 32px; }
+  .section--pt-120, .section--pt-160 { padding-top: 48px; }
+  .section--pb-120, .section--pb-160 { padding-bottom: 48px; }
 }
 
 /* Надзаголовок «▪ Ассортимент» */
 .eyebrow {
   display: flex;
   align-items: center;
-  gap: var(--ko-space-8);
+  gap: var(--ko-space-10);
+  height: 24px;
   color: var(--ko-text-3);
-  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
 }
 .eyebrow::before {
   content: "";
@@ -141,14 +154,15 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 }
 .eyebrow--accent::before { border-radius: var(--ko-radius-max); }
 
-/* Двухколоночный заголовок секции: слева шапка, справа контент */
+/* Двухколоночный заголовок секции: слева шапка, справа контент.
+   По макету: 467 + 20 + 933 = 1420 */
 .split {
   display: grid;
-  grid-template-columns: 380px 1fr;
-  gap: var(--ko-space-64);
+  grid-template-columns: 467px 1fr;
+  gap: var(--ko-space-20);
   align-items: start;
 }
-.split__head { display: grid; gap: var(--ko-space-16); }
+.split__head { display: grid; gap: var(--ko-space-16); align-content: start; }
 
 @media (max-width: 1024px) {
   .split { grid-template-columns: 1fr; gap: var(--ko-space-32); }
