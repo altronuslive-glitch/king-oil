@@ -292,6 +292,8 @@ textarea.input { min-height: 96px; resize: vertical; }
   gap: var(--ko-space-12);
   padding: var(--ko-space-24);
   background: var(--ko-bg-1);
+  /* цвет задаём явно: карточка встречается и на тёмной секции */
+  color: var(--ko-text-1);
 }
 .icon-card__icon {
   display: grid;
@@ -308,7 +310,8 @@ textarea.input { min-height: 96px; resize: vertical; }
   color: var(--ko-text-2);
 }
 .icon-card--accent { background: var(--ko-bg-brand); color: var(--ko-text-0); }
-.icon-card--accent .icon-card__text { color: rgba(255,255,255,.85); }
+.icon-card--accent .icon-card__text { color: rgba(255, 255, 255, .85); }
+.icon-card--accent .icon-card__icon { color: var(--ko-icon-brand); }
 
 /* ---------- Список-строки (категории, цифры) ---------- */
 .row-list { display: grid; }
