@@ -193,11 +193,10 @@
   .promo-dark__cards { grid-template-columns: 1fr; }
 }
 
-/* ---------- 7. Отзывы — карточки 650 ---------- */
-.reviews .carousel { grid-auto-columns: 650px; }
-
-@media (max-width: 1024px) { .reviews .carousel { grid-auto-columns: calc((100% - var(--ko-space-20)) / 2); } }
-@media (max-width: 768px)  { .reviews .carousel { grid-auto-columns: 86%; } }
+/* ---------- 7. Отзывы ----------
+   Секция есть и на каталоге, и на карточке товара — размеры карточек
+   лежат в components.css рядом с самим компонентом.
+*/
 
 /* ---------- 8. Акции — карточки 460, 3 в ряду ---------- */
 .promo-articles .carousel { grid-auto-columns: calc((100% - var(--ko-space-20) * 2) / 3); }

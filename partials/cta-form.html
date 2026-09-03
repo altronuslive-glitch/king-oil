@@ -1,0 +1,28 @@
+  <section class="section section--grey cta-form">
+    <div class="container">
+      <div class="cta-form__intro">
+        <p class="eyebrow eyebrow--accent">Обратная связь</p>
+        <h2 class="h2 cta-form__title">Напишите нам</h2>
+        <p class="cta-form__text">Оставьте заявку — перезвоним, поможем подобрать масло и рассчитаем стоимость доставки в ваш регион.</p>
+      </div>
+
+      <form class="cta-form__form" data-form>
+        <div class="cta-form__row">
+          <input class="input input--white" type="text" placeholder="Ваше имя" autocomplete="name" required>
+          <input class="input input--white" type="tel" placeholder="+7" autocomplete="tel" required>
+        </div>
+        <textarea class="input input--white" placeholder="Опишите вопрос"></textarea>
+        <label class="checkbox">
+          <input type="checkbox" required>
+          <span>Я согласен с <a href="#">политикой конфиденциальности</a> и <a href="#">пользовательским соглашением</a></span>
+        </label>
+        <button class="btn btn--primary" type="submit">Отправить заявку</button>
+      </form>
+
+      <div hidden data-form-success>
+        <div class="modal__icon"><svg><use href="#i-check"></use></svg></div>
+        <p class="h5">Заявка отправлена!</p>
+        <p class="cta-form__text">В ближайшее время с вами свяжется менеджер.</p>
+      </div>
+    </div>
+  </section>

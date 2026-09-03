@@ -1,0 +1,296 @@
+/* ============================================================
+   pages.css — блоки, общие для внутренних страниц
+   Размеры выверены по метаданным Figma (артборд 1900, контейнер 1420)
+   ============================================================ */
+
+/* ---------- Шапка страницы: крошки + H1 ----------
+   Макет: крошки 68–72, H1 72 (Heading 2 64/72).
+   На «Как купить» и «Контактах» блок заголовка 120 — снизу добавлено 48.
+*/
+.page-head__title { margin-top: var(--ko-space-8); }
+.page-head--pb-48 { padding-bottom: var(--ko-space-48); }
+
+/* Мелкие вертикальные отступы секций, которых нет в base.css */
+.section--pt-0  { padding-top: 0; }
+.section--pb-0  { padding-bottom: 0; }
+.section--pt-40 { padding-top: var(--ko-space-40); }
+.section--pb-40 { padding-bottom: var(--ko-space-40); }
+.section--pt-48 { padding-top: var(--ko-space-48); }
+.section--pb-48 { padding-bottom: var(--ko-space-48); }
+
+@media (max-width: 768px) {
+  .section--pt-48 { padding-top: var(--ko-space-32); }
+  .section--pb-48 { padding-bottom: var(--ko-space-32); }
+}
+
+/* Шапка секции с уменьшенным отступом: в макете у карточек-фич он 40, не 48 */
+.section-head--tight { margin-bottom: var(--ko-space-40); }
+
+/* Подводка под заголовком секции — в макете ширина около 660 */
+.section-head__lead {
+  max-width: 660px;
+  font: 400 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font);
+  color: var(--ko-text-2);
+}
+
+/* ---------- Карточки-фичи (доставка, оплата, шаги) ----------
+   Макет: карточка на подложке --ko-bg-1, паддинг 24, внутри белый квадрат
+   64×64 с иконкой 32, ниже заголовок Heading 6 и описание Caption xl.
+   Расстояние от квадрата до заголовка — 64.
+*/
+.features {
+  display: grid;
+  grid-template-columns: repeat(var(--features-cols, 4), 1fr);
+  gap: var(--ko-space-20);
+}
+.features--3 { --features-cols: 3; }
+
+.feature {
+  display: flex;
+  flex-direction: column;
+  min-height: var(--feature-h, 268px);
+  padding: var(--ko-space-24);
+  background: var(--ko-bg-1);
+}
+.features--delivery { --feature-h: 316px; }
+.features--steps { --feature-h: 320px; }
+
+.feature__icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  margin-bottom: var(--ko-space-64);
+  background: var(--ko-bg-0);
+  color: var(--ko-icon-3);
+}
+.feature__icon svg { width: var(--ko-icon-lg); height: var(--ko-icon-lg); }
+.feature__icon--brand { color: var(--ko-icon-brand); }
+.feature__num { font: 600 var(--ko-large-xl-size)/var(--ko-large-xl-lh) var(--ko-font); }
+
+.feature__title { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); }
+.feature__text {
+  margin-top: var(--ko-space-12);
+  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  color: var(--ko-text-2);
+}
+
+@media (max-width: 1024px) {
+  .features { grid-template-columns: repeat(2, 1fr); }
+  .feature { min-height: 0; }
+  .feature__icon { margin-bottom: var(--ko-space-32); }
+}
+@media (max-width: 480px) {
+  .features { grid-template-columns: 1fr; }
+}
+
+/* ---------- Форма «Напишите нам» ----------
+   Макет 1900×468: подложка --ko-bg-1, паддинг 80.
+   Слева колонка 840 (надзаголовок сверху, заголовок и текст прижаты к низу),
+   справа форма 580: два поля по 284 с гэпом 12, textarea 100, чекбокс, кнопка 209×52.
+*/
+.cta-form .container {
+  display: grid;
+  grid-template-columns: 840px 580px;
+  justify-content: space-between;
+  gap: var(--ko-space-20);
+  min-height: 308px;
+}
+.cta-form__intro { display: flex; flex-direction: column; max-width: 720px; }
+.cta-form__title { margin-top: auto; }
+.cta-form__text {
+  margin-top: var(--ko-space-24);
+  font: 400 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font);
+  color: var(--ko-text-2);
+}
+
+.cta-form__form { display: grid; align-content: start; gap: var(--ko-space-12); }
+.cta-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ko-space-12); }
+/* В макете поля ровно 52, textarea — 100 */
+.cta-form__row .input { height: var(--ko-control-h); padding-block: 0; }
+.cta-form__form textarea.input { min-height: 100px; }
+.cta-form__form .checkbox { margin-top: var(--ko-space-12); }
+.cta-form__form .btn { justify-self: start; margin-top: var(--ko-space-16); min-width: 209px; }
+
+@media (max-width: 1440px) {
+  .cta-form .container { grid-template-columns: 1fr 580px; }
+}
+@media (max-width: 1024px) {
+  .cta-form .container { grid-template-columns: 1fr; min-height: 0; gap: var(--ko-space-40); }
+  .cta-form__title { margin-top: var(--ko-space-24); }
+}
+@media (max-width: 480px) {
+  .cta-form__row { grid-template-columns: 1fr; }
+}
+
+/* ---------- Тёмная CTA-полоса (страница «О компании») ----------
+   Макет 1900×212: слева заголовок H3 и подпись, справа оранжевая кнопка.
+*/
+.cta-bar { padding-block: var(--ko-space-64); }
+.cta-bar .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ko-space-40);
+}
+.cta-bar__text {
+  margin-top: var(--ko-space-12);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: rgba(255, 255, 255, .6);
+}
+.cta-bar .btn { flex: none; }
+
+@media (max-width: 768px) {
+  .cta-bar { padding-block: var(--ko-space-64); }
+.cta-bar .container { flex-direction: column; align-items: flex-start; gap: var(--ko-space-24); }
+}
+
+/* ---------- Колонки под линией (о компании: цифры, гарантия, пункты) ----------
+   Макет: 4 (или 3) колонки, над каждой линия --ko-border-1.
+*/
+.col-list {
+  display: grid;
+  grid-template-columns: repeat(var(--col-list-cols, 4), 1fr);
+  gap: var(--ko-space-20);
+}
+.col-list--3 { --col-list-cols: 3; }
+.col-list > * { padding-top: var(--ko-space-20); border-top: 1px solid var(--ko-border-1); }
+
+.col-list__value {
+  font: 500 var(--ko-h3-size)/var(--ko-h3-lh) var(--ko-font);
+  letter-spacing: -0.01em;
+}
+.col-list__title { font: 500 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font); }
+.col-list__note {
+  margin-top: var(--ko-space-12);
+  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  color: var(--ko-text-2);
+}
+.col-list__note--3 { color: var(--ko-text-3); }
+
+@media (max-width: 1024px) { .col-list { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .col-list { grid-template-columns: 1fr; } }
+
+/* ---------- О компании: герой ----------
+   Макет 1900×794: слева крошки, надзаголовок, H2 в 5 строк, абзац, кнопка;
+   справа изображение.
+*/
+.about-hero .container {
+  display: grid;
+  grid-template-columns: 700px 1fr;
+  gap: var(--ko-space-64);
+  align-items: start;
+}
+.about-hero__eyebrow { margin-bottom: var(--ko-space-24); }
+.about-hero__text {
+  margin: var(--ko-space-24) 0 var(--ko-space-32);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
+  color: var(--ko-text-2);
+  max-width: 620px;
+}
+.about-hero__media { aspect-ratio: 620 / 480; background: var(--ko-bg-2); }
+.about-hero__media img { width: 100%; height: 100%; object-fit: cover; }
+
+@media (max-width: 1024px) {
+  .about-hero .container { grid-template-columns: 1fr; gap: var(--ko-space-32); }
+  .about-hero__media { aspect-ratio: 16 / 9; }
+}
+
+/* ---------- Контакты ----------
+   Макет 1900×524: слева список из 4 блоков (~340), справа карта.
+*/
+.contacts .container {
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: var(--ko-space-64);
+  align-items: start;
+}
+.contacts__list > li {
+  padding-block: var(--ko-space-20);
+  border-top: 1px solid var(--ko-border-1);
+}
+.contacts__list > li:last-child { border-bottom: 1px solid var(--ko-border-1); }
+.contacts__value { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); }
+.contacts__note {
+  margin-top: var(--ko-space-4);
+  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+/* Карта — плейсхолдер: сервис (Яндекс / 2ГИС) и число точек пока не выбраны */
+.contacts__map {
+  aspect-ratio: 1020 / 400;
+  background: var(--ko-bg-2);
+  display: grid;
+  place-items: center;
+  color: var(--ko-text-3);
+  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+}
+
+@media (max-width: 1024px) {
+  .contacts .container { grid-template-columns: 1fr; gap: var(--ko-space-32); }
+}
+
+/* ---------- Реквизиты ----------
+   Макет 1900×472: слева H2 в две строки, справа таблица со строками-зеброй.
+*/
+.requisites__table { width: 100%; border-collapse: collapse; }
+.requisites__table th,
+.requisites__table td {
+  padding: var(--ko-space-20) var(--ko-space-16);
+  text-align: left;
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+}
+.requisites__table th { color: var(--ko-text-2); font-weight: 400; width: 40%; }
+.requisites__table tr:nth-child(odd) { background: var(--ko-bg-1); }
+
+@media (max-width: 480px) {
+  .requisites__table th, .requisites__table td { display: block; width: auto; }
+  .requisites__table td { padding-top: 0; }
+}
+
+/* ---------- Акции: главная (горизонтальная) карточка ----------
+   Макет 1900×448: слева изображение ~555×250, справа рубрика, дата,
+   заголовок Heading 5 и лид.
+*/
+.promo-featured {
+  display: grid;
+  grid-template-columns: 700px 1fr;
+  gap: var(--ko-space-40);
+  align-items: start;
+}
+.promo-featured__media { aspect-ratio: 700 / 448; background: var(--ko-bg-2); }
+.promo-featured__media img { width: 100%; height: 100%; object-fit: cover; }
+.promo-featured__title {
+  margin-top: var(--ko-space-24);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.promo-featured__lead {
+  margin-top: var(--ko-space-16);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
+  color: var(--ko-text-3);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 1024px) {
+  .promo-featured { grid-template-columns: 1fr; gap: var(--ko-space-24); }
+  .promo-featured__media { aspect-ratio: 16 / 9; }
+}
+
+/* ---------- Акции: сетка статей — 3 колонки, гэп 20 / 48 ---------- */
+.promo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ko-grid-gap-y) var(--ko-grid-gap-x);
+}
+
+.promo-grid + .pagination { margin-top: var(--ko-space-48); }
+.pagination--center { justify-content: center; }
+
+@media (max-width: 1024px) { .promo-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px)  { .promo-grid { grid-template-columns: 1fr; gap: var(--ko-space-32); } }

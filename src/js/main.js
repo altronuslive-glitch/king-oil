@@ -313,6 +313,136 @@
   }
 
   /* ---------------------------------------------------------
+     Таббар: активный пункт по адресу страницы
+     (разметка таббара общая для всех страниц, см. partials/tabbar.html)
+     --------------------------------------------------------- */
+  const page = location.pathname.split('/').pop() || 'index.html';
+  $$('.tabbar a').forEach((a) => {
+    a.classList.toggle('is-active', a.getAttribute('href') === page);
+  });
+
+  /* ---------------------------------------------------------
+     Каталог: дропдаун сортировки
+     --------------------------------------------------------- */
+  $$('[data-sort]').forEach((root) => {
+    const btn = $('[data-sort-btn]', root);
+    const panelEl = $('[data-sort-panel]', root);
+    if (!btn || !panelEl) return;
+
+    const close = () => {
+      panelEl.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+    };
+
+    btn.addEventListener('click', () => {
+      const open = panelEl.hidden;
+      panelEl.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+    });
+
+    panelEl.addEventListener('click', (e) => {
+      const option = e.target.closest('.sort__option');
+      if (!option) return;
+      $$('.sort__option', panelEl).forEach((o) => o.classList.toggle('is-active', o === option));
+      // TODO: интеграция — пересортировка выдачи на бэкенде
+      close();
+    });
+
+    document.addEventListener('click', (e) => { if (!e.target.closest('[data-sort]')) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  });
+
+  /* ---------------------------------------------------------
+     Каталог: фильтры
+     --------------------------------------------------------- */
+  $$('[data-filters]').forEach((root) => {
+    const toggle = $('[data-filters-toggle]', root);
+    if (toggle) toggle.addEventListener('click', () => root.classList.toggle('is-open'));
+
+    root.addEventListener('click', (e) => {
+      // TODO: интеграция — снятие фильтра должно перезапрашивать выдачу
+      if (e.target.closest('[data-chip-remove]')) {
+        e.target.closest('[data-chip-remove]').remove();
+        return;
+      }
+      if (e.target.closest('[data-filters-reset]')) {
+        $$('[data-chip-remove]', root).forEach((chip) => chip.remove());
+        $$('select', root).forEach((s) => { s.selectedIndex = 0; });
+      }
+    });
+  });
+
+  /* ---------------------------------------------------------
+     Каталог: подбор по автомобилю.
+     Модель и год открываются только после выбора марки — состояния
+     в макете нет, логика заложена самостоятельно.
+     --------------------------------------------------------- */
+  const carBrand = $('[data-car-brand]');
+  if (carBrand) {
+    const dependent = [$('[data-car-model]'), $('[data-car-year]')].filter(Boolean);
+    carBrand.addEventListener('change', () => {
+      dependent.forEach((s) => { s.disabled = !carBrand.value; });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Табы-переключатели (выбор объёма в карточке товара)
+     --------------------------------------------------------- */
+  $$('[data-tabs]').forEach((group) => {
+    group.addEventListener('click', (e) => {
+      const tab = e.target.closest('[data-tab]');
+      if (!tab) return;
+      $$('[data-tab]', group).forEach((t) => t.classList.toggle('is-active', t === tab));
+    });
+  });
+
+  /* ---------------------------------------------------------
+     Степпер количества
+     --------------------------------------------------------- */
+  $$('[data-stepper]').forEach((root) => {
+    const input = $('input', root);
+    if (!input) return;
+
+    const min = Number(input.min) || 1;
+    const max = Number(input.max) || Infinity;
+
+    const clamp = () => {
+      const value = Math.min(max, Math.max(min, Number(input.value) || min));
+      input.value = String(value);
+      $$('[data-step]', root).forEach((btn) => {
+        const next = value + Number(btn.dataset.step);
+        btn.disabled = next < min || next > max;
+      });
+    };
+
+    root.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-step]');
+      if (!btn) return;
+      input.value = String(Number(input.value) + Number(btn.dataset.step));
+      clamp();
+    });
+    input.addEventListener('change', clamp);
+    clamp();
+  });
+
+  /* ---------------------------------------------------------
+     Галерея товара: превью переключают главный кадр
+     --------------------------------------------------------- */
+  $$('[data-gallery]').forEach((root) => {
+    const main = $('.gallery__main img', root);
+    root.addEventListener('click', (e) => {
+      const thumb = e.target.closest('[data-gallery-thumb]');
+      if (!thumb) return;
+      $$('[data-gallery-thumb]', root).forEach((t) => t.classList.toggle('is-active', t === thumb));
+      const img = $('img', thumb);
+      if (main && img) {
+        main.src = img.dataset.full || img.src;
+        main.alt = img.alt;
+      }
+    });
+  });
+
+  /* ---------------------------------------------------------
      Год в копирайте
      --------------------------------------------------------- */
   $$('[data-year]').forEach((el) => { el.textContent = String(new Date().getFullYear()); });

@@ -12,3 +12,6 @@ dist/
 
 # Рендеры для просмотра
 preview/
+
+# Python
+__pycache__/

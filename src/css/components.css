@@ -381,6 +381,12 @@ textarea.input { min-height: 96px; resize: vertical; }
 .review__name { font: 500 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font); }
 .review__date { font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); color: var(--ko-text-3); }
 
+/* Лента отзывов: карточка 650, встречается на главной, в каталоге и на товаре */
+.reviews .carousel { grid-auto-columns: 650px; }
+
+@media (max-width: 1024px) { .reviews .carousel { grid-auto-columns: calc((100% - var(--ko-space-20)) / 2); } }
+@media (max-width: 768px)  { .reviews .carousel { grid-auto-columns: 86%; } }
+
 /* ---------- Сертификаты ----------
    Макет: карточка 186×310 = картинка + подпись
 */

@@ -1,0 +1,108 @@
+<!-- ============ МОДАЛКИ ============ -->
+
+<!-- Вход -->
+<div class="modal" hidden data-modal="login">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="login-title">Вход в King-Oil</h2>
+
+    <div class="modal__tabs">
+      <button class="modal__tab" type="button">Телефон</button>
+      <button class="modal__tab is-active" type="button">E-mail</button>
+    </div>
+
+    <form class="modal__body">
+      <label class="field">
+        <span class="field__label">E-mail</span>
+        <input class="input" type="email" placeholder="mail@example.com" autocomplete="email">
+      </label>
+      <label class="field field--password">
+        <span class="field__label">Пароль</span>
+        <input class="input" type="password" autocomplete="current-password">
+        <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
+      </label>
+      <a class="modal__link" href="#">Забыли пароль?</a>
+      <div class="modal__actions">
+        <button class="btn btn--primary btn--block" type="submit">Войти</button>
+        <button class="btn btn--secondary btn--block" type="button" data-modal-open="register">Регистрация</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Регистрация -->
+<div class="modal" hidden data-modal="register">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="register-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="register-title">Регистрация в King-Oil</h2>
+
+    <form class="modal__body">
+      <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" placeholder="Александр Федосенко" autocomplete="name"></label>
+      <label class="field"><span class="field__label">E-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email"></label>
+      <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel"></label>
+      <label class="field field--password">
+        <span class="field__label">Придумайте пароль</span>
+        <input class="input" type="password" autocomplete="new-password">
+        <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
+      </label>
+      <label class="field field--password">
+        <span class="field__label">Повторите пароль</span>
+        <input class="input" type="password" autocomplete="new-password">
+        <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
+      </label>
+      <label class="field"><span class="field__label">Дата рождения</span><input class="input" type="date"></label>
+
+      <label class="switch"><input type="checkbox" data-toggle-company>Аккаунт для компании</label>
+
+      <div class="modal__body" hidden data-company-fields>
+        <label class="field"><span class="field__label">Название компании</span><input class="input" type="text" placeholder="ООО «Компания»"></label>
+        <label class="field"><span class="field__label">ИНН</span><input class="input" type="text" inputmode="numeric" placeholder="5503193478"></label>
+      </div>
+
+      <div class="modal__actions">
+        <button class="btn btn--primary btn--block" type="submit">Зарегистрироваться</button>
+        <button class="btn btn--secondary btn--block" type="button" data-modal-open="login">Войти</button>
+      </div>
+
+      <label class="checkbox">
+        <input type="checkbox">
+        <span>Я даю согласие на обработку моих персональных данных в порядке и на условиях, указанных в <a href="#">Согласии на обработку персональных данных</a>, и подтверждаю ознакомление с <a href="#">Политикой конфиденциальности</a> и <a href="#">Пользовательским соглашением</a></span>
+      </label>
+    </form>
+  </div>
+</div>
+
+<!-- Заказать звонок -->
+<div class="modal" hidden data-modal="callback">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="callback-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="callback-title">Заказать звонок</h2>
+    <p class="modal__subtitle">Заполните форму — наш менеджер перезвонит в ближайшие 15 минут в рабочее время.</p>
+
+    <form class="modal__body" data-form>
+      <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" autocomplete="name" required></label>
+      <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel" required></label>
+      <label class="field"><span class="field__label">Комментарий</span><textarea class="input" placeholder="Марка, модель и год автомобиля"></textarea></label>
+      <label class="checkbox"><input type="checkbox" required><span>Я согласен с <a href="#">политикой конфиденциальности</a> и <a href="#">пользовательским соглашением</a></span></label>
+      <div class="modal__actions"><button class="btn btn--primary btn--block" type="submit">Отправить</button></div>
+    </form>
+
+    <div hidden data-form-success>
+      <div class="modal__icon"><svg><use href="#i-check"></use></svg></div>
+      <h3 class="h5" style="text-align:center">Заявка отправлена!</h3>
+      <p class="modal__subtitle" style="text-align:center;margin-top:8px">Ваша заявка успешно отправлена. В ближайшее время с вами свяжется менеджер.</p>
+      <button class="btn btn--primary btn--block" type="button" data-close>Отлично!</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ COOKIES ============ -->
+<div class="cookies" hidden data-cookies>
+  <svg class="cookies__icon"><use href="#i-cookie"></use></svg>
+  <p class="cookies__text">Мы используем данные cookie, чтобы улучшить работу сайта, в соответствии с <a href="#">политикой использования cookie</a>.</p>
+  <div class="cookies__actions">
+    <button class="btn btn--primary" type="button" data-cookies-accept>Согласен</button>
+    <button class="btn btn--secondary" type="button" data-cookies-decline>Не согласен</button>
+  </div>
+</div>
+

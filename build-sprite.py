@@ -1,9 +1,9 @@
-"""Собирает SVG-спрайт из геометрии, выгруженной из Figma, и вставляет его в src/index.html.
+"""Собирает SVG-спрайт из геометрии, выгруженной из Figma, в partials/sprite.html.
+
+После пересборки разложить спрайт по страницам: python build-pages.py
 
 Запуск: python build-sprite.py
 """
-
-import re
 
 # id -> (ширина, высота, толщина обводки | None, [контуры], залитая?)
 ICONS = {
@@ -59,6 +59,13 @@ ICONS = {
     "i-star": (22.8254, 21.7082, None, [
         "M11.4127 0L14.8124 7.32065L22.8254 8.2918L16.9136 13.7874L18.4661 21.7082L11.4127 17.784L4.35925 21.7082L5.91177 13.7874L0 8.2918L8.01293 7.32065L11.4127 0Z"
     ], True),
+    # Оплата на странице «Как купить» (Sec / Доставка, 26847:25650)
+    "i-card": (22, 18, 2, [
+        "M1 6.71429H21M5.44444 12.4286H8.5M4.33333 17H17.6667C19.5076 17 21 15.465 21 13.5714V4.42857C21 2.53502 19.5076 1 17.6667 1H4.33333C2.49238 1 1 2.53502 1 4.42857V13.5714C1 15.465 2.49238 17 4.33333 17Z"
+    ], False),
+    "i-doc": (18, 22, 2, [
+        "M17 7L11 1H3C2.46957 1 1.96086 1.21071 1.58579 1.58579C1.21071 1.96086 1 2.46957 1 3V19C1 19.5304 1.21071 20.0391 1.58579 20.4142C1.96086 20.7893 2.46957 21 3 21H15C15.5304 21 16.0391 20.7893 16.4142 20.4142C16.7893 20.0391 17 19.5304 17 19V7ZM11 1V7H17M13 16H5M13 12H5M7 8H5"
+    ], False),
 }
 
 # Нарисованы вручную: в макете нет отдельных векторных слоёв
@@ -67,6 +74,20 @@ HANDMADE = {
     "i-bolt": '<symbol id="i-bolt" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 3 5 14h6l-1 7 8-11h-6l1-7Z"/></symbol>',
     "i-cookie": '<symbol id="i-cookie" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="9" cy="9" r="1.1" fill="currentColor"/><circle cx="15.5" cy="8" r=".9" fill="currentColor"/><circle cx="14" cy="15.5" r="1.1" fill="currentColor"/><circle cx="8.5" cy="14.5" r=".8" fill="currentColor"/><circle cx="12" cy="11.5" r=".7" fill="currentColor"/></symbol>',
     "i-check": '<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 13 4 4 10-10"/></symbol>',
+    # Купюра: прямоугольник 20×12 на (2,6), четверти круга r=4 по углам и круг r=2
+    # в центре — координаты из метаданных Figma (26847:25877). Радиус скругления
+    # самого прямоугольника метаданные не отдают, взят 0 как везде в макете.
+    "i-cash": (
+        '<symbol id="i-cash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+        '<path d="M2 6h20v12H2z"/>'
+        '<path d="M6 6a4 4 0 0 1-4 4M18 6a4 4 0 0 0 4 4M2 14a4 4 0 0 1 4 4M22 14a4 4 0 0 0-4 4"/>'
+        '<circle cx="12" cy="12" r="2"/>'
+        "</symbol>"
+    ),
+    "i-truck": '<symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>',
+    "i-pin": '<symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>',
+    "i-minus": '<symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></symbol>',
+    "i-plus": '<symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>',
 }
 
 
@@ -90,26 +111,22 @@ def build():
     lines = [
         "<!-- ============ SVG-спрайт ============",
         "     Геометрия иконок выгружена из Figma один в один, цвет — через currentColor.",
-        "     Вручную нарисованы только i-menu, i-bolt, i-cookie, i-check: в макете",
-        "     они не лежат отдельными векторными слоями.",
+        "     Вручную нарисованы i-menu, i-bolt, i-cookie, i-check, i-cash, i-truck,",
+        "     i-pin, i-minus, i-plus: в макете они не лежат отдельными векторными слоями.",
         "     Пересобрать: python build-sprite.py",
         "     ============================================================ -->",
         '<svg style="display:none" aria-hidden="true">',
     ]
     for sid, (w, h, sw, paths, filled) in ICONS.items():
         lines.append("  " + symbol(sid, w, h, sw, paths, filled))
-    for sid in ("i-menu", "i-bolt", "i-cookie", "i-check"):
+    for sid in HANDMADE:
         lines.append("  " + HANDMADE[sid])
     lines.append("</svg>")
     return "\n".join(lines)
 
 
 if __name__ == "__main__":
-    sprite = build()
-    path = "src/index.html"
-    html = open(path, encoding="utf-8").read()
-    new = re.sub(r"<!-- ============ SVG-спрайт ============.*?</svg>", sprite, html, flags=re.S)
-    if new == html:
-        raise SystemExit("не нашёл блок спрайта в " + path)
-    open(path, "w", encoding="utf-8", newline="\n").write(new)
-    print(f"иконок в спрайте: {len(ICONS) + len(HANDMADE)}")
+    path = "partials/sprite.html"
+    open(path, "w", encoding="utf-8", newline="\n").write(build() + "\n")
+    print(f"иконок в спрайте: {len(ICONS) + len(HANDMADE)}, записан {path}")
+    print("разложить по страницам: python build-pages.py")
