@@ -68,6 +68,7 @@
   transition: background-color .15s ease;
 }
 .footer__social a:hover { background: var(--ko-bg-2); }
+.footer__social img,
 .footer__social svg { width: 24px; height: 24px; }
 
 .footer__divider {
