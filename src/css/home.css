@@ -7,7 +7,20 @@
    Контент 700×460 на x=240,y=64. Кнопка прижата к низу блока.
    Стрелки 52×52 с гэпом 10, правый край на 1660.
 */
-.hero { background: var(--ko-bg-4); color: var(--ko-text-0); }
+.hero {
+  position: relative;
+  color: var(--ko-text-0);
+  background: var(--ko-bg-4) url("../img/hero.jpg") center / cover no-repeat;
+}
+/* Затемнение слева: в макете фото само по себе тёмное в этой части,
+   но на узких экранах кадр смещается и текст попадает на светлую канистру */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(19, 25, 39, .8) 0%, rgba(19, 25, 39, .55) 38%, rgba(19, 25, 39, 0) 62%);
+}
+.hero .container { position: relative; }
 .hero .container {
   display: grid;
   grid-template-columns: 700px 1fr;
@@ -29,11 +42,19 @@
 }
 .hero__content .btn { margin-top: auto; min-width: 200px; }
 
+/* Стрелки баннера: сплошные белые квадраты 52×52 с тёмным шевроном, гэп 10 */
 .hero__nav { align-self: end; justify-self: end; display: flex; }
-.hero__nav .arrow-btn { border-color: rgba(255, 255, 255, .25); color: #fff; }
-.hero__nav .arrow-btn { width: 52px; height: 52px; }
-.hero__nav .arrow-btn + .arrow-btn { margin-left: 10px; border-left-width: 1px; }
-.hero__nav .arrow-btn:hover { border-color: rgba(255, 255, 255, .6); }
+.hero__nav .arrow-btn {
+  width: 52px;
+  height: 52px;
+  border: 0;
+  background: var(--ko-bg-0);
+  color: var(--ko-text-1);
+  transition: background-color .15s ease;
+}
+.hero__nav .arrow-btn + .arrow-btn { margin-left: 10px; }
+.hero__nav .arrow-btn:hover { background: var(--ko-bg-1); }
+.hero__nav .arrow-btn:disabled { opacity: .5; }
 
 @media (max-width: 1024px) {
   .hero .container { grid-template-columns: 1fr; }
