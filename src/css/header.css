@@ -370,6 +370,9 @@
   width: 24px; height: 24px;
   color: var(--ko-icon-2);
 }
+/* Без явного размера svg берёт холст по умолчанию (300×150) и крестик уезжает
+   вниз из кнопки 24×24 — визуально он оказывается на уровне иконки */
+.mini-modal__close svg { width: 100%; height: 100%; }
 .mini-modal__icon {
   display: grid;
   place-items: center;
