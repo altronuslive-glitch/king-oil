@@ -38,6 +38,8 @@
   --ko-btn-brand: #f97316;
   --ko-btn-white: #ffffff;
   --ko-btn-grey: #f5f6f8;
+  --ko-btn-brand-soft: #fff7ed; /* Secondary buttons/brand — «В корзину» в карточке */
+  --ko-btn-brand-soft-hover: #ffedd5; /* Secondary buttons/brand-hover */
 
   /* ---------- Цвета: статусные ---------- */
   --ko-other-1: #3da755; /* «Хит продаж», успех */

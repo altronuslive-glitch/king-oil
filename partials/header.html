@@ -15,15 +15,16 @@
           </div>
         </div>
         <nav class="header__top-nav">
-          <a class="link" href="about.html">О нас</a>
-          <a class="link" href="delivery.html">Оплата</a>
-          <a class="link" href="delivery.html#faq">Вопросы и ответы</a>
+          <a class="link" href="about.html">О компании</a>
+          <a class="link" href="payment.html">Оплата</a>
+          <a class="link" href="reviews.html">Отзывы</a>
           <a class="link" href="contacts.html">Контакты</a>
+          <a class="link link--accent" href="account.html#loyalty">Бонусные баллы</a>
         </nav>
       </div>
       <div class="header__top-right">
         <a class="link" href="tel:+73812475777" data-city-phone>8 (3812) 475-777</a>
-        <a class="link" href="tel:+78007007874">8 800 700 7874</a>
+        <a class="link" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
       </div>
     </div>
   </div>
@@ -35,42 +36,77 @@
         <img src="img/logo.png" width="160" height="50" alt="King-Oil">
       </a>
 
-      <button class="burger" type="button" data-toggle="mobile-menu" aria-label="Меню">
-        <svg><use href="#i-menu"></use></svg>
-      </button>
+      <div class="header__mobile-actions">
+        <button class="icon-btn" type="button" data-search-toggle aria-expanded="false" aria-label="Поиск">
+          <svg><use href="#i-search"></use></svg>
+        </button>
+        <a class="icon-btn" href="tel:+73812475777" aria-label="Позвонить">
+          <svg><use href="#i-phone"></use></svg>
+        </a>
+        <button class="burger" type="button" data-toggle="mobile-menu" aria-label="Меню">
+          <svg><use href="#i-menu"></use></svg>
+        </button>
+      </div>
 
       <button class="catalog-btn" type="button" data-toggle="mega" aria-expanded="false">
         <svg><use href="#i-catalog"></use></svg><span>Каталог</span>
       </button>
 
-      <div class="search" data-search>
-        <input class="search__input" type="search" placeholder="Поиск по сайту" aria-label="Поиск по сайту">
-        <button class="search__submit" type="button" aria-label="Найти"><svg><use href="#i-search"></use></svg></button>
+      <form class="search" data-search action="search.html" role="search">
+        <!-- Стрелка слева от поля закрывает полноэкранный поиск (макет «После нажатия на поиск») -->
+        <button class="search__back" type="button" data-search-cancel aria-label="Закрыть поиск"><svg><use href="#i-arrow-left"></use></svg></button>
+        <div class="search__field">
+          <input class="search__input" type="search" name="q" placeholder="Поиск по сайту" aria-label="Поиск по сайту" autocomplete="off">
+          <button class="search__submit" type="submit" aria-label="Найти"><svg><use href="#i-search"></use></svg></button>
+          <button class="search__clear" type="button" hidden data-search-clear aria-label="Очистить"><svg><use href="#i-close"></use></svg></button>
+        </div>
 
         <div class="search__panel" hidden data-search-panel>
-          <div class="search__group">
-            <div class="search__group-head"><span>Вы искали</span><button class="link" type="button">Очистить</button></div>
-            <button class="search__row" type="button"><span>Моторное масло 5W-30</span><svg><use href="#i-close"></use></svg></button>
-            <button class="search__row" type="button"><span>Castrol EDGE</span><svg><use href="#i-close"></use></svg></button>
-            <button class="search__row" type="button"><span>Антифриз G12</span><svg><use href="#i-close"></use></svg></button>
+          <!-- Состояние по умолчанию: показывается при пустом вводе -->
+          <div data-search-default>
+            <div class="search__group" data-search-recent-group>
+              <div class="search__group-head"><span>Вы искали</span><button class="link" type="button" data-search-clear-recent>Очистить</button></div>
+              <button class="search__row" type="button" data-search-recent><span>Моторное масло 5W-30</span><svg><use href="#i-close"></use></svg></button>
+              <button class="search__row" type="button" data-search-recent><span>Castrol EDGE</span><svg><use href="#i-close"></use></svg></button>
+              <button class="search__row" type="button" data-search-recent><span>Антифриз G12</span><svg><use href="#i-close"></use></svg></button>
+            </div>
+            <div class="search__group" data-search-popular>
+              <div class="search__group-head"><span>Популярные товары</span><a class="link link--accent" href="category.html">Показать все</a></div>
+              <a class="search__product" href="product.html">
+                <img src="img/products/p51.jpg" width="40" height="40" alt="" loading="lazy">
+                <span><span class="search__product-name">Honda HCF-2 (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
+              </a>
+              <a class="search__product" href="product.html">
+                <img src="img/products/p52.jpg" width="40" height="40" alt="" loading="lazy">
+                <span><span class="search__product-name">Mazda ATF M-V (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
+              </a>
+              <a class="search__product" href="product.html">
+                <img src="img/products/p53.jpg" width="40" height="40" alt="" loading="lazy">
+                <span><span class="search__product-name">Nissan ATF Matic D (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
+              </a>
+            </div>
           </div>
-          <div class="search__group">
-            <div class="search__group-head"><span>Популярные товары</span></div>
-            <a class="search__product" href="product.html">
-              <span class="placeholder" style="width:40px;height:40px"></span>
-              <span><span class="search__product-name">Honda HCF-2 (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
-            </a>
-            <a class="search__product" href="product.html">
-              <span class="placeholder" style="width:40px;height:40px"></span>
-              <span><span class="search__product-name">Mazda ATF M-V (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
-            </a>
-            <a class="search__product" href="product.html">
-              <span class="placeholder" style="width:40px;height:40px"></span>
-              <span><span class="search__product-name">Nissan ATF Matic D (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
-            </a>
+
+          <!-- Подсказки-чипсы над результатами (макет «При вводе слова») -->
+          <div class="search__suggest" hidden data-search-suggest></div>
+
+          <!-- Живые результаты по мере ввода: строки рисует js/main.js из KO_PRODUCTS -->
+          <div class="search__group" hidden data-search-live>
+            <div data-search-results></div>
+          </div>
+
+          <!-- Ничего не найдено (макет «Нет результата»): плашка со смайлом,
+               под ней остаётся история запросов -->
+          <div class="search__empty" hidden data-search-empty>
+            <span class="search__empty-face" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <circle cx="20" cy="20" r="19"/><path d="M13 16h.01M27 16h.01M14 27c2-2.5 4-3.5 6-3.5s4 1 6 3.5"/>
+              </svg>
+            </span>
+            <p>Не могу ничего найти…</p>
           </div>
         </div>
-      </div>
+      </form>
 
       <div class="header__actions">
         <div class="header__action-wrap">
@@ -103,79 +139,84 @@
   <!-- Ряд 3: категории -->
   <nav class="header__nav">
     <div class="container">
-      <a href="catalog.html">Моторные масла</a>
-      <a href="catalog.html">Трансмиссионные</a>
-      <a href="catalog.html">Антифриз</a>
-      <a href="catalog.html">Аккумуляторы</a>
-      <a href="catalog.html">Фильтры</a>
-      <a href="catalog.html">Лампы</a>
+      <a href="category.html">Моторные масла</a>
+      <a href="category.html">Трансмиссионные</a>
+      <a href="category.html">Антифриз</a>
+      <a href="category.html">Аккумуляторы</a>
+      <a href="category.html">Фильтры</a>
+      <a href="category.html">Лампы</a>
       <a href="promo.html">Акции</a>
       <a href="contacts.html">Контакты</a>
     </div>
   </nav>
 
-  <!-- Мега-меню каталога -->
-  <div class="mega" hidden data-panel="mega">
-    <div class="container">
-      <div class="mega__aside">
-        <button class="mega__cat is-active" type="button" data-mega-cat="0">Моторные масла</button>
-        <button class="mega__cat" type="button" data-mega-cat="1">Трансмиссионные масла</button>
-        <button class="mega__cat" type="button" data-mega-cat="2">Антифриз</button>
-        <button class="mega__cat" type="button" data-mega-cat="3">Аккумуляторы</button>
-        <button class="mega__cat" type="button" data-mega-cat="4">Фильтры</button>
-        <button class="mega__cat" type="button" data-mega-cat="5">Лампы</button>
+</header>
+
+<!-- Мега-меню каталога — панель 1580 от левого края поверх шапки
+     (макет Component 148/Menu list 22988:21416 на кадре 26900:23600).
+     Ссылки ведут в листинг category.html, кнопка «Каталог» открывает эту панель,
+     а сам раздел каталога (catalog.html) доступен из таббара и мобильного меню -->
+<div class="mega" hidden data-panel="mega">
+  <div class="mega__box">
+    <div class="mega__aside">
+      <button class="mega__cat is-active" type="button" data-mega-cat="0">Моторные масла</button>
+      <button class="mega__cat" type="button" data-mega-cat="1">Трансмиссионные масла</button>
+      <button class="mega__cat" type="button" data-mega-cat="2">Антифриз</button>
+      <button class="mega__cat" type="button" data-mega-cat="3">Аккумуляторы</button>
+      <button class="mega__cat" type="button" data-mega-cat="4">Фильтры</button>
+      <button class="mega__cat" type="button" data-mega-cat="5">Лампы</button>
+    </div>
+    <div class="mega__content">
+      <!-- Бренды взяты из меню тестового сайта kingoil.itb-dev.ru -->
+      <div class="mega__group is-active" data-mega-panel="0">
+        <h2 class="h3 mega__title">Моторные масла</h2>
+        <div class="mega__links">
+          <a href="category.html">Оригинальные масла</a><a href="category.html">ЛУКОЙЛ</a><a href="category.html">BARDAHL</a>
+          <a href="category.html">CASTROL</a><a href="category.html">CHAMPION</a><a href="category.html">ENI</a>
+          <a href="category.html">ELF</a><a href="category.html">ENEOS</a><a href="category.html">FQ</a>
+          <a href="category.html">G-ENERGY</a><a href="category.html">IDEMITSU</a><a href="category.html">KIXX</a>
+        </div>
       </div>
-      <div class="mega__content">
-        <!-- Бренды взяты из меню тестового сайта kingoil.itb-dev.ru -->
-        <div class="mega__panel is-active" data-mega-panel="0">
-          <h3 class="h5 mega__title">Моторные масла</h3>
-          <div class="mega__links">
-            <a href="catalog.html">Оригинальные масла</a><a href="catalog.html">ЛУКОЙЛ</a><a href="catalog.html">BARDAHL</a>
-            <a href="catalog.html">CASTROL</a><a href="catalog.html">CHAMPION</a><a href="catalog.html">ENI</a>
-            <a href="catalog.html">ELF</a><a href="catalog.html">ENEOS</a><a href="catalog.html">FQ</a>
-            <a href="catalog.html">G-ENERGY</a><a href="catalog.html">IDEMITSU</a><a href="catalog.html">KIXX</a>
-          </div>
+      <div class="mega__group" data-mega-panel="1">
+        <h2 class="h3 mega__title">Трансмиссионные масла</h2>
+        <div class="mega__links">
+          <a href="category.html">NGN</a><a href="category.html">TOYOTA</a><a href="category.html">TOTACHI</a>
+          <a href="category.html">NISSAN</a><a href="category.html">HONDA</a><a href="category.html">MITSUBISHI</a>
+          <a href="category.html">KIA / HYUNDAI</a><a href="category.html">MAZDA</a><a href="category.html">GM</a>
+          <a href="category.html">ZIC</a><a href="category.html">MERCEDES</a><a href="category.html">ЛУКОЙЛ</a>
         </div>
-        <div class="mega__panel" data-mega-panel="1">
-          <h3 class="h5 mega__title">Трансмиссионные масла</h3>
-          <div class="mega__links">
-            <a href="catalog.html">NGN</a><a href="catalog.html">TOYOTA</a><a href="catalog.html">TOTACHI</a>
-            <a href="catalog.html">NISSAN</a><a href="catalog.html">HONDA</a><a href="catalog.html">MITSUBISHI</a>
-            <a href="catalog.html">KIA / HYUNDAI</a><a href="catalog.html">MAZDA</a><a href="catalog.html">GM</a>
-            <a href="catalog.html">ZIC</a><a href="catalog.html">MERCEDES</a><a href="catalog.html">ЛУКОЙЛ</a>
-          </div>
+      </div>
+      <div class="mega__group" data-mega-panel="2">
+        <h2 class="h3 mega__title">Антифриз</h2>
+        <div class="mega__links">
+          <a href="category.html">G11</a><a href="category.html">G12</a><a href="category.html">G12+ / G12++</a>
+          <a href="category.html">G13</a><a href="category.html">Готовые составы</a><a href="category.html">Концентраты</a>
         </div>
-        <div class="mega__panel" data-mega-panel="2">
-          <h3 class="h5 mega__title">Антифриз</h3>
-          <div class="mega__links">
-            <a href="catalog.html">G11</a><a href="catalog.html">G12</a><a href="catalog.html">G12+ / G12++</a>
-            <a href="catalog.html">G13</a><a href="catalog.html">Готовые составы</a><a href="catalog.html">Концентраты</a>
-          </div>
+      </div>
+      <div class="mega__group" data-mega-panel="3">
+        <h2 class="h3 mega__title">Аккумуляторы</h2>
+        <div class="mega__links">
+          <a href="category.html">Tubor</a><a href="category.html">Topla</a><a href="category.html">Tyumen</a>
+          <a href="category.html">Mutlu</a><a href="category.html">BORG / UNO / Dominator</a><a href="category.html">Zeus</a>
+          <a href="category.html">XTREME</a><a href="category.html">Forse / Sebang</a>
         </div>
-        <div class="mega__panel" data-mega-panel="3">
-          <h3 class="h5 mega__title">Аккумуляторы</h3>
-          <div class="mega__links">
-            <a href="catalog.html">Tubor</a><a href="catalog.html">Topla</a><a href="catalog.html">Tyumen</a>
-            <a href="catalog.html">Mutlu</a><a href="catalog.html">BORG / UNO / Dominator</a><a href="catalog.html">Zeus</a>
-            <a href="catalog.html">XTREME</a><a href="catalog.html">Forse / Sebang</a>
-          </div>
+      </div>
+      <div class="mega__group" data-mega-panel="4">
+        <h2 class="h3 mega__title">Фильтры</h2>
+        <div class="mega__links">
+          <a href="category.html">Масляные</a><a href="category.html">Воздушные</a><a href="category.html">Салонные</a><a href="category.html">Топливные</a>
         </div>
-        <div class="mega__panel" data-mega-panel="4">
-          <h3 class="h5 mega__title">Фильтры</h3>
-          <div class="mega__links">
-            <a href="catalog.html">Масляные</a><a href="catalog.html">Воздушные</a><a href="catalog.html">Салонные</a><a href="catalog.html">Топливные</a>
-          </div>
-        </div>
-        <div class="mega__panel" data-mega-panel="5">
-          <h3 class="h5 mega__title">Лампы</h3>
-          <div class="mega__links">
-            <a href="catalog.html">Галогеновые</a><a href="catalog.html">LED</a><a href="catalog.html">Ксенон</a><a href="catalog.html">H4 / H7</a>
-          </div>
+      </div>
+      <div class="mega__group" data-mega-panel="5">
+        <h2 class="h3 mega__title">Лампы</h2>
+        <div class="mega__links">
+          <a href="category.html">Галогеновые</a><a href="category.html">LED</a><a href="category.html">Ксенон</a><a href="category.html">H4 / H7</a>
         </div>
       </div>
     </div>
   </div>
-</header>
+  <button class="mega__close" type="button" data-close aria-label="Закрыть каталог"><svg><use href="#i-close"></use></svg></button>
+</div>
 
 <!-- Место под фиксированную шапку: высоту выставляет js/main.js -->
 <div class="header-spacer" data-header-spacer></div>
@@ -183,29 +224,26 @@
 <!-- Мобильное меню -->
 <div class="mobile-menu" hidden data-panel="mobile-menu">
   <button class="mobile-menu__close" type="button" data-close aria-label="Закрыть меню"><svg><use href="#i-close"></use></svg></button>
-  <a class="mobile-menu__user" href="account.html">
-    <span class="mobile-menu__avatar"></span>
-    <span><span class="text-base-m">Войти в аккаунт</span><br><span class="text-caption text-3">Заказы и избранное</span></span>
-  </a>
   <a class="mobile-menu__link" href="account.html"><svg><use href="#i-package"></use></svg>Мои заказы</a>
   <a class="mobile-menu__link" href="wishlist.html"><svg><use href="#i-heart"></use></svg>Избранное</a>
   <hr class="mobile-menu__sep">
-  <a class="mobile-menu__link" href="about.html">О нас</a>
-  <a class="mobile-menu__link" href="delivery.html">Оплата</a>
-  <a class="mobile-menu__link" href="delivery.html#faq">Вопросы и ответы</a>
+  <a class="mobile-menu__link" href="catalog.html">Каталог</a>
+  <a class="mobile-menu__link" href="promo.html">Акции</a>
+  <a class="mobile-menu__link" href="about.html">О компании</a>
+  <a class="mobile-menu__link" href="delivery.html">Доставка</a>
+  <a class="mobile-menu__link" href="payment.html">Оплата</a>
+  <a class="mobile-menu__link" href="how-to-buy.html">Как купить</a>
+  <a class="mobile-menu__link" href="returns.html">Возврат и обмен</a>
+  <a class="mobile-menu__link" href="account.html#loyalty">Бонусные баллы</a>
+  <a class="mobile-menu__link" href="reviews.html">Отзывы</a>
   <a class="mobile-menu__link" href="contacts.html">Контакты</a>
   <div class="mobile-menu__contacts">
     <a class="mobile-menu__phone" href="tel:+73812475777" data-city-phone>8 (3812) 475-777</a>
     <a class="text-small text-accent" href="tel:+78007007874">8 800 700 7874 — по РФ бесплатно</a>
-    <div class="city" data-city style="margin-top:8px">
-      <button class="city-btn" type="button" data-toggle="city-mobile" aria-expanded="false">
-        <span data-city-label>Омск</span> <svg><use href="#i-chevron"></use></svg>
-      </button>
-      <div class="city__list" hidden data-panel="city-mobile">
-        <button class="city__item is-active" type="button" data-city-set="omsk">Омск</button>
-        <button class="city__item" type="button" data-city-set="tyumen">Тюмень</button>
-      </div>
-    </div>
+    <!-- Город на мобильном открывает модалку выбора, а не выпадающий список -->
+    <button class="city-btn" type="button" data-modal-open="city" style="margin-top:8px">
+      <span data-city-label>Омск</span> <svg><use href="#i-chevron"></use></svg>
+    </button>
     <p class="text-caption text-3" style="margin-top:16px">Адрес компании<br>г. Омск, ул. Герцена, 197А</p>
   </div>
 </div>

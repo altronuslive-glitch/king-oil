@@ -3,25 +3,65 @@
    Размеры выверены по метаданным Figma (артборд 1900, контейнер 1420)
    ============================================================ */
 
-/* ---------- 1. Главный слайдер — 1900×588 ----------
-   Контент 700×460 на x=240,y=64. Кнопка прижата к низу блока.
+/* ---------- 1. Главный слайдер — 1900×600 ----------
+   Фото: чёрный автомобиль с канистрами ЛУКОЙЛ Genesis (макет 26899:12612).
+   Контент 700×472 на x=240,y=64. Кнопка прижата к низу блока.
    Стрелки 52×52 с гэпом 10, правый край на 1660.
 */
-.hero {
+.hero { position: relative; color: var(--ko-text-0); background: var(--ko-bg-4); }
+/* Слайды едут лентой: смена баннера — движение, текст при этом гаснет
+   и проявляется уже у нового слайда */
+.hero__viewport { overflow: hidden; }
+.hero__track {
+  display: flex;
+  transition: transform .6s cubic-bezier(.4, 0, .2, 1);
+}
+.hero__slide {
+  flex: 0 0 100%;
   position: relative;
-  color: var(--ko-text-0);
-  background: var(--ko-bg-4) url("../img/hero.jpg") center / cover no-repeat;
+  background: var(--ko-bg-4) url("../img/hero.jpg") no-repeat;
+  background-size: cover;
+  /* По вертикали кадр смещён вверх по фотографии: при center крышки канистр
+     упирались в верхнюю границу и срезались */
+  background-position: center 35%;
+}
+/* Текст уезжает вместе со слайдом, но гаснет — на новом месте он появляется заново */
+.hero__slide .hero__content {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity .35s ease, transform .35s ease;
+}
+.hero__slide.is-active .hero__content {
+  opacity: 1;
+  transform: none;
+  transition-delay: .25s;
 }
 /* Затемнение слева: в макете фото само по себе тёмное в этой части,
    но на узких экранах кадр смещается и текст попадает на светлую канистру */
-.hero::before {
+.hero__slide::before {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(90deg, rgba(19, 25, 39, .8) 0%, rgba(19, 25, 39, .55) 38%, rgba(19, 25, 39, 0) 62%);
 }
 .hero .container { position: relative; }
-.hero .container {
+
+/* Стрелки лежат поверх слайдов, в правом нижнем углу контейнера */
+.hero__controls { position: absolute; inset: 0; pointer-events: none; }
+.hero__controls .container {
+  display: grid;
+  align-items: end;
+  justify-items: end;
+  height: 100%;
+  padding-block: var(--ko-space-64);
+}
+.hero__nav { pointer-events: auto; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__track { transition: none; }
+  .hero__slide .hero__content { transition: none; }
+}
+.hero__slide .container {
   display: grid;
   grid-template-columns: 700px 1fr;
   gap: var(--ko-space-20);
@@ -31,7 +71,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-height: 460px;
+  min-height: 472px;
   width: 700px;
   max-width: 100%;
 }
@@ -57,104 +97,45 @@
 .hero__nav .arrow-btn:disabled { opacity: .5; }
 
 @media (max-width: 1024px) {
-  .hero .container { grid-template-columns: 1fr; }
+  .hero__slide .container { grid-template-columns: 1fr; }
   .hero__content { width: 100%; min-height: 0; gap: var(--ko-space-32); }
   .hero__content .btn { margin-top: var(--ko-space-8); }
   .hero__nav { justify-self: start; margin-top: var(--ko-space-32); }
 }
-
-/* ---------- 2. Категории — 120 / 80, строка 104 ---------- */
-.categories__row {
-  grid-template-columns: 380px 150px 275px 32px;
-  min-height: 104px;
-}
-.categories__name { font: 500 var(--ko-h5-size)/var(--ko-h5-lh) var(--ko-font); }
-.categories__count {
-  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
-  color: var(--ko-text-3);
-  white-space: nowrap;
-}
-.categories__desc {
-  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
-  color: var(--ko-text-3);
-}
-.categories__arrow {
-  width: var(--ko-icon-lg);
-  height: var(--ko-icon-lg);
-  color: var(--ko-icon-3);
-  transition: transform .15s ease, color .15s ease;
-}
-.categories__row:hover .categories__arrow { transform: translateX(4px); color: var(--ko-icon-brand); }
-.categories__row:hover .categories__name { color: var(--ko-text-accent); }
-
-@media (max-width: 1280px) {
-  .categories__row { grid-template-columns: 1fr auto 275px 32px; }
-}
-@media (max-width: 1024px) {
-  .categories__row { grid-template-columns: 1fr auto 32px; gap: var(--ko-space-16); }
-  .categories__desc { display: none; }
-}
-
-/* ---------- 3. Хиты продаж ----------
-   Ряд 1: 3×460 (плитка 460×450), ряд 2: 4×340 (плитка 340×330), гэп 20/48
-*/
-.hits__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--ko-space-20);
-}
-.hits__grid--small {
-  grid-template-columns: repeat(4, 1fr);
-  margin-top: var(--ko-space-48);
-}
-.hits__grid--small .product-card__media { aspect-ratio: 340 / 240; padding: var(--ko-space-32); }
-.hits .btn { margin-top: var(--ko-space-48); min-width: 200px; }
-
-@media (max-width: 1024px) {
-  .hits__grid, .hits__grid--small { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 480px) {
-  .hits__grid, .hits__grid--small { grid-template-columns: 1fr 1fr; gap: var(--ko-space-12); }
-  .product-card__media { padding: var(--ko-space-16); }
-}
-
-/* ---------- 4. Цифры ----------
-   Заголовок сверху, ниже 4 строки по 164. Колонки 460/460/460, гэп 20.
-*/
-.numbers__row {
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--ko-space-20);
-  min-height: 164px;
-}
-.numbers__label { font: 500 var(--ko-h5-size)/var(--ko-h5-lh) var(--ko-font); }
-.numbers__value {
-  font: 500 var(--ko-h1-size)/var(--ko-h1-lh) var(--ko-font);
-  letter-spacing: -0.02em;
-  text-align: center;
-}
-.numbers__note {
-  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
-  color: var(--ko-text-3);
-  text-align: right;
-}
-
-@media (max-width: 1024px) {
-  .numbers__row { grid-template-columns: 1fr auto; min-height: 120px; }
-  .numbers__note { display: none; }
-  .numbers__value { font-size: 48px; line-height: 56px; }
-}
+/* Мобильный слайдер по макету 26886:5598 (375×640):
+   поля 32/16/16, снизу ряд «кнопка 200 слева — две белые стрелки 48 справа».
+   Стрелки в макете есть: вчерашняя правка по docs/18-mobile.md была ошибкой */
 @media (max-width: 768px) {
-  .numbers__value { font-size: 36px; line-height: 44px; }
+  /* В макете фото прижато к низу, а верх под текстом — ровная тёмная заливка.
+     Поэтому не cover: кадр высотой 420 внизу, канистры выведены по центру */
+  .hero__slide {
+    background-size: auto 420px;
+    background-position: 85% bottom;
+  }
+  /* В макете поверх фото нет ни градиента, ни затемнения: только заливка
+     #131927 под кадром, поэтому наложение убираем совсем */
+  .hero__slide::before { content: none; }
+  .hero__slide .container {
+    padding-block: var(--ko-space-32) var(--ko-space-16);
+    min-height: 640px;
+  }
+  .hero__content { min-height: 0; gap: var(--ko-space-20); }
+  .hero__content .btn { margin-top: auto; width: 200px; min-width: 0; }
+  /* Лид по макету Text base 16/24, а не 18/28 как на десктопе */
+  .hero__text { margin-top: 0; font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); }
+
+  /* Стрелки встают на одну линию с кнопкой: тот же нижний отступ, что у слайда */
+  .hero__controls .container { padding-block: var(--ko-space-16); }
+  .hero__nav { display: flex; justify-self: end; margin-top: 0; }
+  .hero__nav .arrow-btn { width: 48px; height: 48px; }
+  .hero__nav .arrow-btn + .arrow-btn { margin-left: 6px; }
+  .hero__nav .arrow-btn svg { width: var(--ko-icon-normal); height: var(--ko-icon-normal); }
 }
 
-/* ---------- 5. Сертификаты — 7 карточек в ряду ---------- */
-.certificates .carousel { grid-auto-columns: calc((100% - var(--ko-space-20) * 6) / 7); }
 
-@media (max-width: 1024px) { .certificates .carousel { grid-auto-columns: calc((100% - var(--ko-space-20) * 3) / 4); } }
-@media (max-width: 768px)  { .certificates .carousel { grid-auto-columns: calc((100% - var(--ko-space-20)) / 2); } }
 
-/* ---------- 6. Тёмный блок ----------
-   Левая колонка 700 сверху, правая 700 с карточками 340×316, прижатыми к низу.
+/* ---------- 4. Подбор масла (тёмная секция) — 1900×1200 ----------
+   Фото на всю ширину, слева сверху заголовок 700, абзац и кнопка.
    Высота контента 960 при паддингах 120.
 */
 /* Фон — фото из макета плюс градиент 163°, чёрный 29% → прозрачный */
@@ -164,13 +145,14 @@
     linear-gradient(163deg, rgba(0, 0, 0, .29), rgba(0, 0, 0, 0)),
     url("../img/services-bg.jpg");
   background-size: cover, cover;
-  background-position: center, center;
+  /* В макете кадр прижат вправо: слева срезано 330, справа 100.
+     При center мастер уходил за правый край вместе с логотипом на рукаве */
+  background-position: center, 77% center;
 }
 .promo-dark .container {
   position: relative;
   display: grid;
-  grid-template-columns: 700px 700px;
-  justify-content: space-between;
+  grid-template-columns: 700px;
   gap: var(--ko-space-20);
   min-height: 960px;
 }
@@ -181,26 +163,11 @@
   font: 400 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font);
   color: rgba(255, 255, 255, .7);
 }
-.promo-dark__cards {
-  display: grid;
-  grid-template-columns: repeat(2, 340px);
-  gap: var(--ko-space-20);
-  align-self: end;
-  justify-content: end;
-}
-.promo-dark__cards .icon-card { min-height: 316px; align-content: start; }
-
 @media (max-width: 1440px) {
-  .promo-dark .container { grid-template-columns: 1fr 1fr; }
-  .promo-dark__cards { grid-template-columns: 1fr 1fr; }
+  .promo-dark .container { grid-template-columns: minmax(0, 700px); }
 }
 @media (max-width: 1024px) {
-  .promo-dark .container { grid-template-columns: 1fr; min-height: 0; gap: var(--ko-space-40); }
-  .promo-dark__cards { justify-content: stretch; }
-  .promo-dark__cards .icon-card { min-height: 0; }
-}
-@media (max-width: 480px) {
-  .promo-dark__cards { grid-template-columns: 1fr; }
+  .promo-dark .container { grid-template-columns: 1fr; min-height: 560px; gap: var(--ko-space-40); }
 }
 
 /* ---------- 7. Отзывы ----------

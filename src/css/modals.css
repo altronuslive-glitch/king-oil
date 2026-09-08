@@ -35,7 +35,28 @@
 .modal__close:hover { color: var(--ko-icon-3); }
 .modal__close svg { width: 100%; height: 100%; }
 
-.modal__title { margin-bottom: var(--ko-space-24); }
+/* Правое поле под крестик (24 + отступ 16): на узком экране длинный заголовок
+   вроде «Регистрация в King-Oil» подлезал под кнопку закрытия */
+.modal__title { margin-bottom: var(--ko-space-24); padding-right: var(--ko-space-40); }
+
+/* Выбор города в модалке: строки на всю ширину, активная — брендовой рамкой */
+.city-choice { display: grid; gap: var(--ko-space-8); }
+.city-choice__item {
+  display: flex;
+  align-items: center;
+  gap: var(--ko-space-12);
+  padding: var(--ko-space-12) var(--ko-space-16);
+  background: var(--ko-bg-1);
+  border: 2px solid transparent;
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-1);
+  text-align: left;
+  transition: border-color .15s ease, background-color .15s ease;
+}
+.city-choice__item svg { width: 20px; height: 20px; color: var(--ko-icon-2); }
+.city-choice__item:hover { background: var(--ko-bg-2); }
+.city-choice__item.is-active { border-color: var(--ko-border-brand); background: var(--ko-bg-0); }
+.city-choice__item.is-active svg { color: var(--ko-icon-brand); }
 .modal__subtitle {
   margin-bottom: var(--ko-space-24);
   font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
@@ -164,3 +185,9 @@
   .cookies__actions { width: 100%; }
   .cookies__actions .btn { flex: 1; }
 }
+
+/* Экран «Заявка отправлена»: по центру, под галочкой отступ крупнее */
+.modal__success { text-align: center; }
+.modal__success .modal__icon { margin: var(--ko-space-8) auto var(--ko-space-32); }
+.modal__success .modal__subtitle { margin-top: var(--ko-space-8); }
+.modal__success .btn { margin-top: var(--ko-space-32); }

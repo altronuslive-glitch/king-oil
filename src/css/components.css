@@ -14,14 +14,17 @@
   font: 500 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   white-space: nowrap;
   cursor: pointer;
-  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease, opacity .15s ease;
 }
 .btn--primary { background: var(--ko-btn-brand); color: var(--ko-text-0); }
 .btn--primary:hover { background: #e2620a; }
 .btn--secondary { background: var(--ko-btn-grey); color: var(--ko-text-1); }
 .btn--secondary:hover { background: var(--ko-bg-2); }
+/* Белая кнопка: в макете у неё на наведении меняется только прозрачность */
 .btn--white { background: var(--ko-btn-white); color: var(--ko-text-1); }
-.btn--white:hover { background: var(--ko-bg-1); }
+.btn--white:hover { background: var(--ko-btn-white); opacity: .8; }
+.btn--danger { background: var(--ko-bg-error); color: var(--ko-border-error); }
+.btn--danger:hover { background: var(--ko-border-error); color: var(--ko-text-0); }
 .btn--block { width: 100%; }
 .btn:disabled { opacity: .5; cursor: not-allowed; }
 
@@ -38,8 +41,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 52px;
-  height: 52px;
+  width: var(--ko-control-h);
+  height: var(--ko-control-h);
   color: var(--ko-icon-2);
   border-radius: var(--ko-radius);
   transition: background-color .15s ease, color .15s ease;
@@ -68,7 +71,10 @@
   color: var(--ko-icon-3);
   transition: border-color .15s ease, color .15s ease;
 }
-.arrow-btn + .arrow-btn { border-left: 0; }
+/* Кнопки стоят вплотную: рамки накладываются одна на другую, поэтому у второй
+   кнопки левая грань на месте и на наведении не пропадает */
+.arrow-btn { position: relative; }
+.arrow-btn + .arrow-btn { margin-left: -1px; }
 .arrow-btn:hover { border-color: var(--ko-border-4); z-index: 1; }
 .arrow-btn:disabled { opacity: .4; cursor: default; }
 .arrow-btn svg { width: var(--ko-icon-normal); height: var(--ko-icon-normal); }
@@ -84,20 +90,29 @@
 
 .input {
   width: 100%;
-  padding: var(--ko-control-pad-y) var(--ko-space-16);
+  /* 52 по макету = 2 рамки + 12 + строка 24 + 12 + 2.
+     Рамка прозрачная: у залитого поля обводки нет, она только держит высоту */
+  padding: var(--ko-space-12) var(--ko-space-16);
   background: var(--ko-bg-1);
-  border: 1px solid var(--ko-border-1);
+  border: 2px solid transparent;
   border-radius: var(--ko-radius);
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-1);
   transition: border-color .15s ease, background-color .15s ease;
 }
 .input::placeholder { color: var(--ko-text-3); }
-.input:focus { outline: none; border-color: var(--ko-border-brand); background: var(--ko-bg-0); }
+.input:hover { background: var(--ko-bg-2); }
+.input:focus { outline: none; border-color: var(--ko-border-brand); background: var(--ko-bg-1); }
 .input--error { background: var(--ko-bg-error); border-color: var(--ko-border-error); }
 .input--white { background: var(--ko-bg-0); }
 
 textarea.input { min-height: 96px; resize: vertical; }
+
+/* На мобильном поле 48: 2 рамки + 10 + строка 24 + 10 + 2 */
+@media (max-width: 768px) {
+  .input { padding-block: 10px; }
+  textarea.input { padding-block: var(--ko-space-12); }
+}
 
 .field__error {
   font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
@@ -105,33 +120,103 @@ textarea.input { min-height: 96px; resize: vertical; }
 }
 
 /* Селект */
-.select {
-  position: relative;
-  display: block;
-}
-.select select {
+/* ---------- Выпадающий список ----------
+   Кнопка повторяет Base selection (26757:610): заливка, рамка 2, паддинг 18/14,
+   шеврон 24. Панель — как у сортировки в каталоге. Системный <select> не берём:
+   его выпадающий список рисует ОС и стилям не поддаётся.
+*/
+.select { position: relative; display: block; }
+.select__btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ko-space-12);
   width: 100%;
-  padding: var(--ko-control-pad-y) 44px var(--ko-control-pad-y) var(--ko-space-16);
-  background: var(--ko-bg-0);
-  border: 1px solid var(--ko-border-1);
-  border-radius: var(--ko-radius);
+  min-height: var(--ko-control-h);
+  padding: var(--ko-space-12) var(--ko-space-16);
+  background: var(--ko-bg-1);
+  /* обводки у залитого контрола нет: наведение подсвечиваем заливкой,
+     рамка появляется только когда список раскрыт */
+  border: 2px solid transparent;
+  text-align: left;
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-1);
+  transition: border-color .15s ease;
+}
+.select__btn:hover { background: var(--ko-bg-2); }
+.select__btn[aria-expanded="true"] { border-color: var(--ko-border-brand); }
+.select__btn svg {
+  flex: none;
+  width: var(--ko-icon-normal);
+  height: var(--ko-icon-normal);
+  color: var(--ko-icon-2);
+  transition: transform .2s ease;
+}
+.select__btn[aria-expanded="true"] svg { transform: rotate(180deg); }
+.select__value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+/* Подпись селекта всегда чёрная: в фильтрах это название фильтра, а не плейсхолдер */
+.select__value--muted { color: var(--ko-text-1); }
+
+/* На залитой подложке поле белое и без обводки — как Base input в макете
+   (26756:610): рамка нужна только когда контрол стоит на белом */
+.select--white .select__btn,
+.input--white {
+  background: var(--ko-bg-0);
+  border-color: transparent;
+}
+/* Светлый вариант стоит на серой подложке: на наведении он остаётся белым и без
+   обводки — рамка появляется только на фокусе, когда в поле действительно пишут */
+.select--white .select__btn:hover,
+.input--white:hover { background: var(--ko-bg-0); border-color: transparent; }
+.select--white .select__btn[aria-expanded="true"],
+.input--white:focus { border-color: var(--ko-border-brand); background: var(--ko-bg-0); }
+
+.select__panel {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 30;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: var(--ko-space-8) 0;
+  background: var(--ko-bg-0);
+  border: 2px solid var(--ko-border-1);
+  box-shadow: 0 12px 32px rgba(19, 25, 39, .12);
+}
+.select__option {
+  display: flex;
+  align-items: center;
+  gap: var(--ko-space-12);
+  width: 100%;
+  padding: var(--ko-space-10) var(--ko-space-18);
+  text-align: left;
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-1);
+  cursor: pointer;
+  transition: background-color .15s ease;
+}
+.select__option:hover { background: var(--ko-bg-1); }
+.select__option.is-active { color: var(--ko-text-accent); }
+
+/* Мультивыбор: у фильтров каталога пункты с чекбоксами */
+.select__option input {
   appearance: none;
+  flex: none;
+  width: 18px; height: 18px;
+  border: 2px solid var(--ko-border-4);
+  background: var(--ko-bg-0);
   cursor: pointer;
 }
-.select select:focus { outline: none; border-color: var(--ko-border-brand); }
-.select::after {
+.select__option input:checked { background: var(--ko-bg-brand); border-color: var(--ko-bg-brand); }
+.select__option input:checked::after {
   content: "";
-  position: absolute;
-  right: 16px;
-  top: 50%;
-  width: 8px; height: 8px;
-  margin-top: -6px;
-  border-right: 1.5px solid var(--ko-icon-2);
-  border-bottom: 1.5px solid var(--ko-icon-2);
+  display: block;
+  width: 5px; height: 9px;
+  margin: 0 auto;
+  border-right: 2px solid #fff;
+  border-bottom: 2px solid #fff;
   transform: rotate(45deg);
-  pointer-events: none;
 }
 
 /* Чекбокс */
@@ -197,7 +282,7 @@ textarea.input { min-height: 96px; resize: vertical; }
   justify-content: center;
   height: 40px;
   padding-inline: var(--ko-space-16);
-  border: 1px solid var(--ko-border-1);
+  border: 2px solid var(--ko-border-1);
   font: 400 var(--ko-caption-xl-size)/1 var(--ko-font);
   transition: border-color .15s ease, color .15s ease;
 }
@@ -208,28 +293,52 @@ textarea.input { min-height: 96px; resize: vertical; }
 .badge {
   display: inline-flex;
   align-items: center;
-  height: 26px;
-  padding-inline: var(--ko-space-8);
-  font: 500 var(--ko-caption-size)/1 var(--ko-font);
+  padding: var(--ko-space-4) var(--ko-space-8);
+  font: 500 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
   color: var(--ko-text-0);
 }
 .badge--hit { background: var(--ko-other-1); }
-.badge--sale { background: var(--ko-other-2); }
+/* «Нет в наличии» — состояния в макете нет, собрано на нейтральных токенах
+   (решение от 7 сентября, см. docs/22-stock-states.md) */
+.badge--out { background: var(--ko-bg-3); color: var(--ko-text-1); }
+/* Скидка крупнее: Large m 20/28 -> высота 36 (макет 26859:10755) */
+.badge--sale {
+  background: var(--ko-other-2);
+  font: 500 var(--ko-large-size)/var(--ko-large-lh) var(--ko-font);
+}
 
 /* ---------- Карточка товара ----------
    Макет: плитка 460×450 = подложка 460×360 + 20 + блок текста 70.
    Изображение внутри подложки с полями 40.
 */
-.product-card { display: grid; gap: var(--ko-space-8); }
+/* ---------- Карточка товара (тайл) ----------
+   Макет spec tile (26702:35538). Ряды жёсткие, гэп между ними 20:
+   Large  432×556 = картинка 360 + 20 + (цена 34 + 6 + название 28) + 20 + чипсы 28 + 20 + кнопка 40
+   Mini   322×436 = картинка 240 + то же самое
+   Static — изображение с рамкой border-1, Hover — рамка темнеет до bg-3.
+*/
+.product-card {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: var(--ko-space-20);
+  /* название в одну строку с многоточием: без min-width колонка сетки
+     растягивается по его полной длине и ломает раскладку на узких экранах */
+  min-width: 0;
+}
+.product-card__info { min-width: 0; }
 
 .product-card__media {
   position: relative;
-  aspect-ratio: 460 / 360;
-  margin-bottom: var(--ko-space-12); /* 12 + gap 8 = 20 до цены */
-  padding: var(--ko-space-40);
-  background: var(--ko-bg-2);
+  display: block;
+  height: 360px;                 /* Large; Mini переопределяет на 240 */
+  padding: 50px 42px;            /* поля вокруг фотографии из макета */
+  background: var(--ko-bg-0);
+  border: 2px solid var(--ko-border-1);
   overflow: hidden;
+  transition: border-color .15s ease;
 }
+.product-card:hover .product-card__media { border-color: var(--ko-bg-3); }
 .product-card__media img {
   width: 100%;
   height: 100%;
@@ -237,16 +346,41 @@ textarea.input { min-height: 96px; resize: vertical; }
   transition: transform .3s ease;
 }
 .product-card:hover .product-card__media img { transform: scale(1.03); }
+.product-card__media .placeholder { display: block; width: 100%; height: 100%; }
 
-.product-card__badge-hit  { position: absolute; top: 0; left: 0; }
-.product-card__badge-sale { position: absolute; bottom: 0; left: 0; }
+/* Бейджи перекрывают рамку и прижаты к её внешнему краю */
+.product-card__badge-hit  { position: absolute; top: -2px; left: -2px; }
+.product-card__badge-sale { position: absolute; bottom: -2px; left: -2px; }
 
-.product-card__info { display: grid; gap: var(--ko-space-8); }
+/* Кнопка «в избранное» — 34×34 в правом верхнем углу.
+   Отступ у Large 10, у Mini 6 (макеты 26702:35496 и 26702:35539) */
+.product-card__fav {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 34px; height: 34px;
+  color: var(--ko-icon-2);
+  background: none;
+  transition: color .15s ease;
+}
+.product-card__fav svg { width: var(--ko-icon-normal); height: var(--ko-icon-normal); }
+/* По наведению значок только темнеет, заливка — уже выбранное состояние */
+.product-card__fav:hover { color: var(--ko-icon-3); }
+/* --i-fill наследуется внутрь <use>: сам символ нарисован обводкой,
+   снаружи его fill="none" иначе не перебить */
+.product-card__fav.is-active { color: var(--ko-icon-brand); --i-fill: currentColor; }
+
+/* Текстовая часть: отступы заданы полями, а не общим гэпом —
+   между ценой и названием 6, дальше по 20 */
+.product-card__info { display: flex; flex-direction: column; }
 
 .product-card__price {
   display: flex;
   align-items: baseline;
-  gap: var(--ko-space-8);
+  gap: var(--ko-space-12);
   font: 600 var(--ko-large-xl-size)/var(--ko-large-xl-lh) var(--ko-font);
 }
 .product-card__price-old {
@@ -255,20 +389,102 @@ textarea.input { min-height: 96px; resize: vertical; }
   text-decoration: line-through;
 }
 .product-card__title {
-  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
-  color: var(--ko-text-2);
+  display: block;
+  margin-top: 6px;
+  height: 28px;
+  font: 400 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font);
+  color: var(--ko-text-1);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color .15s ease;
 }
+.product-card__title:hover { color: var(--ko-text-accent); }
+
+/* Выбор объёма: варианты одного товара, клик меняет цену на месте */
+.product-card__volumes { display: flex; gap: var(--ko-space-8); margin-top: var(--ko-space-20); }
+.volume {
+  height: 28px;
+  padding: 0 var(--ko-space-10);
+  border: 2px solid var(--ko-border-1);
+  background: var(--ko-bg-0);
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-text-1);
+  transition: border-color .15s ease;
+}
+.volume:hover { border-color: var(--ko-border-4); }
+.volume.is-active { border-color: var(--ko-border-brand); }
+
+.product-card__buy {
+  align-self: start;
+  margin-top: var(--ko-space-20);
+  height: 40px;
+  padding: 0 var(--ko-space-20);
+  background: var(--ko-btn-brand-soft);
+  color: var(--ko-text-links);
+  font: 500 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  transition: background-color .15s ease, color .15s ease;
+}
+/* Ховер по атомам (Secondary buttons/brand-hover): подложка чуть насыщеннее,
+   текст остаётся оранжевым. Срабатывает только на самой кнопке */
+.product-card__buy:hover { background: var(--ko-btn-brand-soft-hover); color: var(--ko-text-links); }
+
+/* ---------- Мобильная плитка (макет spec tile в 26886:5930, ширина 166) ----------
+   Картинка 160 с полями 16/24, между блоками 16, цена Large 1 20/26,
+   название Small 15/20 в одну строку, чипсы и кнопка 14/20 */
+@media (max-width: 768px) {
+  .product-card { gap: var(--ko-space-16); }
+  .product-card__media { height: 160px; padding: var(--ko-space-24) var(--ko-space-16); }
+  .product-card__fav { top: 2px; right: 2px; width: 32px; height: 32px; }
+  .product-card__fav svg { width: 20px; height: 20px; }
+  .product-card__price { font: 600 var(--ko-large-size)/26px var(--ko-font); }
+  .product-card__price-old { font-size: var(--ko-caption-xl-size); }
+  /* Название в одну строку с многоточием — по макету 15/20 */
+  .product-card__title {
+    margin-top: var(--ko-space-4);
+    height: 20px;
+    font: 400 var(--ko-caption-xl-size)/20px var(--ko-font);
+  }
+  .product-card__volumes { margin-top: var(--ko-space-16); gap: var(--ko-space-8); }
+  /* Чипс объёма по макету: поля 4/8, рамка 1.5, кегль 14/20 — высота 31 */
+  .volume {
+    height: auto;
+    padding: var(--ko-space-4) var(--ko-space-8);
+    border-width: 1.5px;
+    font: 400 14px/20px var(--ko-font);
+  }
+  /* «В корзину»: поля 8/20, кегль 14/20 — высота 36 */
+  .product-card__buy {
+    margin-top: var(--ko-space-16);
+    height: auto;
+    padding: var(--ko-space-8) var(--ko-space-20);
+    font: 500 14px/20px var(--ko-font);
+  }
+  /* Бейджи в мобильном макете мельче: −15% не должен спорить с ценой */
+  .badge--sale { font: 500 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font); }
+  .badge { padding: 2px var(--ko-space-8); }
+}
+
+/* ---------- Карточка «нет в наличии» ----------
+   Габариты плитки не меняются: фотография гасится прозрачностью,
+   вместо «В корзину» — «Уведомить о поступлении» на нейтральной подложке.
+   Состояния в макете нет — см. docs/22-stock-states.md */
+.product-card--out .product-card__media img { opacity: .45; }
+.product-card--out .product-card__price { color: var(--ko-text-3); }
+.product-card__badge-out { position: absolute; top: -2px; left: -2px; }
+.product-card__buy--out {
+  background: var(--ko-btn-grey);
+  color: var(--ko-text-2);
+}
+.product-card__buy--out:hover { background: var(--ko-bg-2); color: var(--ko-text-1); }
 
 /* ---------- Карточка статьи ----------
    Макет: 460×452 = картинка 460×260 + 20 + текст 172
 */
-.article-card { display: grid; gap: var(--ko-space-12); align-content: start; }
+.article-card { display: grid; gap: var(--ko-space-8); align-content: start; }
 .article-card__media {
   aspect-ratio: 460 / 260;
-  margin-bottom: var(--ko-space-8); /* 8 + gap 12 = 20 */
+  margin-bottom: var(--ko-space-12); /* 12 + gap 8 = 20 */
   background: var(--ko-bg-2);
   overflow: hidden;
 }
@@ -276,7 +492,6 @@ textarea.input { min-height: 96px; resize: vertical; }
 .article-card__meta {
   display: flex;
   gap: var(--ko-space-16);
-  margin-bottom: var(--ko-space-8);
   font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
 }
 .article-card__rubric { color: var(--ko-text-accent); }
@@ -337,21 +552,32 @@ textarea.input { min-height: 96px; resize: vertical; }
 .row-list__item:last-child { border-bottom: 1px solid var(--ko-border-1); }
 
 /* ---------- Отзывы ----------
-   Макет: карточка 650×384, паддинг 32, звёзды 24 с шагом 28
+   Макет Review / 1 (26702:38795): карточка 672×388, паддинг 32.
+   Шапка 28 (звёзды 24 с шагом 28, справа значок 24 + 12 + «2GIS»),
+   +20 текст 140 (5 строк по 28), +8 ссылка 28, +40 автор 60.
 */
 .review {
   display: flex;
   flex-direction: column;
-  gap: var(--ko-space-8);
-  min-height: 384px;
+  min-height: 388px;
   padding: var(--ko-space-32);
   background: var(--ko-bg-1);
 }
+.review__head { display: flex; align-items: center; justify-content: space-between; gap: var(--ko-space-16); }
+.review__source {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ko-space-12);
+  font: 400 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font);
+  color: #19aa1e;
+  white-space: nowrap;
+}
+.review__source img { width: var(--ko-icon-normal); height: var(--ko-icon-normal); }
 .review__stars { display: flex; gap: var(--ko-space-4); color: var(--ko-icon-brand); }
 .review__stars svg { width: var(--ko-icon-normal); height: var(--ko-icon-normal); }
 .review__stars .is-empty { color: var(--ko-bg-3); }
 .review__text {
-  margin-top: var(--ko-space-12); /* 12 + gap 8 = 20 после звёзд */
+  margin-top: var(--ko-space-20);
   font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
   color: var(--ko-text-2);
   display: -webkit-box;
@@ -361,6 +587,7 @@ textarea.input { min-height: 96px; resize: vertical; }
 }
 .review__more {
   align-self: flex-start;
+  margin-top: var(--ko-space-8);
   color: var(--ko-text-accent);
   font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
 }
@@ -369,20 +596,59 @@ textarea.input { min-height: 96px; resize: vertical; }
   align-items: center;
   gap: var(--ko-space-20);
   margin-top: auto;
-  padding-top: var(--ko-space-32);
+  padding-top: var(--ko-space-40);
 }
 .review__avatar {
+  display: grid;
+  place-items: center;
   width: 60px; height: 60px;
   flex: none;
   border-radius: var(--ko-radius-max);
   background: var(--ko-bg-3);
   object-fit: cover;
+  font: 500 var(--ko-small-size)/1 var(--ko-font);
+  color: var(--ko-text-0);
 }
 .review__name { font: 500 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font); }
 .review__date { font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); color: var(--ko-text-3); }
 
-/* Лента отзывов: карточка 650, встречается на главной, в каталоге и на товаре */
-.reviews .carousel { grid-auto-columns: 650px; }
+/* Лента отзывов: карточка 672 (макет 26702:38559), гэп 20 */
+.reviews .carousel { grid-auto-columns: 672px; }
+
+/* Страница отзывов: две колонки по 700, гэп 20, текст не обрезается */
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--ko-space-20);
+}
+.reviews-grid .review__text {
+  display: block;
+  -webkit-line-clamp: none;
+  overflow: visible;
+}
+
+@media (max-width: 768px) { .reviews-grid { grid-template-columns: 1fr; } }
+
+/* Мобильная карточка отзыва (макет 26899:12878): поля 20 вместо 32,
+   аватар 48, до автора 24. С десктопными отступами она занимала почти экран */
+@media (max-width: 768px) {
+  .review { min-height: 0; padding: var(--ko-space-20); }
+  .review__head { gap: var(--ko-space-8); }
+  .review__source { font-size: var(--ko-caption-xl-size); }
+  .review__source img,
+  .review__stars svg { width: var(--ko-icon-md); height: var(--ko-icon-md); }
+  .review__text {
+    margin-top: var(--ko-space-12);
+    font-size: var(--ko-caption-xl-size);
+    line-height: 22px;
+    -webkit-line-clamp: 4;
+  }
+  .review__more { font-size: var(--ko-caption-xl-size); }
+  .review__author { gap: var(--ko-space-12); padding-top: var(--ko-space-24); }
+  .review__avatar { width: 48px; height: 48px; }
+  .review__name { font-size: var(--ko-caption-xl-size); }
+  .review__date { font-size: var(--ko-caption-size); }
+}
 
 @media (max-width: 1024px) { .reviews .carousel { grid-auto-columns: calc((100% - var(--ko-space-20)) / 2); } }
 @media (max-width: 768px)  { .reviews .carousel { grid-auto-columns: 86%; } }
@@ -453,8 +719,20 @@ textarea.input { min-height: 96px; resize: vertical; }
      и полоса застревает на нулевой ширине */
 }
 
+/* На мобильном карусели листаются свайпом: стрелок в макете нет,
+   полоса прогресса стоит по центру под лентой (docs/18-mobile.md) */
+@media (max-width: 768px) {
+  .carousel-foot {
+    justify-content: center;
+    height: auto;
+    margin-top: var(--ko-space-24);
+  }
+  .carousel-nav { display: none; }
+  .carousel-progress { align-self: center; }
+}
+
 /* ---------- Аккордеон FAQ ---------- */
-.accordion { display: grid; gap: var(--ko-space-12); }
+.accordion { display: grid; gap: var(--ko-space-10); }
 .accordion__item { background: var(--ko-bg-1); transition: background-color .15s ease; }
 .accordion__item:hover { background: var(--ko-bg-2); }
 .accordion__item.is-open { background: var(--ko-bg-0); border: 1px solid var(--ko-border-1); }
@@ -467,11 +745,11 @@ textarea.input { min-height: 96px; resize: vertical; }
   width: 100%;
   padding: var(--ko-space-20) var(--ko-space-24);
   text-align: left;
-  font: 500 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font);
+  font: 500 var(--ko-large-size)/var(--ko-large-lh) var(--ko-font);
 }
 .accordion__chevron {
   flex: none;
-  width: 20px; height: 20px;
+  width: var(--ko-icon-normal); height: var(--ko-icon-normal);
   color: var(--ko-icon-2);
   transition: transform .2s ease;
 }
@@ -491,13 +769,13 @@ textarea.input { min-height: 96px; resize: vertical; }
 }
 
 /* ---------- Пагинация ---------- */
-.pagination { display: flex; align-items: center; gap: var(--ko-space-8); }
+.pagination { display: flex; align-items: center; flex-wrap: wrap; gap: var(--ko-space-8); }
 .pagination__item {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 40px;
-  height: 40px;
+  min-width: 48px;
+  height: 48px;
   padding-inline: var(--ko-space-8);
   border: 1px solid var(--ko-border-1);
   font: 400 var(--ko-caption-xl-size)/1 var(--ko-font);
@@ -510,47 +788,91 @@ textarea.input { min-height: 96px; resize: vertical; }
   color: var(--ko-text-0);
 }
 .pagination__dots { border: 0; }
+
+/* Пагинация каталога: слева «Показать ещё», справа страницы (макет 26846:22913) */
+.pagination-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ko-space-24);
+  flex-wrap: wrap;
+}
+.pagination-row__more { height: 48px; min-width: 150px; padding-block: 0; }
+
+@media (max-width: 768px) {
+  .pagination-row { justify-content: center; }
+  .pagination-row__more { width: 100%; }
+}
+
 .pagination__next { border: 0; padding-inline: var(--ko-space-12); }
 
 /* ---------- Хлебные крошки ---------- */
+/* Ссылка возврата вместо крошек — на страницах, куда приходят из кабинета */
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ko-space-8);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-2);
+  transition: color .15s ease;
+}
+.back-link svg { width: 20px; height: 20px; }
+/* Ссылка стоит вместо крошек, поэтому и отступы у неё те же */
+.back-link { padding-block: var(--ko-space-24) var(--ko-space-40); }
+.back-link:hover { color: var(--ko-text-accent); }
+
 .breadcrumbs {
   display: flex;
   flex-wrap: wrap;
   gap: var(--ko-space-8);
-  padding-block: var(--ko-space-20);
-  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  /* снизу больше воздуха: заголовок страницы не должен липнуть к крошкам */
+  padding-block: var(--ko-space-24) var(--ko-space-40);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-3);
 }
 .breadcrumbs a { color: var(--ko-text-2); }
 .breadcrumbs a:hover { color: var(--ko-text-accent); }
 .breadcrumbs li:not(:last-child)::after { content: " /"; color: var(--ko-text-3); }
 
+/* На мобильном крошки компактнее: кегль 14 и меньше воздуха под ними */
+@media (max-width: 768px) {
+  .breadcrumbs,
+  .back-link { padding-block: var(--ko-space-16) var(--ko-space-20); }
+  .breadcrumbs { font-size: var(--ko-caption-xl-size); line-height: var(--ko-caption-xl-lh); }
+}
+
 /* ---------- Степпер количества 216×52 ----------
    «−», поле, «+» (плюс брендового цвета). Нужен на карточке товара и в корзине. */
+/* Счётчик по макету (26766:1395): три отдельные ячейки — «минус» на серой
+   подложке, поле белое с рамкой, «плюс» на бледно-оранжевой */
 .stepper {
   display: grid;
   grid-template-columns: 52px 1fr 52px;
-  align-items: center;
+  gap: var(--ko-space-4);
+  align-items: stretch;
   width: 216px;
   height: var(--ko-control-h);
-  border: 1px solid var(--ko-border-1);
 }
 .stepper__btn {
   display: grid;
   place-items: center;
   height: 100%;
+  background: var(--ko-bg-1);
   color: var(--ko-icon-3);
-  transition: color .15s ease;
+  transition: background-color .15s ease, color .15s ease;
 }
 .stepper__btn svg { width: var(--ko-icon-md); height: var(--ko-icon-md); }
-.stepper__btn--plus { color: var(--ko-icon-brand); }
+.stepper__btn:hover { background: var(--ko-bg-2); }
+.stepper__btn--plus { background: var(--ko-btn-brand-soft); color: var(--ko-icon-brand); }
+.stepper__btn--plus:hover { background: var(--ko-btn-brand-soft-hover); }
 .stepper__btn:disabled { color: var(--ko-bg-3); cursor: not-allowed; }
+.stepper__btn:disabled:hover { background: var(--ko-bg-1); }
 .stepper__input {
   width: 100%;
   height: 100%;
-  border: 0;
+  border: 1px solid var(--ko-border-1);
   text-align: center;
-  background: none;
+  background: var(--ko-bg-0);
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   appearance: textfield;
 }
@@ -587,4 +909,207 @@ textarea.input { min-height: 96px; resize: vertical; }
   margin-top: 9px;
   background: var(--ko-bg-brand);
   border-radius: var(--ko-radius-max);
+}
+
+/* ---------- Бенто-сетка «Магазин в цифрах» — 1900×1040 ----------
+   Общий блок: главная и «О компании».
+   Сетка 6 колонок по 220 с гэпом 20 даёт ровно макетные 460 и 940:
+   ряд 1 — карточка 460 + фото 940, ряд 2 — три карточки по 460.
+*/
+.numbers {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-auto-rows: 360px;   /* два ряда по 360 + гэп 20 = макетные 740 */
+  gap: var(--ko-space-20);
+}
+/* Подпись сверху, число и пояснение — единой парой у нижнего края:
+   space-between разносил все три строки и число повисало в середине */
+.numbers__card {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  padding: var(--ko-space-32);
+  background: var(--ko-bg-1);
+}
+.numbers__photo {
+  grid-column: span 4;
+  overflow: hidden;
+}
+.numbers__photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.numbers__label { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); }
+.numbers__value {
+  margin-top: auto;
+  font: 500 var(--ko-h1-size)/var(--ko-h1-lh) var(--ko-font);
+  letter-spacing: -0.02em;
+}
+.numbers__note {
+  margin-top: var(--ko-space-12);
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+
+@media (max-width: 1024px) {
+  .numbers { grid-template-columns: repeat(2, 1fr); grid-auto-rows: minmax(220px, auto); }
+  .numbers__card { grid-column: span 1; padding: var(--ko-space-24); }
+  .numbers__photo { grid-column: span 2; min-height: 240px; }
+  .numbers__value { font-size: 48px; line-height: 56px; }
+}
+@media (max-width: 768px) {
+  .numbers { grid-template-columns: 1fr; grid-auto-rows: minmax(200px, auto); }
+  .numbers__card, .numbers__photo { grid-column: span 1; }
+  .numbers__value { font-size: 40px; line-height: 48px; }
+}
+
+/* ---------- Карусель сертификатов — 7 карточек в ряду ---------- */
+.certificates .carousel { grid-auto-columns: calc((100% - var(--ko-space-20) * 6) / 7); }
+
+@media (max-width: 1024px) { .certificates .carousel { grid-auto-columns: calc((100% - var(--ko-space-20) * 3) / 4); } }
+@media (max-width: 768px)  {
+  /* По макету видно две с половиной карточки. Высота больше не фиксирована:
+     при 310 px и узкой колонке cover срезал документ сверху и снизу —
+     теперь кадр по пропорции листа, а снимок вписывается целиком */
+  .certificates .carousel { grid-auto-columns: 45%; }
+  .certificate { height: auto; gap: var(--ko-space-8); }
+  .certificate__img {
+    height: auto;
+    aspect-ratio: 3 / 4;
+    object-fit: contain;
+    background: var(--ko-bg-1);
+  }
+}
+
+/* ============================================================
+   Строки категорий и плитка хитов — общие для главной и раздела
+   каталога (catalog.html), поэтому лежат здесь, а не в home.css
+   ============================================================ */
+
+/* ---------- 2. Категории — 120 / 80, строка 104 ---------- */
+/* Колонки заданы долями, а не пикселями: при контейнере уже 1420
+   фиксированные 380/150/275 не помещались в правую колонку .split */
+.categories__row {
+  grid-template-columns: minmax(0, 380fr) minmax(0, 150fr) minmax(0, 275fr) 32px;
+  min-height: 104px;
+}
+.categories__name { font: 500 var(--ko-h5-size)/var(--ko-h5-lh) var(--ko-font); }
+.categories__count {
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-3);
+  white-space: nowrap;
+}
+.categories__desc {
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+/* Стрелка по макету: 32×32, цвет Icon Color/icon-3 (#131927) */
+.categories__arrow {
+  width: var(--ko-icon-lg);
+  height: var(--ko-icon-lg);
+  color: var(--ko-icon-3);
+  transition: opacity .2s ease, transform .2s ease;
+}
+/* Состояние Hover из макета (cat row 26842:2663): стрелка уходит из правой
+   колонки и появляется слева, строка сдвигается вправо. Сдвиг плавный —
+   в макете это два отдельных состояния, рывок выглядел бы дёрганьем */
+.categories__row {
+  position: relative;
+  padding-left: 0;
+  transition: padding-left .2s ease;
+}
+.categories__arrow--lead {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  margin-top: calc(var(--ko-icon-lg) / -2);
+  opacity: 0;
+  /* выезжает вместе с текстом — на то же расстояние */
+  transform: translateX(calc((var(--ko-icon-lg) + var(--ko-space-24)) * -1));
+}
+.categories__row:hover { padding-left: calc(var(--ko-icon-lg) + var(--ko-space-24)); }
+.categories__row:hover .categories__arrow--lead { opacity: 1; transform: none; }
+/* правая стрелка уезжает вправо и гаснет */
+.categories__row:hover .categories__arrow:not(.categories__arrow--lead) {
+  opacity: 0;
+  transform: translateX(var(--ko-space-24));
+}
+/* в состоянии Hover тексты приглушены: Text Color/text-2 и text-3 */
+.categories__row:hover .categories__name { color: var(--ko-text-2); }
+
+@media (max-width: 1280px) {
+  .categories__row { grid-template-columns: minmax(0, 1fr) auto minmax(0, 275fr) 32px; }
+}
+@media (max-width: 1024px) {
+  .categories__row { grid-template-columns: 1fr auto 32px; gap: var(--ko-space-16); }
+  .categories__name { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); }
+  .categories__desc { display: none; }
+}
+/* Мобильная строка 343×144 (макет 26886:5635): счётчик, название, описание
+   в колонку, стрелка 32 справа */
+@media (max-width: 768px) {
+  .categories__row {
+    grid-template-columns: minmax(0, 1fr) 32px;
+    grid-template-areas:
+      "count arrow"
+      "name  arrow"
+      "desc  arrow";
+    align-content: start;
+    align-items: start;
+    gap: var(--ko-space-12) var(--ko-space-24);
+    min-height: 144px;
+    padding-block: var(--ko-space-20);
+  }
+  .categories__count { grid-area: count; font: 400 var(--ko-caption-size)/16px var(--ko-font); }
+  .categories__name { grid-area: name; font: 500 var(--ko-large-size)/var(--ko-base-lh) var(--ko-font); }
+  .categories__desc {
+    grid-area: desc;
+    display: block;
+    font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  }
+  .categories__arrow { grid-area: arrow; align-self: start; }
+  .categories__arrow--lead { display: none; }
+  .categories__row:hover { padding-left: 0; }
+}
+
+/* ---------- 3. Хиты продаж ----------
+   Ряд 1: 3×460 (плитка 460×450), ряд 2: 4×340 (плитка 340×330), гэп 20/48
+*/
+.hits__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ko-space-20);
+}
+.hits__grid--small {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: var(--ko-space-48);
+}
+/* Вариант Mini: картинка 280 вместо 360 (в макете 240, см. catalog.css) */
+@media (min-width: 769px) {
+  .hits__grid--small .product-card__media { height: 280px; padding: 32px 40px; }
+  .hits__grid--small .product-card__fav { top: 6px; right: 6px; }
+}
+.hits .btn { margin-top: var(--ko-space-48); min-width: 200px; }
+
+@media (max-width: 1024px) {
+  .hits__grid, .hits__grid--small { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+/* Мобильный ряд: две плитки 166 с гэпом 12, между рядами 24 (макет 26886:5929).
+   Обе сетки (3 крупных + 4 мелких) раскрываются в один поток через display:
+   contents — иначе первая обрывалась на нечётной карточке и плитка «ломалась»
+   на 3 и 4, чего в мобильном макете нет */
+@media (max-width: 768px) {
+  .hits .container {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ko-space-24) var(--ko-space-12);
+  }
+  .hits__grid,
+  .hits__grid--small { display: contents; }
+  .hits .section-head,
+  .hits .btn { grid-column: 1 / -1; }
+  /* 24 от gap сетки + 8 = 32 по макету */
+  .hits .section-head { margin-bottom: var(--ko-space-8); }
+  /* В макете ровно 6 плиток (три ряда по две). Седьмая скрыта, иначе последний
+     ряд остаётся с одной карточкой и пустой ячейкой справа */
+  .hits__grid--small .product-card:nth-child(4) { display: none; }
+  .hits .btn { margin-top: 0 !important; justify-self: stretch; }
 }

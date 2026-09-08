@@ -46,7 +46,9 @@
 .cart-row__media {
   width: 88px;
   height: 88px;
-  background: var(--ko-bg-1);
+  padding: var(--ko-space-4);
+  background: var(--ko-bg-0);
+  border: 1px solid var(--ko-border-1);
 }
 .cart-row__media img { width: 100%; height: 100%; object-fit: contain; }
 
@@ -173,6 +175,9 @@
 }
 .cart__grand-value { font: 600 var(--ko-h5-size)/var(--ko-h5-lh) var(--ko-font); }
 
+/* Кнопки в сводке идут друг под другом с зазором */
+.cart__summary .btn--block + .btn--block { margin-top: var(--ko-space-12); }
+
 .cart__promo {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -213,8 +218,12 @@
 
 .checkout__block {
   margin: 0;
+  /* У fieldset собственный min-width: min-content — из-за него блок распирало
+     длинным адресом в селекте пункта самовывоза (на 320-м экране появлялся
+     горизонтальный скролл). Сбрасываем, как и у прочих грид-детей */
+  min-width: 0;
   padding: var(--ko-space-32);
-  border: 1px solid var(--ko-border-1);
+  border: 2px solid var(--ko-border-1);
 }
 /* legend по умолчанию разрывает верхнюю рамку fieldset — float убирает вырез */
 .checkout__legend {
@@ -228,24 +237,31 @@
   font: 600 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font);
   color: var(--ko-text-1);
 }
-.checkout__body { clear: both; display: grid; gap: var(--ko-space-20); }
-.checkout__num {
-  display: grid;
-  place-items: center;
-  width: 32px;
-  height: 32px;
-  background: var(--ko-bg-brand);
-  color: var(--ko-text-0);
-  font: 600 var(--ko-caption-size)/1 var(--ko-font);
-}
+/* minmax(0, …) вместо 1fr: обычный 1fr не даёт колонке сжаться уже своего
+   содержимого, и длинный адрес в селекте пункта самовывоза распирал оформление
+   на узком экране */
+.checkout__body { clear: both; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--ko-space-20); }
+.checkout__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--ko-space-20); }
+.checkout__grid--shipping { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
 
-.checkout__grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ko-space-20); }
-.checkout__grid--shipping { grid-template-columns: 2fr 1fr; }
-
-/* Уточняющие поля под списком способов получения */
+/* Уточняющие поля под списком способов получения.
+   Панель своя у каждого способа, переключается в js/main.js */
 .checkout__sub {
-  padding: var(--ko-space-20);
-  background: var(--ko-bg-1);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ko-space-20);
+  padding-top: var(--ko-space-20);
+  border-top: 1px solid var(--ko-border-1);
+}
+.checkout__map {
+  aspect-ratio: 1020 / 320;
+  background: var(--ko-bg-2);
+  overflow: hidden;
+}
+.checkout__map iframe { display: block; width: 100%; height: 100%; border: 0; }
+.checkout__hint {
+  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  color: var(--ko-text-3);
 }
 
 .checkout__options { display: grid; gap: var(--ko-space-8); }
@@ -261,16 +277,30 @@
   transition: border-color .15s ease, background-color .15s ease;
 }
 .option:hover { border-color: var(--ko-border-4); }
-.option:has(input:checked) {
-  border-color: var(--ko-border-brand);
-  background: var(--ko-bg-1);
-}
+/* выбранный способ отмечаем только рамкой, без серой заливки */
+.option:has(input:checked) { border-color: var(--ko-border-brand); }
+/* Радиокнопка: кольцо 20 с обводкой 2; наведение — темнее, выбранная — брендовая */
 .option input {
+  appearance: none;
+  position: relative;
+  flex: none;
   width: 20px;
   height: 20px;
-  margin: 0;
-  accent-color: var(--ko-bg-brand);
+  margin: 2px 0 0;
+  background: var(--ko-bg-0);
+  border: 2px solid var(--ko-border-4);
+  border-radius: var(--ko-radius-max);
   cursor: pointer;
+  transition: border-color .15s ease;
+}
+.option:hover input { border-color: var(--ko-icon-3); }
+.option input:checked { border-color: var(--ko-bg-brand); }
+.option input:checked::after {
+  content: "";
+  position: absolute;
+  inset: 3px;
+  background: var(--ko-bg-brand);
+  border-radius: var(--ko-radius-max);
 }
 .option__body { display: grid; gap: var(--ko-space-4); }
 .option__title { font: 500 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); color: var(--ko-text-1); }
@@ -282,35 +312,305 @@
 /* ---------- Личный кабинет ---------- */
 .account {
   display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: var(--ko-space-48) var(--ko-space-20);
+  grid-template-columns: 260px 1fr;
+  gap: var(--ko-space-48);
   align-items: start;
 }
 
-.account__nav { display: grid; }
-.account__user {
-  padding-bottom: var(--ko-space-20);
-  margin-bottom: var(--ko-space-12);
-  border-bottom: 1px solid var(--ko-border-1);
-  font: 600 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font);
-  color: var(--ko-text-1);
-}
-.account__user-note {
-  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
-  color: var(--ko-text-3);
-}
+/* Меню кабинета: строка 44, иконка 20, активный пункт на подложке bg-1
+   (структура с референса 26900:27422, разбор в docs/19-account.md) */
+.account__nav { display: grid; gap: var(--ko-space-4); align-content: start; }
 .account__link {
   display: flex;
   align-items: center;
   gap: var(--ko-space-12);
-  padding: var(--ko-space-12) 0;
+  width: 100%;
+  min-height: 44px;
+  padding: var(--ko-space-10) var(--ko-space-16);
+  text-align: left;
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-1);
+  transition: background-color .15s ease, color .15s ease;
+}
+.account__link svg { width: 20px; height: 20px; flex: none; color: var(--ko-icon-2); }
+.account__link:hover { color: var(--ko-text-accent); }
+.account__link:hover svg { color: var(--ko-icon-brand); }
+.account__link.is-active {
+  background: var(--ko-btn-brand-soft);
+  color: var(--ko-text-accent);
+  font-weight: 500;
+}
+.account__link.is-active svg { color: var(--ko-icon-brand); }
+
+/* Карточка «Мои данные» */
+.account__profile {
+  position: relative;
+  padding: var(--ko-space-32);
+  background: var(--ko-bg-1);
+}
+.account__profile-mail {
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+.account__profile-name { margin-top: var(--ko-space-8); }
+.account__profile-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 260px));
+  gap: var(--ko-space-32);
+  margin-top: var(--ko-space-24);
+}
+.account__field { display: grid; gap: var(--ko-space-4); }
+.account__field-label {
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+.account__field-value {
+  display: flex;
+  align-items: center;
+  gap: var(--ko-space-8);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+}
+.account__check { width: 16px; height: 16px; color: var(--ko-other-1); }
+
+/* Аккаунт организации: бейдж у имени и реквизиты в той же сетке полей.
+   Без класса is-company (частное лицо) и бейдж, и реквизиты скрыты */
+.account__badge {
+  display: inline-block;
+  margin-left: var(--ko-space-8);
+  padding: var(--ko-space-4) var(--ko-space-10);
+  background: var(--ko-bg-2);
+  vertical-align: middle;
+  font: 500 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-text-2);
+}
+.account__profile:not(.is-company) .account__badge,
+.account__profile:not(.is-company) .account__field--company { display: none; }
+
+.account__edit {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ko-space-8);
+  color: var(--ko-text-accent);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+}
+.account__edit:hover { text-decoration: underline; }
+.account__profile .account__edit { position: absolute; top: var(--ko-space-32); right: var(--ko-space-32); }
+
+/* Смена e-mail и пароля — служебные ссылки у нижнего края карточки */
+.account__profile-secondary {
+  position: absolute;
+  right: var(--ko-space-32);
+  bottom: var(--ko-space-32);
+  display: flex;
+  gap: var(--ko-space-24);
+}
+.account__minor {
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-3);
+  transition: color .15s ease;
+}
+.account__minor:hover { color: var(--ko-text-accent); text-decoration: underline; }
+
+/* Под карточкой: выход слева, удаление аккаунта — напротив справа */
+.account__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ko-space-16);
+  margin-top: var(--ko-space-24);
+}
+.account__logout {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ko-space-8);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-3);
+  transition: color .15s ease;
+}
+.account__logout svg { width: 18px; height: 18px; }
+.account__logout:hover { color: var(--ko-text-accent); }
+.account__delete {
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-3);
+  transition: color .15s ease;
+}
+.account__delete:hover { color: var(--ko-border-error); text-decoration: underline; }
+
+.account__block { margin-top: var(--ko-space-48); }
+.account__block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ko-space-20);
+  margin-bottom: var(--ko-space-24);
+}
+.account__block-title {
+  margin-bottom: var(--ko-space-12);
+  font: 500 var(--ko-large-size)/var(--ko-large-lh) var(--ko-font);
+}
+.account__block-head .account__block-title { margin-bottom: 0; }
+.account__block-title--lg {
+  margin-bottom: var(--ko-space-24);
+  font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font);
+}
+
+.account__empty { display: grid; justify-items: start; gap: var(--ko-space-8); }
+.account__empty .btn { margin-top: var(--ko-space-16); }
+
+/* Программа лояльности: два состояния карты — предложение активировать
+   (.loyalty--offer) и активная карта с баллами (.loyalty--active) */
+.loyalty {
+  padding: var(--ko-space-32);
+  background: var(--ko-bg-1);
+}
+.loyalty__eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font: 500 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+.loyalty__head {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: var(--ko-space-20);
+}
+.loyalty__value {
+  margin-top: var(--ko-space-4);
+  font: 500 var(--ko-h5-size)/var(--ko-h5-lh) var(--ko-font);
+}
+.loyalty__unit {
+  font: 400 var(--ko-large-size)/var(--ko-large-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+.loyalty__status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ko-space-4);
+  padding: var(--ko-space-4) var(--ko-space-10);
+  background: rgb(61 167 85 / 12%);
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-other-1);
+}
+.loyalty__status svg { width: 14px; height: 14px; }
+
+.loyalty__levels {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ko-space-12);
+  margin-top: var(--ko-space-24);
+}
+.loyalty__level { display: grid; gap: var(--ko-space-8); }
+.loyalty__level-bar { height: 4px; background: var(--ko-bg-3); }
+.loyalty__level.is-done .loyalty__level-bar { background: var(--ko-bg-brand); }
+.loyalty__level-name {
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+.loyalty__level.is-done .loyalty__level-name { color: var(--ko-text-1); }
+.loyalty__note {
+  margin-top: var(--ko-space-20);
+  max-width: 620px;
+  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
+  color: var(--ko-text-2);
+}
+
+/* Карта не активирована: заголовок с предложением и список преимуществ */
+.loyalty__title { margin-top: var(--ko-space-8); max-width: 620px; }
+.loyalty__benefits {
+  display: grid;
+  gap: var(--ko-space-12);
+  margin-top: var(--ko-space-24);
+  list-style: none;
+}
+.loyalty__benefits li {
+  display: flex;
+  align-items: start;
+  gap: var(--ko-space-12);
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-2);
 }
-.account__link svg { width: 20px; height: 20px; color: var(--ko-icon-2); }
-.account__link:hover,
-.account__link.is-active { color: var(--ko-text-accent); }
-.account__link.is-active svg { color: var(--ko-icon-brand); }
+.loyalty__benefits svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  margin-top: 1px;
+  color: var(--ko-icon-brand);
+}
+
+/* Действия: кнопка и ссылка «Подробнее об акциях» внутри самой карточки */
+.loyalty__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ko-space-24);
+  margin-top: var(--ko-space-32);
+}
+
+/* Заказы: карточка целиком — ссылка, справа стрелка вместо «Подробнее».
+   Карточка залита (--ko-bg-1), фото товаров — белые плитки с обводкой */
+.orders { display: grid; gap: var(--ko-space-16); }
+.order-card {
+  position: relative;
+  display: grid;
+  gap: var(--ko-space-16);
+  padding: var(--ko-space-24) var(--ko-space-64) var(--ko-space-24) var(--ko-space-24);
+  background: var(--ko-bg-1);
+  transition: background-color .15s ease;
+}
+.order-card:hover { background: var(--ko-bg-2); }
+.order-card__top { display: grid; gap: var(--ko-space-4); }
+.order-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--ko-space-12);
+}
+.order-card__num { font: 500 var(--ko-large-size)/var(--ko-large-lh) var(--ko-font); }
+.order-card__meta {
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+.order-card__sum { font-weight: 500; color: var(--ko-text-1); white-space: nowrap; }
+.order-card__items { display: flex; align-items: center; gap: var(--ko-space-8); }
+.order-card__thumb,
+.order-card__more {
+  width: 56px;
+  height: 56px;
+  background: var(--ko-bg-0);
+  border: 1px solid var(--ko-border-1);
+}
+.order-card__thumb { padding: var(--ko-space-4); }
+.order-card__thumb img { width: 100%; height: 100%; object-fit: contain; }
+.order-card__more {
+  display: grid;
+  place-items: center;
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+.order-card__arrow {
+  position: absolute;
+  top: 50%;
+  right: var(--ko-space-32);
+  width: 24px;
+  height: 24px;
+  margin-top: -12px;
+  color: var(--ko-icon-2);
+}
+
+/* Промокоды */
+.promocodes { display: grid; gap: var(--ko-space-20); }
+.promocode {
+  padding: var(--ko-space-24);
+  background: var(--ko-bg-1);
+  border-left: 4px solid var(--ko-bg-brand);
+}
+.promocode__code { font: 600 var(--ko-large-xl-size)/var(--ko-large-xl-lh) var(--ko-font); }
+.promocode__note {
+  margin-top: var(--ko-space-8);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-2);
+}
+.promocode--used { border-left-color: var(--ko-bg-3); }
+.promocode--used .promocode__code { color: var(--ko-text-3); }
 
 .account__cards {
   display: grid;
@@ -349,89 +649,72 @@
   padding: var(--ko-space-4) var(--ko-space-10);
   font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
 }
-.status--progress { background: var(--ko-bg-2); color: var(--ko-text-2); }
+.status--progress { background: var(--ko-bg-0); color: var(--ko-text-2); }
 .status--done { background: rgb(61 167 85 / 12%); color: var(--ko-other-1); }
 .status--cancel { background: var(--ko-bg-error); color: var(--ko-border-error); }
 
-/* ---------- Избранное: карточка товара с кнопкой-сердцем ---------- */
-.product-card--wish { position: relative; }
-.product-card__link { display: grid; gap: var(--ko-space-8); }
-.product-card__buy {
-  margin-top: var(--ko-space-12);
-  width: 100%;
-  gap: var(--ko-space-8);
-}
-.product-card__buy svg { width: 20px; height: 20px; }
-
-.wish-btn {
-  position: absolute;
-  top: var(--ko-space-12);
-  right: var(--ko-space-12);
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 40px;
-  height: 40px;
-  background: var(--ko-bg-0);
-  color: var(--ko-icon-2);
-  box-shadow: 0 4px 12px rgb(19 25 39 / 10%);
-}
-.wish-btn svg { width: 20px; height: 20px; }
-.wish-btn.is-active { color: var(--ko-icon-brand); }
-.wish-btn.is-active svg { fill: currentColor; }
+/* Карточка избранного — общий компонент .product-card из components.css,
+   сердце помечено data-wish-remove */
 
 /* ---------- Страница оформленного заказа ---------- */
 .order { display: grid; grid-template-columns: 940px 460px; justify-content: space-between; gap: var(--ko-space-20); align-items: start; }
 
 .order-hero {
   display: grid;
-  justify-items: start;
   gap: var(--ko-space-16);
-  padding: var(--ko-space-40);
   margin-bottom: var(--ko-space-40);
-  background: var(--ko-bg-1);
 }
-.order-hero__icon { margin-bottom: var(--ko-space-8); }
 .order-hero__title { margin: 0; }
+/* Финал оформления: галочка, заголовок и подводка по центру */
+.order-hero--center { justify-items: center; text-align: center; padding-top: var(--ko-space-40); }
+.order-hero--center .order-hero__text { margin-inline: auto; }
+.order-hero__icon { margin: 0 0 var(--ko-space-8); }
 .order-hero__text {
   max-width: 640px;
   font: 400 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font);
   color: var(--ko-text-2);
 }
 
-.order-steps {
+/* Этапы заказа: четыре полоски с небольшой точкой в начале каждой.
+   Пройденные — фирменные, будущие — серые; подпись под полоской */
+.order-progress {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--ko-space-8);
+  gap: var(--ko-space-12);
   margin-bottom: var(--ko-space-48);
+  list-style: none;
 }
-.order-step { display: grid; justify-items: center; gap: var(--ko-space-8); text-align: center; position: relative; }
-.order-step::before {
+.order-progress__step { display: grid; gap: var(--ko-space-12); }
+.order-progress__bar {
+  position: relative;
+  height: 2px;
+  background: var(--ko-bg-2);
+}
+.order-progress__bar::before {
   content: "";
   position: absolute;
-  top: 18px;
-  left: 50%;
-  width: 100%;
-  height: 2px;
-  background: var(--ko-border-1);
-}
-.order-step:last-child::before { display: none; }
-.order-step__dot {
-  position: relative;
-  z-index: 1;
-  display: grid;
-  place-items: center;
-  width: 36px;
-  height: 36px;
+  left: 0;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  margin-top: -3px;
   border-radius: var(--ko-radius-max);
-  background: var(--ko-bg-2);
-  color: var(--ko-text-3);
-  font: 600 var(--ko-small-size)/1 var(--ko-font);
+  background: var(--ko-bg-3);
 }
-.order-step__dot svg { width: 18px; height: 18px; }
-.order-step.is-done .order-step__dot { background: var(--ko-other-1); color: var(--ko-text-0); }
-.order-step.is-active .order-step__dot { background: var(--ko-bg-brand); color: var(--ko-text-0); }
-.order-step__label { font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font); color: var(--ko-text-2); }
+.order-progress__label {
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+.order-progress__step.is-done .order-progress__bar,
+.order-progress__step.is-active .order-progress__bar { background: var(--ko-bg-brand); }
+.order-progress__step.is-done .order-progress__bar::before,
+.order-progress__step.is-active .order-progress__bar::before { background: var(--ko-bg-brand); }
+.order-progress__step.is-done .order-progress__label { color: var(--ko-text-2); }
+.order-progress__step.is-active .order-progress__label { color: var(--ko-text-1); }
+
+@media (max-width: 768px) {
+  .order-progress { grid-template-columns: repeat(2, 1fr); gap: var(--ko-space-16); }
+}
 
 .order__subtitle { margin-bottom: var(--ko-space-16); }
 .order-facts { width: 100%; border-collapse: collapse; margin-bottom: var(--ko-space-24); }
@@ -471,6 +754,41 @@
   .cart__summary { position: static; }
   .account { grid-template-columns: 1fr; }
   .account__cards { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  /* Лента разделов доходит до краёв экрана: обрезка ровно по границе контейнера
+     читается как обрубленный текст, а край экрана — как продолжение ленты.
+     Тот же приём, что у ряда категорий в шапке */
+  .account__nav {
+    display: flex;
+    gap: var(--ko-space-8);
+    overflow-x: auto;
+    scrollbar-width: none;
+    margin-bottom: var(--ko-space-24);
+    margin-inline: calc(var(--ko-page-pad) * -1);
+    padding-inline: var(--ko-page-pad);
+  }
+  .account__nav::-webkit-scrollbar { display: none; }
+  .account__link { width: auto; flex: none; white-space: nowrap; }
+  .account__profile { padding: var(--ko-space-20); }
+  /* Кнопка правки в потоке уходит под имя и поля, а не перед почтой:
+     сверху она читалась как заголовок карточки */
+  .account__profile .account__edit { position: static; order: 1; margin-top: var(--ko-space-16); }
+  .account__profile { display: flex; flex-direction: column; align-items: flex-start; }
+  .account__profile > :not(.account__edit) { order: 0; width: 100%; }
+  .account__profile-secondary {
+    position: static;
+    flex-wrap: wrap;
+    gap: var(--ko-space-16);
+    margin-top: var(--ko-space-20);
+  }
+  .account__profile-fields { grid-template-columns: 1fr; gap: var(--ko-space-16); }
+  .loyalty { padding: var(--ko-space-24); }
+  .loyalty__levels { grid-template-columns: 1fr; }
+  .loyalty__head { flex-direction: column; gap: var(--ko-space-12); }
+  .loyalty__actions { flex-direction: column; align-items: start; gap: var(--ko-space-16); }
+  .order-card { padding: var(--ko-space-20) var(--ko-space-48) var(--ko-space-20) var(--ko-space-20); }
+  .order-card__arrow { right: var(--ko-space-16); }
 }
 @media (max-width: 900px) {
   /* Таблица разворачивается в карточки: подписи колонок переезжают внутрь строк */
@@ -524,9 +842,6 @@
   .checkout__grid,
   .checkout__grid--shipping { grid-template-columns: 1fr; }
   .account__cards { grid-template-columns: 1fr; }
-  .account__table thead { display: none; }
-  .account__table tbody tr { display: grid; gap: var(--ko-space-4); padding: var(--ko-space-16) var(--ko-space-20); }
-  .account__table td { padding: 0; }
 
   .notfound__actions { flex-direction: column; width: 100%; }
   .notfound__links { flex-wrap: wrap; justify-content: center; }

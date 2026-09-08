@@ -18,13 +18,21 @@
    Ниже ряд из четырёх превью 100×100 с шагом 116.
 */
 .gallery__main {
-  display: grid;
-  place-items: center;
+  position: relative;
   aspect-ratio: 620 / 560;
-  padding: var(--ko-space-80);
-  background: var(--ko-bg-2);
+  background: var(--ko-bg-0);
+  border: 2px solid var(--ko-border-1);
 }
-.gallery__main img { width: 100%; height: 100%; object-fit: contain; }
+/* Фото позиционируем абсолютно: иначе его собственная высота растягивает кадр.
+   Размер задаём областью, а не натуральной величиной файла: у снимков разное
+   разрешение (556×560, 250×250 и т. д.), и при auto мелкие показывались меньше */
+.gallery__main img {
+  position: absolute;
+  inset: var(--ko-space-80);
+  width: calc(100% - var(--ko-space-80) * 2);
+  height: calc(100% - var(--ko-space-80) * 2);
+  object-fit: contain;
+}
 
 .gallery__thumbs {
   display: flex;
@@ -37,12 +45,12 @@
   width: 100px;
   height: 100px;
   padding: var(--ko-space-16);
-  background: var(--ko-bg-2);
-  border: 1px solid transparent;
+  background: var(--ko-bg-0);
+  border: 2px solid var(--ko-border-1);
   transition: border-color .15s ease;
 }
 .gallery__thumb img { width: 100%; height: 100%; object-fit: contain; }
-.gallery__thumb:hover { border-color: var(--ko-border-4); }
+.gallery__thumb:hover { border-color: var(--ko-bg-3); }
 .gallery__thumb.is-active { border-color: var(--ko-border-brand); }
 
 /* ---------- Инфоблок ---------- */
@@ -129,8 +137,26 @@
   .product { grid-template-columns: 1fr; gap: var(--ko-space-32); }
   .gallery__main { padding: var(--ko-space-40); }
 }
+
+/* ---------- Мобильный вид карточки ----------
+   Десктопные кегли и отступы растягивали инфоблок почти на 900 px:
+   цена 48/52, описание 18/28, зазор между блоками 24. Ужимаем по мобильному
+   ритму: цена H5, тексты 15–16, зазоры 16 (решение от 8 сентября) */
+@media (max-width: 768px) {
+  .product { gap: var(--ko-space-24); }
+  .product-info { gap: var(--ko-space-16); }
+  .product-info__price-now { font: 500 28px/34px var(--ko-font); }
+  .product-info__price-unit,
+  .product-info__price-old,
+  .product-info__stock { font: 400 var(--ko-caption-xl-size)/22px var(--ko-font); }
+  .product-info__tags { gap: var(--ko-space-8); }
+  .product-info__tags .tag { height: 28px; padding-inline: var(--ko-space-10); font-size: var(--ko-caption-size); }
+  .product-info__volume { gap: var(--ko-space-8); }
+}
 @media (max-width: 480px) {
-  .gallery__thumb { width: 72px; height: 72px; padding: var(--ko-space-10); }
+  /* Превью резиновые: четыре штуки по 72 с шагом 16 требуют 336 и на 320-м
+     экране распирали страницу. Делим доступную ширину поровну */
+  .gallery__thumb { flex: 1 1 0; width: auto; height: auto; aspect-ratio: 1; padding: var(--ko-space-10); }
   .product-info__actions .btn { width: 100%; }
 }
 
@@ -144,12 +170,14 @@
   gap: var(--ko-space-64);
   align-items: start;
 }
+/* Строка 56 = 16 + текст 24 + 15 + рамка 1, между строками 4 (макет 26778:1389) */
+.specs > div { display: grid; gap: var(--ko-space-4); align-content: start; }
 .specs__row {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: var(--ko-space-24);
-  padding-block: var(--ko-space-16);
+  padding: var(--ko-space-16) 0 15px;
   border-bottom: 1px solid var(--ko-border-1);
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
 }
@@ -161,21 +189,44 @@
 /* ---------- Описание — 1900×772 ----------
    Подложка --ko-bg-1 на всю ширину, текст в колонке ~800.
 */
-.product-about__block { max-width: 800px; }
-.product-about__block + .product-about__block { margin-top: var(--ko-space-64); }
-.product-about__block h2 { margin-bottom: var(--ko-space-24); }
+.product-about__block { max-width: 900px; }
+.product-about__block + .product-about__block { margin-top: var(--ko-space-80); }
+.product-about__block h2 { margin-bottom: var(--ko-space-32); }
 .product-about__block p {
   font: 400 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font);
   color: var(--ko-text-2);
 }
-.product-about__block p + p { margin-top: var(--ko-space-20); }
+.product-about__block p + p { margin-top: var(--ko-space-24); }
 
 /* ---------- Похожие товары — 4 карточки в ряд, гэп 20 ---------- */
-.similar-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--ko-grid-gap-x);
+/* Похожие товары — плитки Large 337x556, гэп 24 (макет 26779:1389) */
+.similar-carousel {
+  gap: var(--ko-space-24);
+  grid-auto-columns: calc((100% - var(--ko-space-24) * 3) / 4);
 }
-.similar-grid .product-card__media { aspect-ratio: 335 / 300; padding: var(--ko-space-32); }
 
-@media (max-width: 1024px) { .similar-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1024px) { .similar-carousel { grid-auto-columns: calc((100% - var(--ko-space-24)) / 2); } }
+/* На мобильном плитка та же, что в листинге (166 с гэпом 12), иначе карточка
+   растягивалась на 295 и её картинка не совпадала с каталогом */
+@media (max-width: 768px)  {
+  .similar-carousel {
+    grid-auto-columns: 166px;
+    gap: var(--ko-space-12);
+  }
+}
+
+/* ---------- Мобильный текст карточки ----------
+   Блок стоит в конце файла: правила описания и характеристик объявлены ниже
+   мобильной секции выше, и та бы их не перебила.
+   Описание и таблицы — 15/22 вместо 18/28, отступы вдвое меньше */
+@media (max-width: 768px) {
+  .product-about__block p { font: 400 var(--ko-caption-xl-size)/22px var(--ko-font); }
+  .product-about__block + .product-about__block { margin-top: var(--ko-space-32); }
+  .product-about__block h2 { margin-bottom: var(--ko-space-16); }
+  .product-about__block p + p { margin-top: var(--ko-space-12); }
+  .specs { gap: var(--ko-space-24); }
+  .specs__row {
+    padding: var(--ko-space-12) 0 11px;
+    font: 400 var(--ko-caption-xl-size)/22px var(--ko-font);
+  }
+}

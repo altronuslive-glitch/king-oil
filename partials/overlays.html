@@ -21,7 +21,7 @@
         <input class="input" type="password" autocomplete="current-password">
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
-      <a class="modal__link" href="#">Забыли пароль?</a>
+      <a class="modal__link" href="#" data-modal-open="recover">Забыли пароль?</a>
       <div class="modal__actions">
         <button class="btn btn--primary btn--block" type="submit">Войти</button>
         <button class="btn btn--secondary btn--block" type="button" data-modal-open="register">Регистрация</button>
@@ -50,8 +50,6 @@
         <input class="input" type="password" autocomplete="new-password">
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
-      <label class="field"><span class="field__label">Дата рождения</span><input class="input" type="date"></label>
-
       <label class="switch"><input type="checkbox" data-toggle-company>Аккаунт для компании</label>
 
       <div class="modal__body" hidden data-company-fields>
@@ -66,7 +64,7 @@
 
       <label class="checkbox">
         <input type="checkbox">
-        <span>Я даю согласие на обработку моих персональных данных в порядке и на условиях, указанных в <a href="#">Согласии на обработку персональных данных</a>, и подтверждаю ознакомление с <a href="#">Политикой конфиденциальности</a> и <a href="#">Пользовательским соглашением</a></span>
+        <span>Я даю согласие на обработку моих персональных данных в порядке и на условиях, указанных в <a href="legal.html">Согласии на обработку персональных данных</a>, и подтверждаю ознакомление с <a href="legal.html">Политикой конфиденциальности</a> и <a href="legal.html">Пользовательским соглашением</a></span>
       </label>
     </form>
   </div>
@@ -87,10 +85,23 @@
       <div class="modal__actions"><button class="btn btn--primary btn--block" type="submit">Отправить</button></div>
     </form>
 
-    <div hidden data-form-success>
+    <div class="modal__success" hidden data-form-success>
       <div class="modal__icon"><svg><use href="#i-check"></use></svg></div>
-      <h3 class="h5" style="text-align:center">Заявка отправлена!</h3>
-      <p class="modal__subtitle" style="text-align:center;margin-top:8px">Ваша заявка успешно отправлена. В ближайшее время с вами свяжется менеджер.</p>
+      <h3 class="h5">Заявка отправлена!</h3>
+      <p class="modal__subtitle">Ваша заявка успешно отправлена. В ближайшее время с вами свяжется менеджер.</p>
+      <button class="btn btn--primary btn--block" type="button" data-close>Отлично!</button>
+    </div>
+  </div>
+</div>
+
+<!-- Успешная отправка формы со страницы: сама форма остаётся на месте -->
+<div class="modal" hidden data-modal="sent">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="sent-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <div class="modal__success">
+      <div class="modal__icon"><svg><use href="#i-check"></use></svg></div>
+      <h2 class="h5" id="sent-title">Заявка отправлена!</h2>
+      <p class="modal__subtitle">Ваша заявка успешно отправлена. В ближайшее время с вами свяжется менеджер.</p>
       <button class="btn btn--primary btn--block" type="button" data-close>Отлично!</button>
     </div>
   </div>
@@ -106,3 +117,139 @@
   </div>
 </div>
 
+<!-- Изменение профиля (макет 4163:133053) -->
+<div class="modal" hidden data-modal="profile">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="profile-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="profile-title">Личные данные</h2>
+    <form class="modal__body">
+      <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" value="Евгений Раскудаев" autocomplete="name"></label>
+      <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" value="+7 (913) 000-00-00" autocomplete="tel"></label>
+      <!-- E-mail отсюда убран: он меняется своей модалкой `email` — нужен пароль
+           и подтверждение по ссылке, иначе адрес входа меняется одним «Сохранить» -->
+      <!-- Тип аккаунта выбирается один раз при регистрации и здесь не меняется,
+           но реквизиты организации редактируются: у аккаунта компании эти два поля
+           видны, у частного лица блок убирается -->
+      <label class="field"><span class="field__label">Название организации</span><input class="input" type="text" value="ООО «Сибавтотрейд»" autocomplete="organization"></label>
+      <label class="field"><span class="field__label">ИНН</span><input class="input" type="text" inputmode="numeric" value="5503193478"></label>
+      <div class="modal__actions">
+        <button class="btn btn--primary btn--block" type="submit">Сохранить</button>
+        <button class="btn btn--secondary btn--block" type="button" data-close>Отмена</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Удаление аккаунта: шаг с подтверждением, чтобы это не был случайный клик -->
+<div class="modal" hidden data-modal="delete-account">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="delete-account-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="delete-account-title">Удалить аккаунт</h2>
+    <p class="modal__subtitle">Вместе с аккаунтом удалятся история заказов, избранное и накопленные баллы. Восстановить их будет нельзя.</p>
+    <form class="modal__body">
+      <label class="field field--password">
+        <span class="field__label">Текущий пароль</span>
+        <input class="input" type="password" autocomplete="current-password">
+        <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
+      </label>
+      <div class="modal__actions">
+        <button class="btn btn--danger btn--block" type="submit">Удалить аккаунт</button>
+        <button class="btn btn--secondary btn--block" type="button" data-close>Отмена</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Смена e-mail: своей отрисовки в макете нет, собрана по образцу модалки пароля -->
+<div class="modal" hidden data-modal="email">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="email-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="email-title">Смена e-mail</h2>
+    <p class="modal__subtitle">Текущий адрес — e.raskudaev@gmail.com. На новый мы отправим письмо со ссылкой для подтверждения.</p>
+    <form class="modal__body">
+      <label class="field"><span class="field__label">Новый e-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email"></label>
+      <label class="field field--password">
+        <span class="field__label">Текущий пароль</span>
+        <input class="input" type="password" autocomplete="current-password">
+        <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
+      </label>
+      <div class="modal__actions">
+        <button class="btn btn--primary btn--block" type="submit">Сохранить</button>
+        <button class="btn btn--secondary btn--block" type="button" data-close>Отмена</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Изменение пароля (макет 4136:84095) -->
+<div class="modal" hidden data-modal="password">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="password-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="password-title">Смена пароля</h2>
+    <form class="modal__body">
+      <label class="field field--password">
+        <span class="field__label">Текущий пароль</span>
+        <input class="input" type="password" autocomplete="current-password">
+        <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
+      </label>
+      <label class="field field--password">
+        <span class="field__label">Новый пароль</span>
+        <input class="input" type="password" autocomplete="new-password">
+        <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
+      </label>
+      <label class="field field--password">
+        <span class="field__label">Повторите новый пароль</span>
+        <input class="input" type="password" autocomplete="new-password">
+        <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
+      </label>
+      <div class="modal__actions">
+        <button class="btn btn--primary btn--block" type="submit">Сохранить</button>
+        <button class="btn btn--secondary btn--block" type="button" data-close>Отмена</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Выбор города: на мобильном список открывается модалкой (решение от 8 сентября) -->
+<div class="modal" hidden data-modal="city">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="city-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="city-title">Выберите город</h2>
+    <p class="modal__subtitle">От города зависят телефоны, адреса пунктов выдачи и сроки доставки.</p>
+    <div class="city-choice">
+      <button class="city-choice__item is-active" type="button" data-city-set="omsk">
+        <svg><use href="#i-pin"></use></svg><span>Омск</span>
+      </button>
+      <button class="city-choice__item" type="button" data-city-set="tyumen">
+        <svg><use href="#i-pin"></use></svg><span>Тюмень</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Восстановление пароля — состояния в макете нет, собрано по образцу «Входа» и data-form-success -->
+<div class="modal" hidden data-modal="recover">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="recover-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="recover-title">Восстановление пароля</h2>
+    <p class="modal__subtitle">Укажите e-mail, на который зарегистрирован аккаунт. Мы пришлём ссылку для создания нового пароля.</p>
+
+    <form class="modal__body" data-form>
+      <label class="field">
+        <span class="field__label">E-mail</span>
+        <input class="input" type="email" placeholder="mail@example.com" autocomplete="email" required>
+      </label>
+      <div class="modal__actions">
+        <button class="btn btn--primary btn--block" type="submit">Отправить ссылку</button>
+        <button class="btn btn--secondary btn--block" type="button" data-modal-open="login">Вспомнил пароль</button>
+      </div>
+    </form>
+
+    <div class="modal__success" hidden data-form-success>
+      <div class="modal__icon"><svg><use href="#i-check"></use></svg></div>
+      <h3 class="h5">Проверьте почту</h3>
+      <p class="modal__subtitle">Мы отправили ссылку для восстановления пароля. Если письма нет — проверьте папку «Спам».</p>
+      <button class="btn btn--primary btn--block" type="button" data-close>Понятно</button>
+    </div>
+  </div>
+</div>

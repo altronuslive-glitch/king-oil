@@ -7,7 +7,7 @@
    Макет: крошки 68–72, H1 72 (Heading 2 64/72).
    На «Как купить» и «Контактах» блок заголовка 120 — снизу добавлено 48.
 */
-.page-head__title { margin-top: var(--ko-space-8); }
+.page-head__title { margin-top: 0; }
 .page-head--pb-48 { padding-bottom: var(--ko-space-48); }
 
 /* Мелкие вертикальные отступы секций, которых нет в base.css */
@@ -15,16 +15,24 @@
 .section--pb-0  { padding-bottom: 0; }
 .section--pt-40 { padding-top: var(--ko-space-40); }
 .section--pb-40 { padding-bottom: var(--ko-space-40); }
+/* Ритм информационных разделов: 50 сверху и снизу, у последнего блока перед
+   формой снизу 120. На мобильном — прежние 40 (80 между блоками) */
+.section--pt-50 { padding-top: 50px; }
+.section--pb-50 { padding-bottom: 50px; }
+.section--pt-32 { padding-top: var(--ko-space-32); }
 .section--pt-48 { padding-top: var(--ko-space-48); }
 .section--pb-48 { padding-bottom: var(--ko-space-48); }
 
 @media (max-width: 768px) {
   .section--pt-48 { padding-top: var(--ko-space-32); }
   .section--pb-48 { padding-bottom: var(--ko-space-32); }
+  .section--pt-50 { padding-top: var(--ko-space-40); }
+  .section--pb-50 { padding-bottom: var(--ko-space-40); }
 }
 
 /* Шапка секции с уменьшенным отступом: в макете у карточек-фич он 40, не 48 */
-.section-head--tight { margin-bottom: var(--ko-space-40); }
+.section-head--tight,
+.section-head--40 { margin-bottom: var(--ko-space-40); }
 
 /* Подводка под заголовком секции — в макете ширина около 660 */
 .section-head__lead {
@@ -34,9 +42,9 @@
 }
 
 /* ---------- Карточки-фичи (доставка, оплата, шаги) ----------
-   Макет: карточка на подложке --ko-bg-1, паддинг 24, внутри белый квадрат
-   64×64 с иконкой 32, ниже заголовок Heading 6 и описание Caption xl.
-   Расстояние от квадрата до заголовка — 64.
+   Макет обновлён 7 сентября (26847:25852): карточка на подложке --ko-bg-1,
+   паддинг 24, иконка 32 лежит прямо на подложке — белого квадрата больше нет,
+   до заголовка 64, ниже заголовок Heading 6 и описание Caption xl.
 */
 .features {
   display: grid;
@@ -56,19 +64,32 @@
 .features--steps { --feature-h: 320px; }
 
 .feature__icon {
-  display: grid;
-  place-items: center;
-  width: 64px;
-  height: 64px;
+  display: flex;
+  align-items: center;
+  height: 32px;
   margin-bottom: var(--ko-space-64);
-  background: var(--ko-bg-0);
   color: var(--ko-icon-3);
 }
 .feature__icon svg { width: var(--ko-icon-lg); height: var(--ko-icon-lg); }
 .feature__icon--brand { color: var(--ko-icon-brand); }
-.feature__num { font: 600 var(--ko-large-xl-size)/var(--ko-large-xl-lh) var(--ko-font); }
+.feature__num {
+  font: 600 var(--ko-large-xl-size)/var(--ko-large-xl-lh) var(--ko-font);
+  color: var(--ko-text-accent);
+}
 
 .feature__title { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); }
+/* Карточка адреса: без иконки, текст на ступень мельче обычной фичи */
+.feature--address { min-height: 0; }
+.feature--address .feature__title { font: 500 var(--ko-large-size)/var(--ko-large-lh) var(--ko-font); }
+.feature--address .feature__text { font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font); }
+
+/* Срок в карточке этапа: прижат к низу, размером основного текста */
+.feature__time {
+  margin-top: auto;
+  padding-top: var(--ko-space-20);
+  font: 500 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font);
+  color: var(--ko-text-accent);
+}
 .feature__text {
   margin-top: var(--ko-space-12);
   font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
@@ -78,7 +99,7 @@
 @media (max-width: 1024px) {
   .features { grid-template-columns: repeat(2, 1fr); }
   .feature { min-height: 0; }
-  .feature__icon { margin-bottom: var(--ko-space-32); }
+  .feature__icon { margin-bottom: var(--ko-space-40); }
 }
 @media (max-width: 480px) {
   .features { grid-template-columns: 1fr; }
@@ -118,6 +139,12 @@
 @media (max-width: 1024px) {
   .cta-form .container { grid-template-columns: 1fr; min-height: 0; gap: var(--ko-space-40); }
   .cta-form__title { margin-top: var(--ko-space-24); }
+}
+@media (max-width: 768px) {
+  /* По мобильному макету (26899:23112) кнопка идёт на всю ширину контейнера,
+     а поле вопроса выше — 116 вместо 100 */
+  .cta-form__form .btn { justify-self: stretch; width: 100%; }
+  .cta-form__form textarea.input { min-height: 116px; }
 }
 @media (max-width: 480px) {
   .cta-form__row { grid-template-columns: 1fr; }
@@ -177,48 +204,168 @@
 */
 .about-hero .container {
   display: grid;
-  grid-template-columns: 700px 1fr;
-  gap: var(--ko-space-64);
-  align-items: start;
+  justify-items: center;
+  text-align: center;
 }
-.about-hero__eyebrow { margin-bottom: var(--ko-space-24); }
+.about-hero__title { max-width: 800px; }
 .about-hero__text {
-  margin: var(--ko-space-24) 0 var(--ko-space-32);
-  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
+  margin-top: var(--ko-space-24);
+  max-width: 800px;
+  font: 400 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font);
   color: var(--ko-text-2);
-  max-width: 620px;
 }
-.about-hero__media { aspect-ratio: 620 / 480; background: var(--ko-bg-2); }
-.about-hero__media img { width: 100%; height: 100%; object-fit: cover; }
+.about-hero__actions {
+  display: flex;
+  gap: var(--ko-space-12);
+  margin-top: var(--ko-space-40);
+}
+/* Фото магазина идёт на всю ширину экрана, а не по контейнеру.
+   Параллакс убран по просьбе заказчика: при скролле кадр стоит на месте */
+.about-hero__photo {
+  margin-top: var(--ko-space-80);
+  height: 910px;
+  overflow: hidden;
+}
+.about-hero__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
 @media (max-width: 1024px) {
-  .about-hero .container { grid-template-columns: 1fr; gap: var(--ko-space-32); }
-  .about-hero__media { aspect-ratio: 16 / 9; }
+  .about-hero__photo { margin-top: var(--ko-space-48); height: 480px; }
+}
+@media (max-width: 768px) {
+  /* По макету (26900:27014) кнопки идут в столбик на всю ширину контейнера.
+     Родитель — grid, поэтому растягиваем через justify-self: align-self в гриде
+     работает по вертикали и ширину не менял */
+  .about-hero__actions { flex-direction: column; justify-self: stretch; width: 100%; }
+  .about-hero__actions .btn { width: 100%; }
+  .about-hero__photo { height: 320px; }
+}
+
+/* ---------- Цитата ----------
+   Макет 26899:22900: подложка --ko-bg-1, всё по центру, белый квадрат с кавычками
+*/
+/* Серая полоса не на всю секцию: в макете сверху и снизу остаётся белое поле */
+.quote__band {
+  display: grid;
+  align-content: center;
+  min-height: 642px;
+  background: var(--ko-bg-1);
+}
+.quote .container { display: grid; justify-items: center; text-align: center; }
+.quote__mark {
+  display: grid;
+  place-items: center;
+  width: 60px; height: 60px;
+  background: var(--ko-bg-0);
+  color: var(--ko-text-1);
+}
+.quote__mark svg { width: var(--ko-icon-lg); height: var(--ko-icon-lg); }
+.quote__text { max-width: 900px; margin-top: var(--ko-space-40); }
+.quote__note {
+  max-width: 680px;
+  margin-top: var(--ko-space-24);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
+  color: var(--ko-text-2);
+}
+
+/* ---------- Филиалы ----------
+   Макет 26899:22817: слева контакты 460, справа карта 604×530
+*/
+.branches .container {
+  display: grid;
+  grid-template-columns: 540px 1fr;
+  gap: 60px;
+  align-items: start;
+}
+.branches__info { display: grid; justify-items: start; }
+.branches__phone {
+  margin-top: var(--ko-space-40);
+  font: 500 var(--ko-h5-size)/var(--ko-h5-lh) var(--ko-font);
+  color: var(--ko-text-1);
+}
+.branches__hours {
+  margin-top: var(--ko-space-12);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
+  color: var(--ko-text-3);
+}
+.branches__mail {
+  margin-top: var(--ko-space-24);
+  font: 400 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font);
+  color: var(--ko-text-accent);
+}
+.branches__list { display: grid; gap: var(--ko-space-12); margin-top: var(--ko-space-32); }
+.branches__list li {
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-1);
+}
+.branches__actions { display: flex; align-items: center; gap: var(--ko-space-8); margin-top: var(--ko-space-40); }
+.branches__icon {
+  display: grid;
+  place-items: center;
+  width: 52px; height: 52px;
+  background: var(--ko-bg-1);
+  transition: background-color .15s ease;
+}
+.branches__icon:hover { background: var(--ko-bg-2); }
+.branches__map { min-height: 720px; background: var(--ko-bg-2); }
+
+@media (max-width: 1024px) {
+  .branches .container { grid-template-columns: 1fr; gap: var(--ko-space-40); }
+  .branches__map { min-height: 360px; }
 }
 
 /* ---------- Контакты ----------
    Макет 1900×524: слева список из 4 блоков (~340), справа карта.
 */
+/* Макет 26785:1947: слева колонка 432, справа карта 940, промежуток 48 */
 .contacts .container {
   display: grid;
-  grid-template-columns: 340px 1fr;
-  gap: var(--ko-space-64);
+  grid-template-columns: 432px minmax(0, 940px);
+  justify-content: space-between;
+  gap: var(--ko-space-48);
   align-items: start;
 }
+/* Блоки списка по макету: 128 / 128 / 168 / 120 = паддинг 32 + строки 32 или 24
+   с зазором 8 (у адресов — 16) */
 .contacts__list > li {
-  padding-block: var(--ko-space-20);
-  border-top: 1px solid var(--ko-border-1);
+  position: relative;
+  padding-block: var(--ko-space-32);
 }
-.contacts__list > li:last-child { border-bottom: 1px solid var(--ko-border-1); }
+/* Разделители рисуем псевдоэлементами: рамка добавляла бы к блоку лишний пиксель,
+   и колонка переставала совпадать с макетом (128 + 128 + 168 + 120 = 544) */
+.contacts__list > li::before,
+.contacts__list > li:last-child::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--ko-border-1);
+}
+.contacts__list > li:last-child::after { top: auto; bottom: 0; }
+/* Телефон и e-mail — Heading 6 24/32 */
 .contacts__value { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); }
+/* Адреса и режим работы — Small r 16/24, как в макете */
+.contacts__addresses {
+  display: grid;
+  gap: var(--ko-space-16);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-1);
+}
+.contacts__hours { font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); color: var(--ko-text-1); }
 .contacts__note {
-  margin-top: var(--ko-space-4);
-  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  margin-top: var(--ko-space-8);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-3);
 }
 /* Карта Яндекс.Карт: контейнер под JS API. Метки кликабельны (js/main.js) */
 .contacts__map {
-  aspect-ratio: 1020 / 400;
+  aspect-ratio: 940 / 544;
   background: var(--ko-bg-2);
   overflow: hidden;
 }
@@ -260,27 +407,106 @@ a.map-balloon__row { color: var(--ko-text-accent); }
   .requisites__table td { padding-top: 0; }
 }
 
-/* ---------- Юридические страницы (политика конфиденциальности) ---------- */
-.legal { max-width: 900px; }
-.legal p {
+/* ---------- Подводка под H1 на страницах разделов ---------- */
+.page-head__lead {
+  margin-top: var(--ko-space-16);
+  max-width: 760px;
+  font: 400 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font);
+  color: var(--ko-text-2);
+}
+
+/* ---------- Таблица условий (тарифы доставки) ----------
+   Тот же паттерн, что таблицы в кабинете: шапка на подложке, строки под линией.
+   На узком экране таблица скроллится внутри своей обёртки, а не тянет страницу */
+.table-scroll { overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; }
+.data-table th,
+.data-table td {
+  padding: var(--ko-space-16) var(--ko-space-20);
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--ko-border-1);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-2);
+}
+.data-table thead th {
+  background: var(--ko-bg-1);
+  font-weight: 500;
+  color: var(--ko-text-1);
+  white-space: nowrap;
+}
+.data-table strong { font-weight: 500; color: var(--ko-text-1); }
+
+/* На мобильном таблица в четыре колонки не читается: горизонтальный скролл
+   прячет «Срок» и «Стоимость». Строка разворачивается в карточку, подпись
+   колонки печатается перед значением из data-label (docs/23-mobile-pass.md) */
+@media (max-width: 768px) {
+  .data-table--cards thead { display: none; }
+  .data-table--cards,
+  .data-table--cards tbody,
+  .data-table--cards tr,
+  .data-table--cards td { display: block; width: 100%; }
+  .data-table--cards tr {
+    padding: var(--ko-space-16);
+    background: var(--ko-bg-1);
+    border-bottom: 0;
+  }
+  .data-table--cards tr + tr { margin-top: var(--ko-space-12); }
+  .data-table--cards td {
+    padding: 0;
+    border-bottom: 0;
+  }
+  .data-table--cards td + td { margin-top: var(--ko-space-8); }
+  /* Первая ячейка — заголовок карточки, подпись «Способ» ей не нужна */
+  .data-table--cards td:first-child {
+    font: 500 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font);
+    color: var(--ko-text-1);
+  }
+  .data-table--cards td:not(:first-child)::before {
+    content: attr(data-label);
+    display: block;
+    font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+    color: var(--ko-text-3);
+  }
+}
+
+.text-note {
+  margin-top: var(--ko-space-20);
+  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  color: var(--ko-text-3);
+}
+
+/* ---------- Текстовый блок раздела ----------
+   Те же правила, что у юридических страниц: колонка 900, абзацы Small ⭥,
+   подзаголовки Heading 6, списки с оранжевым квадратом */
+.legal,
+.text-block { max-width: 900px; }
+.text-block > .h3,
+.text-block > .h5 { margin-bottom: var(--ko-space-24); }
+.legal p,
+.text-block p {
   margin-bottom: var(--ko-space-12);
   font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
   color: var(--ko-text-2);
 }
 .legal__intro { margin-bottom: var(--ko-space-24); }
-.legal__h {
+.legal__h,
+.text-block__h {
   margin: var(--ko-space-40) 0 var(--ko-space-16);
   font: 600 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font);
   color: var(--ko-text-1);
 }
-.legal__list { margin: 0 0 var(--ko-space-12); display: grid; gap: var(--ko-space-8); }
-.legal__list li {
+.legal__list,
+.text-block__list { margin: 0 0 var(--ko-space-12); display: grid; gap: var(--ko-space-8); }
+.legal__list li,
+.text-block__list li {
   position: relative;
   padding-left: var(--ko-space-20);
   font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
   color: var(--ko-text-2);
 }
-.legal__list li::before {
+.legal__list li::before,
+.text-block__list li::before {
   content: "";
   position: absolute;
   left: 4px;
@@ -289,29 +515,40 @@ a.map-balloon__row { color: var(--ko-text-accent); }
   height: 6px;
   background: var(--ko-bg-brand);
 }
-.legal a { color: var(--ko-text-accent); }
+.legal a,
+.text-block a { color: var(--ko-text-accent); }
 
 /* ---------- Акции: главная (горизонтальная) карточка ----------
    Макет 1900×448: слева изображение ~555×250, справа рубрика, дата,
    заголовок Heading 5 и лид.
 */
+/* Главная статья — макет 26846:23126, 1420×400: картинка 912, текст 460, гэп 48.
+   В колонке текста мета прижата к верху, заголовок и лид — к низу карточки */
 .promo-featured {
   display: grid;
-  grid-template-columns: 700px 1fr;
-  gap: var(--ko-space-40);
-  align-items: start;
+  grid-template-columns: 912px minmax(0, 1fr);
+  gap: var(--ko-space-48);
+  height: 400px;
 }
-.promo-featured__media { aspect-ratio: 700 / 448; background: var(--ko-bg-2); }
+.promo-featured__media { height: 100%; background: var(--ko-bg-2); }
 .promo-featured__media img { width: 100%; height: 100%; object-fit: cover; }
+
+.promo-featured__body {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  align-content: start;
+}
+/* в макете ряд меты ровно 24, а не 28 как в карточках листинга */
+.promo-featured .article-card__meta { line-height: var(--ko-small-lh); }
+.promo-featured__text { align-self: end; display: block; }
 .promo-featured__title {
-  margin-top: var(--ko-space-24);
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 .promo-featured__lead {
-  margin-top: var(--ko-space-16);
+  margin-top: var(--ko-space-20);
   font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);
   color: var(--ko-text-3);
   display: -webkit-box;
@@ -321,8 +558,9 @@ a.map-balloon__row { color: var(--ko-text-accent); }
 }
 
 @media (max-width: 1024px) {
-  .promo-featured { grid-template-columns: 1fr; gap: var(--ko-space-24); }
-  .promo-featured__media { aspect-ratio: 16 / 9; }
+  .promo-featured { grid-template-columns: minmax(0, 1fr); gap: var(--ko-space-24); height: auto; }
+  .promo-featured__media { aspect-ratio: 16 / 9; height: auto; }
+  .promo-featured__text { align-self: start; margin-top: var(--ko-space-24); }
 }
 
 /* ---------- Страница акции: шапка материала ----------
@@ -364,8 +602,12 @@ a.map-balloon__row { color: var(--ko-text-accent); }
   gap: var(--ko-grid-gap-y) var(--ko-grid-gap-x);
 }
 
-.promo-grid + .pagination { margin-top: var(--ko-space-48); }
+.promo-grid + .pagination,
+.promo-grid + .pagination-row { margin-top: var(--ko-space-48); }
 .pagination--center { justify-content: center; }
 
 @media (max-width: 1024px) { .promo-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px)  { .promo-grid { grid-template-columns: 1fr; gap: var(--ko-space-32); } }
+
+/* Пользователь просил убрать анимации — показываем кадр без сдвига */
+

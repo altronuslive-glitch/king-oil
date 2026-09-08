@@ -33,10 +33,17 @@
   align-items: center;
   gap: var(--ko-space-24);
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
-  color: var(--ko-text-2);
 }
-.header__top-left { gap: 0; }
-.header__top-nav { display: flex; gap: var(--ko-space-24); margin-left: var(--ko-space-64); }
+/* Ссылки верхнего ряда — вторичного цвета, как и контакты справа */
+.header__top-left { gap: 0; color: var(--ko-text-2); }
+.header__top-right { color: var(--ko-text-2); }
+/* Ряд ссылок начинается по левому краю кнопки «Каталог»: логотип 160 + отступ 20 */
+/* логотип 160 + его отступ 20 + гэп контейнера 12 = левый край кнопки «Каталог» */
+.header__top-left .city { flex: none; width: calc(160px + var(--ko-space-20) + var(--ko-space-12)); }
+.header__top-nav { display: flex; gap: var(--ko-space-24); margin-left: 0; }
+.header__top-nav .link { color: var(--ko-text-2); }
+.header__top-nav .link--accent { color: var(--ko-text-accent); }
+.header__top-nav .link:hover { color: var(--ko-text-accent); }
 
 /* Дропдаун города — блок 90×32 по макету */
 .city-btn {
@@ -102,9 +109,10 @@
   gap: var(--ko-space-12);
   height: 52px;
   min-width: 155px;
-  padding-inline: var(--ko-space-20);
+  padding-inline: var(--ko-space-24);
   background: var(--ko-bg-1);
-  font: 500 var(--ko-small-size)/1 var(--ko-font);
+  font: 500 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font);
+  color: var(--ko-text-1);
   transition: background-color .15s ease;
 }
 .catalog-btn:hover,
@@ -122,17 +130,21 @@
 .search__input {
   width: 100%;
   height: 52px;
-  padding: 0 52px 0 var(--ko-space-16);
+  padding: 0 50px 0 var(--ko-space-18);
   background: var(--ko-bg-0);
-  border: 1px solid var(--ko-border-1);
+  border: 2px solid var(--ko-border-1);
   border-radius: var(--ko-radius);
-  font: 400 var(--ko-small-size)/1 var(--ko-font);
+  font: 400 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font);
+  color: var(--ko-text-1);
 }
+.search__input::placeholder { color: var(--ko-text-2); }
+/* У type="search" свой крестик очистки — он дублировал бы нашу кнопку */
+.search__input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
 .search__input:focus { outline: none; border-color: var(--ko-border-brand); }
 .search__submit {
   position: absolute;
-  right: 0; top: 0;
-  width: 52px; height: 52px;
+  right: var(--ko-space-18); top: 0;
+  width: var(--ko-icon-normal); height: 52px;
   display: grid;
   place-items: center;
   color: var(--ko-icon-2);
@@ -186,7 +198,19 @@
 }
 .search__product:hover { background: var(--ko-bg-1); }
 .search__product img { width: 40px; height: 40px; object-fit: contain; background: var(--ko-bg-2); }
-.search__product-name { font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); }
+/* Название в одну строку с многоточием — как в макете */
+.search__product-name {
+  display: block;
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.search__product > span { min-width: 0; }
+/* Название и категория идут вплотную: перенос делает блочный элемент, а <br>
+   в разметке добавлял бы ещё одну пустую строку */
+.search__product br { display: none; }
+.search__product-cat { display: block; }
 .search__product-cat { font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font); color: var(--ko-text-3); }
 
 .search__empty {
@@ -199,9 +223,18 @@
   color: var(--ko-text-3);
   font: 400 var(--ko-small-size)/1 var(--ko-font);
 }
+.search__empty-face { color: var(--ko-bg-3); }
+.search__empty-face svg { display: block; width: 40px; height: 40px; }
+.search__empty-hint { font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font); text-align: center; }
+
+/* Стрелка «назад», очистка и подсказки живут только в мобильном разделе поиска */
+.search__field { position: relative; }
+.search__back,
+.search__clear { display: none; }
+.search__suggest { display: flex; flex-wrap: wrap; gap: var(--ko-space-8); }
 
 /* ---------- Ряд 3: категории (56) ---------- */
-.header__nav { height: 56px; border-bottom: 1px solid var(--ko-border-1); }
+.header__nav { height: 56px; border-bottom: 2px solid var(--ko-border-1); }
 .header__nav .container {
   display: flex;
   align-items: center;
@@ -226,56 +259,96 @@
 .header.is-stuck .header__main { height: 72px; }
 .header.is-stuck .header__main .container { height: 72px; }
 
-/* ---------- Мега-меню каталога ---------- */
+/* ---------- Мега-меню каталога ----------
+   Макет Component 148/Menu list (22988:21416) на кадре 26900:23600:
+   панель 1580 от левого края поверх шапки, справа крестик 52×52,
+   за панелью — затемнение. Левая колонка 400 на bg-1, пункт 56 высотой,
+   активный — белая плашка. Справа H3 с полями 52/40 и три колонки ссылок.
+*/
 .mega {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%;
-  background: var(--ko-bg-0);
-  border-top: 1px solid var(--ko-border-1);
-  z-index: 55;
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  align-items: flex-start;
+  /* сама подложка кликов не ловит: клик мимо панели уходит на затемнение,
+     которое и закрывает меню */
+  pointer-events: none;
 }
-.mega .container {
+.mega__box {
+  pointer-events: auto;
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: var(--ko-space-48);
-  min-height: 480px;
-  padding-block: var(--ko-space-24);
+  grid-template-columns: 400px minmax(0, 1fr);
+  width: 1580px;
+  max-width: calc(100% - 84px);
+  height: 100vh;
+  background: var(--ko-bg-0);
 }
-.mega__aside { border-right: 1px solid var(--ko-border-1); padding-right: var(--ko-space-24); }
+.mega__close {
+  pointer-events: auto;
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin: var(--ko-space-16);
+  background: var(--ko-bg-0);
+  color: var(--ko-icon-3);
+}
+.mega__close svg { width: var(--ko-icon-normal); height: var(--ko-icon-normal); }
+
+.mega__aside {
+  display: grid;
+  align-content: start;
+  padding: var(--ko-space-16) var(--ko-space-12) var(--ko-space-16) var(--ko-space-16);
+  background: var(--ko-bg-1);
+  overflow-y: auto;
+}
 .mega__cat {
-  display: block;
-  width: 100%;
-  padding: var(--ko-space-12) var(--ko-space-16);
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding-inline: var(--ko-space-16);
   text-align: left;
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-1);
   transition: background-color .15s ease;
 }
 .mega__cat:hover,
-.mega__cat.is-active { background: var(--ko-bg-1); }
+.mega__cat.is-active { background: var(--ko-bg-0); }
 
-.mega__panel { display: none; }
-.mega__panel.is-active { display: block; }
-.mega__title { margin-bottom: var(--ko-space-32); }
+.mega__content {
+  padding: var(--ko-space-40) 52px var(--ko-space-40) 68px;
+  overflow-y: auto;
+}
+.mega__group { display: none; }
+.mega__group.is-active { display: block; }
+.mega__title { margin-bottom: var(--ko-space-40); }
 .mega__links {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--ko-space-12) var(--ko-space-32);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--ko-space-18) var(--ko-space-24);
 }
 .mega__links a {
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
-  color: var(--ko-text-2);
+  color: var(--ko-text-1);
   transition: color .15s ease;
 }
 .mega__links a:hover { color: var(--ko-text-accent); }
+
+@media (max-width: 1024px) {
+  .mega__box { grid-template-columns: 280px minmax(0, 1fr); }
+  .mega__content { padding: var(--ko-space-32); }
+  .mega__links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 
 /* ---------- Затемнение фона ---------- */
 .overlay {
   position: fixed;
   inset: 0;
   background: rgba(19, 25, 39, .6);
-  z-index: 50;
+  /* выше шапки (60): при открытом меню затемнена и она */
+  z-index: 64;
 }
 
 /* ---------- Мини-модалки шапки ---------- */
@@ -342,6 +415,7 @@
 
 /* ---------- Мобильные элементы ---------- */
 .burger { display: none; }
+.header__mobile-actions { display: none; }
 
 .tabbar { display: none; }
 
@@ -350,42 +424,105 @@
 }
 
 @media (max-width: 768px) {
+  /* Мобильная шапка 375x116 (макет Mobile header 22988:21595):
+     12 + строка «логотип + 3 кнопки 40» 40 + 16 + лента разделов 36 + 12 */
   .header__top { display: none; }
-  .header__nav { display: none; }
+  /* Разделитель рисуем тенью, чтобы шапка осталась ровно 116 px по макету */
+  .header { box-shadow: inset 0 -1px 0 #e6e8ec; }
 
-  /* Две строки: логотип + бургер, под ними поиск на всю ширину */
   .header__main { height: auto; }
   .header__main .container {
     flex-wrap: wrap;
-    gap: var(--ko-space-12);
+    gap: 0;
     height: auto;
-    padding-block: var(--ko-space-12);
+    padding-top: var(--ko-space-12);
   }
   .catalog-btn { display: none; }
-  .logo { width: 120px; }
-  .burger { margin-left: auto; }
-  .search { flex-basis: 100%; order: 3; }
-  .search__input { height: 44px; padding-right: 44px; }
-  .search__submit { width: 44px; height: 44px; }
   .header__actions { display: none; }
+  .logo { width: 124px; height: 40px; margin-right: 0; }
 
-  .header.is-stuck .header__main,
-  .header.is-stuck .header__main .container { height: auto; }
-
+  .header__mobile-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: auto;
+  }
+  .header__mobile-actions .icon-btn,
   .burger {
     display: grid;
     place-items: center;
-    width: 44px; height: 44px;
+    width: 40px; height: 40px;
     flex: none;
     color: var(--ko-icon-3);
   }
-  .burger svg { width: 24px; height: 24px; }
+  .header__mobile-actions .icon-btn svg,
+  .burger svg { width: var(--ko-icon-md); height: var(--ko-icon-md); }
 
-  .mega .container { grid-template-columns: 1fr; min-height: 0; }
-  .mega__aside { border-right: 0; padding-right: 0; }
-  .mini-modal { width: calc(100vw - 32px); right: 16px; position: fixed; top: auto; bottom: 88px; }
+  /* Поиск прячется под кнопку-лупу и раскрывается строкой на всю ширину */
+  .search {
+    order: 3;
+    flex-basis: 100%;
+    margin-right: 0;
+    margin-top: var(--ko-space-12);
+    display: none;
+  }
+  .header.is-search-open .search { display: block; }
+  .search__input { height: 44px; padding-right: 46px; font-size: var(--ko-small-size); }
+  .search__submit { right: var(--ko-space-12); height: 44px; }
 
-  /* Таббар */
+  /* Ряд разделов превращается в горизонтальную ленту чипсов 36 px */
+  .header__nav {
+    height: auto;
+    border-bottom: 0;
+    margin-top: var(--ko-space-16);
+    padding-bottom: var(--ko-space-12);
+  }
+  .header__nav .container {
+    gap: 6px;
+    height: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .header__nav .container::-webkit-scrollbar { display: none; }
+  /* Чипс 36 = 8 + строка 20 + 8, по макету Mobile header 22988:21595 */
+  .header__nav a {
+    flex: none;
+    padding: var(--ko-space-8) var(--ko-space-20);
+    background: var(--ko-bg-1);
+    white-space: nowrap;
+    font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  }
+
+  .header.is-stuck .header__main,
+  .header.is-stuck .header__main .container { height: auto; }
+  .header.is-stuck .header__nav { display: none; }
+  /* Когда лента разделов скрыта, снизу нужен такой же отступ, как сверху:
+     иначе логотип и кнопки прижимаются к краю и шапка выглядит обрезанной */
+  .header.is-stuck .header__main .container { padding-bottom: var(--ko-space-12); }
+
+  .mega__box {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr);
+    width: 100%;
+    max-width: none;
+  }
+  .mega__close { position: absolute; top: 0; right: 0; }
+  .mega__aside {
+    display: flex;
+    gap: var(--ko-space-8);
+    padding-right: 68px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .mega__aside::-webkit-scrollbar { display: none; }
+  .mega__cat { flex: none; height: 40px; white-space: nowrap; }
+  .mega__content { padding: var(--ko-space-20) var(--ko-space-16); }
+  .mega__links { grid-template-columns: minmax(0, 1fr); }
+
+  /* Мини-модалка на мобильном раскрывается над таббаром на всю ширину */
+  .mini-modal { position: fixed; top: auto; bottom: 88px; right: 16px; width: calc(100vw - 32px); }
+
+  /* Таббар 375×64 */
   .tabbar {
     position: fixed;
     left: 0; right: 0; bottom: 0;
@@ -402,7 +539,7 @@
     place-items: center;
     color: var(--ko-icon-2);
   }
-  .tabbar a svg { width: 24px; height: 24px; }
+  .tabbar a svg { position: relative; width: 24px; height: 24px; }
   .tabbar a.is-active { color: var(--ko-icon-3); }
   .tabbar a.is-active::before {
     content: "";
@@ -412,7 +549,6 @@
     margin-left: -22px;
     background: var(--ko-bg-1);
   }
-  .tabbar a svg { position: relative; }
   .tabbar__badge {
     position: absolute;
     top: 12px;
@@ -428,14 +564,17 @@
 .mobile-menu {
   position: fixed;
   inset: 0 0 64px;
-  z-index: 65;
-  display: grid;
-  align-content: start;
+  z-index: 70;
+  /* Колонка во всю высоту: контакты прижимаются к низу автоотступом,
+     иначе меню обрывалось на середине экрана и под ним висела пустота */
+  display: flex;
+  flex-direction: column;
   gap: var(--ko-space-8);
   padding: var(--ko-space-20);
   background: var(--ko-bg-0);
   overflow-y: auto;
 }
+.mobile-menu > * { flex: none; }
 .mobile-menu__close {
   position: absolute;
   top: var(--ko-space-16);
@@ -458,14 +597,16 @@
   margin-bottom: var(--ko-space-12);
 }
 .mobile-menu__avatar { width: 48px; height: 48px; border-radius: var(--ko-radius-max); background: var(--ko-bg-3); }
+/* Разделов в меню много, поэтому строка компактнее: 8 по вертикали вместо 12,
+   кегль 16 вместо 18 (решение от 8 сентября) */
 .mobile-menu__link {
   display: flex;
   align-items: center;
   gap: var(--ko-space-12);
-  padding: var(--ko-space-12);
-  font: 400 var(--ko-base-size)/var(--ko-base-lh) var(--ko-font);
+  padding: var(--ko-space-8) var(--ko-space-12);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
 }
 .mobile-menu__link svg { width: 20px; height: 20px; color: var(--ko-icon-2); }
-.mobile-menu__sep { margin: var(--ko-space-12) 0; border: 0; border-top: 1px solid var(--ko-border-1); }
-.mobile-menu__contacts { display: grid; gap: var(--ko-space-8); margin-top: var(--ko-space-24); padding: var(--ko-space-12); }
+.mobile-menu__sep { margin: var(--ko-space-8) 0; border: 0; border-top: 1px solid var(--ko-border-1); }
+.mobile-menu__contacts { display: grid; gap: var(--ko-space-8); margin-top: auto; padding: var(--ko-space-12) var(--ko-space-12) 0; }
 .mobile-menu__phone { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); }

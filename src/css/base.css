@@ -37,6 +37,13 @@ html {
   -webkit-text-size-adjust: 100%;
   /* якорные ссылки не должны уезжать под фиксированную шапку */
   scroll-padding-top: 180px;
+  /* плавная прокрутка по якорям и по кнопкам «наверх» */
+  scroll-behavior: smooth;
+}
+
+/* Если в системе выключены анимации — прокрутка мгновенная */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
 }
 
 body {
@@ -77,10 +84,17 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 :root { --ko-page-pad: 40px; }
 
 @media (max-width: 1024px) { :root { --ko-page-pad: 32px; } }
-@media (max-width: 768px)  { :root { --ko-page-pad: 20px; } }
+/* На мобильном контролы ниже: по макету кнопка 12 + строка 24 + 12 = 48 */
+@media (max-width: 768px)  { :root { --ko-page-pad: 20px; --ko-control-h: 48px; --ko-control-pad-y: 12px; } }
 @media (max-width: 480px)  { :root { --ko-page-pad: 16px; } }
 
 /* ---------- Типографика ---------- */
+/* Длинные слова («Политика конфиденциальности», адреса почты) на узком экране
+   не помещаются в строку и распирают страницу — разрешаем перенос внутри слова */
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h5, .h6,
+p, li, dd, dt, td, th, figcaption, label, .link { overflow-wrap: break-word; }
+
 .h1 { font: 500 var(--ko-h1-size)/var(--ko-h1-lh) var(--ko-font); letter-spacing: -0.02em; }
 .h2 { font: 500 var(--ko-h2-size)/var(--ko-h2-lh) var(--ko-font); letter-spacing: -0.02em; }
 .h3 { font: 500 var(--ko-h3-size)/var(--ko-h3-lh) var(--ko-font); letter-spacing: -0.01em; }
@@ -105,9 +119,11 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
   .h5 { font-size: 28px; line-height: 34px; }
 }
 @media (max-width: 768px) {
+  /* В мобильных макетах заголовок секции — стиль Heading 3: 32/40
+     (26886:5598 слайдер, 26886:5930 «Хиты продаж», 26886:5628 «Категории») */
   .h1 { font-size: 40px; line-height: 48px; }
-  .h2 { font-size: 32px; line-height: 38px; }
-  .h3 { font-size: 28px; line-height: 34px; }
+  .h2 { font-size: 32px; line-height: 40px; }
+  .h3 { font-size: 32px; line-height: 40px; }
   .h5 { font-size: 24px; line-height: 30px; }
   .h6 { font-size: 20px; line-height: 26px; }
 }
@@ -119,18 +135,24 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .section--grey { background: var(--ko-bg-1); }
 .section--dark { background: var(--ko-bg-4); color: var(--ko-text-0); }
 
+.section--pt-0   { padding-top: 0; }
+.section--pt-24  { padding-top: 24px; }
+.section--pt-40  { padding-top: 40px; }
+.section--pb-0   { padding-bottom: 0; }
 .section--pt-120 { padding-top: 120px; }
 .section--pt-160 { padding-top: 160px; }
 .section--pb-120 { padding-bottom: 120px; }
 .section--pb-160 { padding-bottom: 160px; }
 
 @media (max-width: 1024px) {
+  .quote__band { min-height: 0; padding-block: 64px; }
   .section { padding-block: 64px; }
   .section--pt-120, .section--pt-160 { padding-top: 64px; }
   .section--pb-120, .section--pb-160 { padding-bottom: 64px; }
 }
 @media (max-width: 768px) {
-  .section { padding-block: 48px; }
+  /* мобильный ритм: 40 + 40 = 80 между блоками */
+  .section { padding-block: 40px; }
   .section--pt-120, .section--pt-160 { padding-top: 48px; }
   .section--pb-120, .section--pb-160 { padding-bottom: 48px; }
 }
@@ -162,7 +184,7 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
    По макету: 467 + 20 + 933 = 1420 */
 .split {
   display: grid;
-  grid-template-columns: 467px 1fr;
+  grid-template-columns: 460px 1fr;
   gap: var(--ko-space-20);
   align-items: start;
 }
@@ -187,3 +209,12 @@ button { background: none; border: 0; padding: 0; cursor: pointer; }
 .no-scroll { overflow: hidden; }
 
 .placeholder { background: var(--ko-bg-2); }
+
+/* ---------- Мобильный ритм заголовков ----------
+   Блок стоит в конце файла: .section-head объявлен ниже мобильной секции выше,
+   и та бы его не перебила. По макету между заголовком секции и содержимым 32,
+   а между надзаголовком и H2 — 8 (решение от 8 сентября) */
+@media (max-width: 768px) {
+  .section-head { gap: var(--ko-space-8); margin-bottom: var(--ko-space-32); }
+  .section-head--tight { margin-bottom: var(--ko-space-24); }
+}

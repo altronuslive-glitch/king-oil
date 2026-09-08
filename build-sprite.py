@@ -43,9 +43,6 @@ ICONS = {
     "i-message": (16.5, 16.5, 1.5, [
         "M15.75 10.75C15.75 11.192 15.5744 11.616 15.2618 11.9285C14.9493 12.2411 14.5254 12.4167 14.0833 12.4167H4.08333L0.75 15.75V2.41667C0.75 1.97464 0.925595 1.55072 1.23816 1.23816C1.55072 0.925595 1.97464 0.75 2.41667 0.75H14.0833C14.5254 0.75 14.9493 0.925595 15.2618 1.23816C15.5744 1.55072 15.75 1.97464 15.75 2.41667V10.75Z"
     ], False),
-    "i-percent": (14.8333, 14.8333, 1.5, [
-        "M13.25 1.58333L1.58333 13.25M14.0833 12C14.0833 13.1506 13.1506 14.0833 12 14.0833C10.8494 14.0833 9.91667 13.1506 9.91667 12C9.91667 10.8494 10.8494 9.91667 12 9.91667C13.1506 9.91667 14.0833 10.8494 14.0833 12ZM4.91667 2.83333C4.91667 3.98393 3.98393 4.91667 2.83333 4.91667C1.68274 4.91667 0.75 3.98393 0.75 2.83333C0.75 1.68274 1.68274 0.75 2.83333 0.75C3.98393 0.75 4.91667 1.68274 4.91667 2.83333Z"
-    ], False),
     "i-question": (22, 22, 2, [
         "M11 16H11.01M8.09 8C8.3251 7.33167 8.78915 6.76811 9.39995 6.40913C10.0108 6.05016 10.7289 5.91894 11.4272 6.03871C12.1255 6.15849 12.7588 6.52152 13.2151 7.06353C13.6713 7.60553 13.9211 8.29152 13.92 9C13.92 11 10.92 12 10.92 12M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z"
     ], False),
@@ -88,8 +85,20 @@ HANDMADE = {
     "i-truck": '<symbol id="i-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h15v13H1zM16 8h4l3 3v5h-7z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></symbol>',
     "i-pin": '<symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></symbol>',
     "i-minus": '<symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></symbol>',
+    "i-quote": '<symbol id="i-quote" viewBox="0 0 24 24" fill="currentColor"><path d="M10 6.5v5.2c0 3.4-1.9 5.6-5 6.3l-.6-1.9c1.8-.5 2.9-1.6 3.1-3.1H4.5V6.5H10Zm9.5 0v5.2c0 3.4-1.9 5.6-5 6.3l-.6-1.9c1.8-.5 2.9-1.6 3.1-3.1H14V6.5h5.5Z"/></symbol>',
+    "i-phone": '<symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16.9v2.1a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 1.1 3.2 2 2 0 0 1 3.1 1h2.1a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L6.6 8.6a16 16 0 0 0 6 6l1-1a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></symbol>',
+    # Выход из аккаунта: дверь и стрелка наружу — i-refresh для этого не годится
+    "i-logout": '<symbol id="i-logout" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4M10 17l-5-5 5-5M5 12h11"/></symbol>',
+    # Процент: выгруженный из Figma контур занимал 14.8 из 24 и рядом с остальными
+    # иконками смотрелся мелким — перерисован в общую оптическую массу (20 из 24)
+    "i-percent": '<symbol id="i-percent" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 5 5 19"/><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></symbol>',
     "i-plus": '<symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></symbol>',
 }
+
+
+# Сердце «в избранное» умеет заливаться: выбранное состояние ставит --i-fill
+# (см. .product-card__fav.is-active). Без переменной символ остаётся контурным
+FILLABLE = {"i-heart"}
 
 
 def symbol(sid, w, h, sw, paths, filled):
@@ -101,8 +110,9 @@ def symbol(sid, w, h, sw, paths, filled):
     if filled:
         head = f'<symbol id="{sid}" viewBox="0 0 24 24" fill="currentColor">'
     else:
+        fill = 'var(--i-fill, none)' if sid in FILLABLE else 'none'
         head = (
-            f'<symbol id="{sid}" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+            f'<symbol id="{sid}" viewBox="0 0 24 24" fill="{fill}" stroke="currentColor" '
             f'stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round">'
         )
     return head + inner + "</symbol>"
@@ -113,7 +123,7 @@ def build():
         "<!-- ============ SVG-спрайт ============",
         "     Геометрия иконок выгружена из Figma один в один, цвет — через currentColor.",
         "     Вручную нарисованы i-menu, i-bolt, i-cookie, i-check, i-cash, i-truck,",
-        "     i-pin, i-minus, i-plus: в макете они не лежат отдельными векторными слоями.",
+        "     i-pin, i-minus, i-plus, i-logout, i-percent: в макете их нет отдельными слоями.",
         "     Пересобрать: python build-sprite.py",
         "     ============================================================ -->",
         '<svg style="display:none" aria-hidden="true">',

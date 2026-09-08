@@ -1,8 +1,11 @@
 /* ============================================================
    footer.css
+   Макет: компонент 26846:23236, 1900x974 (инстанс на странице 926).
+   Внутри контейнера 1420: колонки 320, разделитель 344,
+   копирайт 369, нижняя строка 417, водяной знак 729.
    ============================================================ */
 
-.footer { padding-top: 80px; padding-bottom: 40px; }
+.footer { padding-top: 120px; padding-bottom: 0; overflow: hidden; }
 
 /* Колонки по макету: 420 / 198 / 132 / 263, распределены по ширине 1420 */
 .footer__cols {
@@ -10,45 +13,47 @@
   grid-template-columns: 420px 198px 132px 263px;
   justify-content: space-between;
   gap: var(--ko-space-24);
-}
-.footer__cols > *:last-child {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  align-items: start;
 }
 
-/* Колонка бренда по макету: логотип 52, +24 описание, +40 контакты, +40 режим = 318 */
+/* Колонка бренда: описание 72, +40 контакты, +40 режим = 242 */
 .footer__brand { display: grid; align-content: start; }
-.footer__logo { width: 160px; height: 52px; }
 .footer__about {
-  margin-top: var(--ko-space-24);
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-2);
   max-width: 420px;
 }
-.footer__contacts { margin-top: var(--ko-space-40); }
-.footer__phone { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); }
+.footer__contacts { margin-top: var(--ko-space-40); display: grid; gap: var(--ko-space-18); }
+.footer__phone {
+  font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font);
+  color: var(--ko-text-1);
+  transition: color .15s ease;
+}
+.footer__phone:hover { color: var(--ko-text-accent); }
 .footer__mail {
-  display: inline-block;
-  margin-top: var(--ko-space-10);
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-2);
+  transition: color .15s ease;
 }
+.footer__mail:hover { color: var(--ko-text-accent); }
 .footer__hours {
   margin-top: var(--ko-space-40);
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-3);
 }
 
+/* В макете (26839:2228) колонка «Контакты» опущена на 24 относительно остальных,
+   но читается как сбитое выравнивание — по просьбе заказчика ставим вровень */
+
 .footer__col-title {
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
-  color: var(--ko-text-1);
+  color: var(--ko-text-3);
   margin-bottom: 20px;
 }
 .footer__links { display: grid; gap: var(--ko-space-12); }
 .footer__links a {
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
-  color: var(--ko-text-2);
+  color: var(--ko-text-1);
   transition: color .15s ease;
 }
 .footer__links a:hover { color: var(--ko-text-accent); }
@@ -56,10 +61,11 @@
 .footer__addresses { display: grid; gap: var(--ko-space-16); }
 .footer__addresses li {
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
-  color: var(--ko-text-2);
+  color: var(--ko-text-1);
 }
 
-.footer__social { display: flex; gap: var(--ko-space-8); margin-top: var(--ko-space-32); flex: none; }
+/* 32 до соцсетей — как в макете (адреса заканчиваются на 212, иконки с 244) */
+.footer__social { display: flex; gap: var(--ko-space-8); margin-top: var(--ko-space-32); }
 .footer__social a {
   display: grid;
   place-items: center;
@@ -72,36 +78,68 @@
 .footer__social svg { width: 24px; height: 24px; }
 
 .footer__divider {
-  margin: var(--ko-space-48) 0;
+  /* 48 вместо 24: колонка «Покупателям» подросла и упиралась в разделитель */
+  margin: var(--ko-space-48) 0 0;
   border: 0;
   border-top: 1px solid var(--ko-border-1);
 }
 
-.footer__bottom {
+/* Копирайт, политика и реквизиты — одной строкой: реквизиты прижаты вправо */
+.footer__copy {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--ko-space-24);
+  gap: 48px;
+  margin-top: var(--ko-space-24);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+  color: var(--ko-text-3);
   flex-wrap: wrap;
 }
+.footer__copy a { color: var(--ko-text-3); transition: color .15s ease; }
+.footer__copy a:hover { color: var(--ko-text-accent); }
+
 .footer__legal {
-  display: grid;
-  gap: var(--ko-space-4);
+  margin-left: auto;
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-3);
 }
-.footer__payments { display: flex; gap: var(--ko-space-8); }
-.footer__payments img,
-.footer__payments svg { width: 51px; height: 32px; object-fit: contain; }
+
+/* Водяной знак — вектор 1420x245 из компонента.
+   Инстанс на странице обрезает нижние 48 px, но тогда у «L» пропадает ножка
+   и буква читается как «I», поэтому показываем знак целиком. */
+.footer__mark {
+  position: relative;
+  margin-top: 160px;
+  height: 0;
+  padding-bottom: 17.25%; /* 245 / 1420 */
+  overflow: hidden;
+}
+.footer__mark svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.footer__mark text {
+  fill: var(--ko-bg-2);
+  font: 500 337px/1 var(--ko-font);
+}
 
 @media (max-width: 1024px) {
+  .footer { padding-top: 80px; }
   .footer__cols { grid-template-columns: 1fr 1fr; gap: var(--ko-space-32); }
   .footer__brand { grid-column: 1 / -1; }
+  .footer__col--contacts { padding-top: 0; }
+  .footer__mark { margin-top: 96px; }
 }
 
 @media (max-width: 768px) {
   .footer { padding-top: 48px; }
-  .footer__cols { grid-template-columns: 1fr; }
-  .footer__social { justify-content: flex-start; }
-  .footer__bottom { flex-direction: column; align-items: flex-start; }
+  .footer__cols { grid-template-columns: 1fr; gap: var(--ko-space-32); }
+  .footer__contacts { margin-top: var(--ko-space-24); gap: var(--ko-space-8); }
+  .footer__hours { margin-top: var(--ko-space-24); }
+  .footer__social { margin-top: var(--ko-space-24); }
+  .footer__copy { gap: var(--ko-space-8); flex-direction: column; align-items: flex-start; }
+  .footer__legal { margin-left: 0; }
+  .footer__mark { margin-top: 48px; }
 }

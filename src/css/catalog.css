@@ -3,25 +3,25 @@
    Размеры выверены по метаданным Figma (артборд 1900, контейнер 1420)
    ============================================================ */
 
-/* ---------- Подбор по автомобилю — 1900×324 ----------
+/* ---------- Подбор по автомобилю — 1900×308 (макет 26756:604) ----------
    Панель 1420×228 на подложке --ko-bg-1, паддинг 40.
-   Ряд: три группы «лейбл + селект» по 386 и кнопка 146×52, гэп 12.
+   Ряд: два поля по 585 («Госномер», «Быстрый поиск») и кнопка 146×52, гэп 12.
 */
 .car-picker {
   padding: var(--ko-space-40);
   background: var(--ko-bg-1);
 }
 .car-picker__title { margin-bottom: var(--ko-space-32); }
+/* В макете подпись поля ровно 18 (26756:609) */
+.car-picker .field__label { line-height: 18px; }
 .car-picker__row {
   display: grid;
-  grid-template-columns: repeat(3, 1fr) 146px;
+  grid-template-columns: 1fr 1fr 146px;
   gap: var(--ko-space-12);
   align-items: end;
 }
 .car-picker__row .btn { height: var(--ko-control-h); }
-/* В макете селект ровно 52; у общего .input высота 54 из-за рамки поверх паддинга */
-.car-picker__row .select select,
-.filters__row .select select { height: var(--ko-control-h); padding-block: 0; }
+.car-picker__row .input { min-height: var(--ko-control-h); }
 
 @media (max-width: 1024px) {
   .car-picker { padding: var(--ko-space-24); }
@@ -32,14 +32,13 @@
   .car-picker__row { grid-template-columns: 1fr; }
 }
 
-/* ---------- Популярные бренды — 1900×138 ---------- */
-.brands { margin-bottom: var(--ko-space-32); }
-.brands__label {
-  margin-bottom: var(--ko-space-16);
-  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
-  color: var(--ko-text-3);
-}
+/* ---------- Популярные бренды — 1900×100 (макет 26756:631) ----------
+   Ряд чипов 52 без подписи сверху, снизу отступ 48.
+*/
+.brands { margin-bottom: var(--ko-space-48); }
 .brands__list { display: flex; flex-wrap: wrap; gap: var(--ko-space-10); }
+/* Боковые поля 24 — по макету (26756:631): «Castrol» ~109, «ZIC» ~82 при высоте 52 */
+.brands__list .chip { height: var(--ko-control-h); padding-inline: var(--ko-space-24); }
 .brands__list .chip.is-active {
   background: var(--ko-bg-brand);
   color: var(--ko-text-0);
@@ -51,8 +50,8 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--ko-space-20);
-  margin-bottom: var(--ko-space-24);
-  padding-bottom: var(--ko-space-24);
+  min-height: 47px;
+  margin-bottom: var(--ko-space-32);
   border-bottom: 1px solid var(--ko-border-1);
 }
 .sort-row__count { font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); }
@@ -65,7 +64,12 @@
   height: 36px;
   font: 400 var(--ko-small-size)/1 var(--ko-font);
 }
-.sort__btn svg { width: var(--ko-icon-md); height: var(--ko-icon-md); color: var(--ko-icon-2); transition: transform .2s ease; }
+.sort__btn { transition: color .15s ease; }
+.sort__btn:hover,
+.sort__btn[aria-expanded="true"] { color: var(--ko-text-accent); }
+.sort__btn svg { width: var(--ko-icon-md); height: var(--ko-icon-md); color: var(--ko-icon-2); transition: transform .2s ease, color .15s ease; }
+.sort__btn:hover svg,
+.sort__btn[aria-expanded="true"] svg { color: var(--ko-icon-brand); }
 .sort__btn[aria-expanded="true"] svg { transform: rotate(180deg); }
 
 .sort__panel {
@@ -98,13 +102,16 @@
   grid-template-columns: repeat(5, 1fr);
   gap: var(--ko-space-12);
 }
+/* Теги не сжимаются: как только ряд упирается в «Сбросить», лишние переносятся вниз */
 .filters__active {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: var(--ko-space-10);
-  margin-top: var(--ko-space-16);
+  margin-top: var(--ko-space-24);
   min-height: 36px;
 }
+.filters__active .chip { flex: none; white-space: nowrap; }
 .filters__reset { margin-left: auto; color: var(--ko-text-1); }
 .filters__reset:hover { color: var(--ko-text-accent); }
 
@@ -113,7 +120,7 @@
 .chip--removable:hover svg { color: var(--ko-icon-3); }
 
 /* Отступ до сетки товаров */
-.filters { margin-bottom: var(--ko-space-48); }
+.filters { margin-bottom: var(--ko-space-40); }
 
 /* Мобильная шторка фильтров: макета нет, вид согласован с заказчиком.
    На десктопе обёртка прозрачная — сетка селектов остаётся прямым потомком .filters */
@@ -173,13 +180,20 @@
 /* ---------- Сетка товаров ----------
    Макет: 3 × 460, гэп 20 по горизонтали и 48 по вертикали.
 */
+/* Макет 26758:613: 4 колонки по 340, гэп 20 / 48, три ряда по 436 */
 .catalog-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--ko-grid-gap-y) var(--ko-grid-gap-x);
 }
-/* Карточки в каталоге крупнее, чем в «Хитах»: подложка квадратнее */
-.catalog-grid .product-card__media { aspect-ratio: 460 / 360; }
+/* Вариант Mini: картинка 280 вместо 360.
+   В макете 240, но при ширине 340 канистра выходила мелкой — по просьбе заказчика
+   плитка чуть выше, из-за этого ряд сетки 476 вместо 436 */
+/* Начиная с 769: ниже действует мобильная плитка из components.css (картинка 160) */
+@media (min-width: 769px) {
+  .catalog-grid .product-card__media { height: 280px; padding: 32px 40px; }
+  .catalog-grid .product-card__fav { top: 6px; right: 6px; }
+}
 
 /* Пустой результат и загрузка — в макете не показаны, но нужны в вёрстке */
 .catalog-empty {
@@ -189,26 +203,27 @@
 }
 .catalog-empty__title { margin-bottom: var(--ko-space-12); color: var(--ko-text-1); }
 
-@media (max-width: 1024px) { .catalog-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 1280px) { .catalog-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 1024px) { .catalog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 480px)  { .catalog-grid { gap: var(--ko-space-32) var(--ko-space-12); } }
 
 /* ---------- Отступ до пагинации (сама она отцентрована в pages.css) ---------- */
-.catalog-grid + .pagination,
-.catalog-empty + .pagination { margin-top: var(--ko-space-48); }
+.catalog-grid + .pagination-row,
+.catalog-empty + .pagination-row { margin-top: var(--ko-space-40); }
 
-/* ---------- SEO-блок — 1900×688 ----------
+/* ---------- SEO-блок — 1900×684 (макет 26759:824) ----------
    Подложка --ko-bg-1 на всю ширину: слева надзаголовок, H3 и два абзаца,
-   справа изображение.
+   справа изображение 686×400. Паддинги секции 72 сверху и 88 снизу.
 */
-.seo .container {
+.seo { padding-block: 72px 88px; }
+.seo__head { margin-bottom: var(--ko-space-32); }
+.seo__cols {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: var(--ko-space-64);
+  gap: var(--ko-space-48);
   align-items: start;
 }
-.seo__text { max-width: 660px; }
-.seo__text .eyebrow { margin-bottom: var(--ko-space-16); }
-.seo__text h2 { margin-bottom: var(--ko-space-24); }
+.seo__text { display: grid; align-content: start; }
 .seo__text p {
   font: 400 var(--ko-base-size)/var(--ko-base-lh-long) var(--ko-font);
   color: var(--ko-text-2);
@@ -227,10 +242,51 @@
 }
 .seo__text a { color: var(--ko-text-accent); }
 
-.seo__media { aspect-ratio: 620 / 420; background: var(--ko-bg-3); }
+.seo__media { aspect-ratio: 686 / 400; width: 100%; height: auto; object-fit: cover; background: var(--ko-bg-3); }
 .seo__media img { width: 100%; height: 100%; object-fit: cover; }
 
 @media (max-width: 1024px) {
-  .seo .container { grid-template-columns: 1fr; gap: var(--ko-space-32); }
+  .seo { padding-block: 64px; }
+  .seo__cols { grid-template-columns: 1fr; gap: var(--ko-space-32); }
   .seo__media { aspect-ratio: 16 / 9; }
+}
+
+/* ---------- Мобильные фильтры ----------
+   По просьбе заказчика в шторке нет дропдаунов: списки видны сразу, каждый
+   под своим заголовком. Блок в конце файла — иначе базовые правила .select
+   ниже по файлу перебивали бы медиазапрос.
+*/
+@media (max-width: 768px) {
+  .filters__row { gap: var(--ko-space-24); }
+
+  /* Название фильтра печатаем из data-label: .select__value на десктопе
+     занят перечислением выбранных значений */
+  .filters__drawer .select::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: var(--ko-space-12);
+    font: 500 var(--ko-large-size)/var(--ko-base-lh) var(--ko-font);
+    color: var(--ko-text-1);
+  }
+  .filters__drawer .select + .select::before {
+    margin-top: 0;
+    padding-top: var(--ko-space-24);
+    border-top: 1px solid var(--ko-border-1);
+  }
+  .filters__drawer .select__btn { display: none; }
+
+  /* Панель перестаёт быть выпадающей: [hidden] снимаем более специфичным
+     селектором, иначе его перебивает [hidden] { display: none !important } */
+  .filters__drawer .select__panel,
+  .filters__drawer .select__panel[hidden] {
+    display: grid !important;
+    position: static;
+    width: auto;
+    max-height: none;
+    padding: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
+  .filters__drawer .select__option { padding-inline: 0; }
 }

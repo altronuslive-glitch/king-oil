@@ -7,7 +7,7 @@
 
 import sys
 from functools import partial
-from http.server import HTTPServer, SimpleHTTPRequestHandler
+from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 
 
 class NoCacheHandler(SimpleHTTPRequestHandler):
@@ -26,4 +26,4 @@ if __name__ == "__main__":
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 5173
     handler = partial(NoCacheHandler, directory="src")
     print(f"King-Oil: http://localhost:{port}  (Ctrl+C — остановить)")
-    HTTPServer(("127.0.0.1", port), handler).serve_forever()
+    ThreadingHTTPServer(("", port), handler).serve_forever()
