@@ -693,12 +693,8 @@
     <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
     <h2 class="h5 modal__title" id="login-title">Вход в King-Oil</h2>
 
-    <div class="modal__tabs">
-      <button class="modal__tab" type="button">Телефон</button>
-      <button class="modal__tab is-active" type="button">E-mail</button>
-    </div>
-
-    <form class="modal__body">
+    <!-- Вход только по e-mail: переключателя «Телефон / E-mail» из макета нет (docs/03) -->
+    <form class="modal__body" data-form data-form-redirect="account.html">
       <label class="field">
         <span class="field__label">E-mail</span>
         <input class="input" type="email" placeholder="mail@example.com" autocomplete="email">
@@ -723,7 +719,7 @@
     <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
     <h2 class="h5 modal__title" id="register-title">Регистрация в King-Oil</h2>
 
-    <form class="modal__body">
+    <form class="modal__body" data-form data-form-redirect="account.html">
       <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" placeholder="Александр Федосенко" autocomplete="name"></label>
       <label class="field"><span class="field__label">E-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email"></label>
       <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel"></label>

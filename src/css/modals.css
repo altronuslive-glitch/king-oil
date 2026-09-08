@@ -77,20 +77,8 @@
 }
 .modal__icon svg { width: 28px; height: 28px; }
 
-/* Табы «Телефон / E-mail» */
-.modal__tabs {
-  display: inline-flex;
-  gap: var(--ko-space-4);
-  margin-bottom: var(--ko-space-20);
-}
-.modal__tab {
-  padding: var(--ko-tabs-pad-y) var(--ko-space-12);
-  background: var(--ko-bg-1);
-  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
-  color: var(--ko-text-2);
-  transition: background-color .15s ease, color .15s ease;
-}
-.modal__tab.is-active { background: var(--ko-bg-2); color: var(--ko-text-1); }
+/* Табов «Телефон / E-mail» из макета в вёрстке нет: вход только по почте
+   (решение заказчика, docs/03-modals.md) */
 
 /* Поле пароля с «глазом» */
 .field--password { position: relative; }
