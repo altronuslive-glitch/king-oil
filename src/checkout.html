@@ -487,16 +487,12 @@
         <fieldset class="checkout__block">
           <legend class="checkout__legend">Оплата</legend>
           <div class="checkout__body">
+            <!-- Оплаты картой на сайте пока нет: приём онлайн-платежей не подключён,
+                 заказ только оформляется, деньги берутся при получении или по счёту.
+                 Вариант «Картой онлайн» снят 10 сентября по решению заказчика -->
             <div class="checkout__options">
               <label class="option">
-                <input type="radio" name="payment" value="card" checked>
-                <span class="option__body">
-                  <span class="option__title">Картой онлайн</span>
-                  <span class="option__text">Visa, Mastercard и МИР — сразу после оформления заказа.</span>
-                </span>
-              </label>
-              <label class="option">
-                <input type="radio" name="payment" value="cash">
+                <input type="radio" name="payment" value="cash" checked>
                 <span class="option__body">
                   <span class="option__title">Наличными при получении</span>
                   <span class="option__text">Курьеру в пределах Омска или на точке самовывоза.</span>
