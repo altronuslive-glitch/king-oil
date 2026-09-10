@@ -126,11 +126,12 @@
         <div class="search__panel" hidden data-search-panel>
           <!-- Состояние по умолчанию: показывается при пустом вводе -->
           <div data-search-default>
+            <!-- История запросов живёт в браузере (js/store.js): строки рисует
+                 js/main.js, отправленный запрос поднимается наверх списка.
+                 Раньше три строки стояли в разметке и «удаление» не переживало перезагрузку -->
             <div class="search__group" data-search-recent-group>
               <div class="search__group-head"><span>Вы искали</span><button class="link" type="button" data-search-clear-recent>Очистить</button></div>
-              <button class="search__row" type="button" data-search-recent><span>Моторное масло 5W-30</span><svg><use href="#i-close"></use></svg></button>
-              <button class="search__row" type="button" data-search-recent><span>Castrol EDGE</span><svg><use href="#i-close"></use></svg></button>
-              <button class="search__row" type="button" data-search-recent><span>Антифриз G12</span><svg><use href="#i-close"></use></svg></button>
+              <div data-search-recent-list></div>
             </div>
             <div class="search__group" data-search-popular>
               <div class="search__group-head"><span>Популярные товары</span><a class="link link--accent" href="category.html">Показать все</a></div>
@@ -172,7 +173,17 @@
 
       <div class="header__actions">
         <div class="header__action-wrap">
-          <a class="icon-btn" href="wishlist.html" aria-label="Избранное"><svg><use href="#i-heart"></use></svg></a>
+          <a class="icon-btn" href="wishlist.html" aria-label="Избранное" data-fav-link>
+            <svg><use href="#i-heart"></use></svg><span class="icon-btn__badge" hidden data-fav-count>0</span>
+          </a>
+          <!-- Пустое избранное: по макету клик открывает мини-модалку, а не уводит
+               на страницу (docs/02-header.md, «Пустая корзина / пустое избранное») -->
+          <div class="mini-modal" hidden data-panel="fav-empty">
+            <button class="mini-modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+            <div class="mini-modal__icon"><svg><use href="#i-heart"></use></svg></div>
+            <p class="mini-modal__title">Нет товаров в избранном!</p>
+            <p class="mini-modal__text">Добавьте товары в избранное,<br>чтобы перейти в раздел</p>
+          </div>
         </div>
 
         <div class="header__action-wrap">
@@ -190,9 +201,15 @@
         </div>
 
         <div class="header__action-wrap">
-          <a class="icon-btn" href="cart.html" aria-label="Корзина" style="color:var(--ko-icon-brand)">
-            <svg><use href="#i-cart"></use></svg><span class="icon-btn__badge">1</span>
+          <a class="icon-btn" href="cart.html" aria-label="Корзина" style="color:var(--ko-icon-brand)" data-cart-link>
+            <svg><use href="#i-cart"></use></svg><span class="icon-btn__badge" hidden data-cart-count>0</span>
           </a>
+          <div class="mini-modal" hidden data-panel="cart-empty">
+            <button class="mini-modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+            <div class="mini-modal__icon"><svg><use href="#i-cart"></use></svg></div>
+            <p class="mini-modal__title">В корзине пусто!</p>
+            <p class="mini-modal__text">Добавьте товары в корзину,<br>чтобы продолжить покупку</p>
+          </div>
         </div>
       </div>
     </div>
@@ -481,9 +498,9 @@
 <!-- ============ ТАББАР (мобильный) ============ -->
 <nav class="tabbar">
   <a href="index.html" aria-label="Главная"><svg><use href="#i-home"></use></svg></a>
-  <a href="wishlist.html" aria-label="Избранное"><svg><use href="#i-heart"></use></svg></a>
+  <a href="wishlist.html" aria-label="Избранное"><svg><use href="#i-heart"></use></svg><span class="tabbar__badge" hidden data-fav-count>0</span></a>
   <a href="catalog.html" aria-label="Каталог"><svg><use href="#i-grid"></use></svg></a>
-  <a href="cart.html" aria-label="Корзина"><svg><use href="#i-bag"></use></svg><span class="tabbar__badge">1</span></a>
+  <a href="cart.html" aria-label="Корзина"><svg><use href="#i-bag"></use></svg><span class="tabbar__badge" hidden data-cart-count>0</span></a>
   <a href="account.html" aria-label="Профиль"><svg><use href="#i-user"></use></svg></a>
 </nav>
 <!-- /@shared:tabbar -->
@@ -501,11 +518,11 @@
     <form class="modal__body" data-form data-form-redirect="account.html">
       <label class="field">
         <span class="field__label">E-mail</span>
-        <input class="input" type="email" placeholder="mail@example.com" autocomplete="email">
+        <input class="input" type="email" placeholder="mail@example.com" autocomplete="email" required>
       </label>
       <label class="field field--password">
         <span class="field__label">Пароль</span>
-        <input class="input" type="password" autocomplete="current-password">
+        <input class="input" type="password" autocomplete="current-password" required minlength="6">
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <a class="modal__link" href="#" data-modal-open="recover">Забыли пароль?</a>
@@ -524,17 +541,17 @@
     <h2 class="h5 modal__title" id="register-title">Регистрация в King-Oil</h2>
 
     <form class="modal__body" data-form data-form-redirect="account.html">
-      <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" placeholder="Александр Федосенко" autocomplete="name"></label>
-      <label class="field"><span class="field__label">E-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email"></label>
-      <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel"></label>
+      <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" placeholder="Александр Федосенко" autocomplete="name" required></label>
+      <label class="field"><span class="field__label">E-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email" required></label>
+      <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel" required></label>
       <label class="field field--password">
         <span class="field__label">Придумайте пароль</span>
-        <input class="input" type="password" autocomplete="new-password">
+        <input class="input" type="password" autocomplete="new-password" required minlength="6">
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <label class="field field--password">
         <span class="field__label">Повторите пароль</span>
-        <input class="input" type="password" autocomplete="new-password">
+        <input class="input" type="password" autocomplete="new-password" required minlength="6" data-confirm-password>
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <label class="switch"><input type="checkbox" data-toggle-company>Аккаунт для компании</label>
@@ -550,7 +567,7 @@
       </div>
 
       <label class="checkbox">
-        <input type="checkbox">
+        <input type="checkbox" required>
         <span>Я даю согласие на обработку моих персональных данных в порядке и на условиях, указанных в <a href="legal.html">Согласии на обработку персональных данных</a>, и подтверждаю ознакомление с <a href="legal.html">Политикой конфиденциальности</a> и <a href="legal.html">Пользовательским соглашением</a></span>
       </label>
     </form>
@@ -742,6 +759,7 @@
 </div>
 <!-- /@shared:overlays -->
 
+<script src="js/store.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

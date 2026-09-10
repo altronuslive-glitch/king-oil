@@ -187,6 +187,10 @@
 }
 .search__row:hover { background: var(--ko-bg-1); }
 .search__row svg { width: 16px; height: 16px; color: var(--ko-icon-2); flex: none; }
+/* Строка истории: слева ссылка на запрос, справа крестик «забыть».
+   Раньше вся строка была одной кнопкой и никуда не вела */
+.search__row > a { flex: 1; min-width: 0; }
+.search__row > button { display: flex; flex: none; }
 
 .search__product {
   display: grid;
@@ -352,12 +356,17 @@
 }
 
 /* ---------- Мини-модалки шапки ---------- */
+/* Мини-модалка — компонент 2099:57024. Числа сняты из Figma 10 сентября,
+   когда к ней добавились пустая корзина и пустое избранное: паддинг 24,
+   иконка 80 с зазором 32, заголовок H6 24/32 с отступом 12, текст Small 16/24,
+   кнопки 48 с гэпом 10. Fav — 400×252, Login — 400×356.
+   До сверки компонент собирал 400×220 и 400×318 (docs/26-logic-pass.md) */
 .mini-modal {
   position: absolute;
   top: calc(100% + 4px);
   right: 0;
   width: 400px;
-  padding: var(--ko-space-32) var(--ko-space-24) var(--ko-space-24);
+  padding: var(--ko-space-24);
   background: var(--ko-bg-0);
   box-shadow: 0 12px 32px rgba(19, 25, 39, .12);
   text-align: center;
@@ -376,20 +385,21 @@
 .mini-modal__icon {
   display: grid;
   place-items: center;
-  width: 64px; height: 64px;
-  margin: 0 auto var(--ko-space-16);
+  width: var(--ko-space-80); height: var(--ko-space-80);
+  margin: 0 auto var(--ko-space-32);
   background: var(--ko-bg-1);
   border-radius: var(--ko-radius-max);
   color: var(--ko-icon-2);
 }
-.mini-modal__icon svg { width: 28px; height: 28px; }
-.mini-modal__title { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); margin-bottom: var(--ko-space-8); }
+/* Icon size/icon-medium = 20 */
+.mini-modal__icon svg { width: 20px; height: 20px; }
+.mini-modal__title { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); margin-bottom: var(--ko-space-12); }
 .mini-modal__text {
-  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-3);
 }
-.mini-modal__actions { display: flex; gap: var(--ko-space-8); margin-top: var(--ko-space-24); }
-.mini-modal__actions .btn { flex: 1; }
+.mini-modal__actions { display: flex; gap: var(--ko-space-10); margin-top: var(--ko-space-32); }
+.mini-modal__actions .btn { flex: 1; height: 48px; }
 
 /* Меню личного кабинета */
 .account-menu {

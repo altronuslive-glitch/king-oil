@@ -9,6 +9,11 @@
   const $  = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => Array.from(ctx.querySelectorAll(sel));
 
+  // Экранирование для строк, которые попадают в innerHTML (названия товаров, запросы)
+  const escapeHtml = (str) => String(str).replace(/[&<>"]/g, (ch) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]
+  ));
+
   /* ---------------------------------------------------------
      Оверлей: один на всё приложение
      --------------------------------------------------------- */
@@ -245,6 +250,8 @@
     // Ссылка «Бонусные баллы» в шапке и подвале ведёт на account.html#loyalty
     const fromHash = location.hash.slice(1);
     if (fromHash) showTab(fromHash);
+    // Кнопка «назад» в браузере тоже должна переключать раздел
+    window.addEventListener('hashchange', () => showTab(location.hash.slice(1)));
   }
 
   /* ---------------------------------------------------------
@@ -257,7 +264,8 @@
       const qty = $('.stepper__input', info);
       const volume = $('[data-tabs] .is-active', info);
       const params = new URLSearchParams({ mode: 'buy-now' });
-      if (link.dataset.sku) params.set('sku', link.dataset.sku);
+      const sku = (volume && volume.dataset.sku) || link.dataset.sku;
+      if (sku) params.set('sku', sku);
       if (volume) params.set('volume', volume.textContent.trim());
       if (qty) params.set('qty', qty.value || '1');
       e.preventDefault();
@@ -269,30 +277,55 @@
      Модальные окна
      --------------------------------------------------------- */
   let openModalEl = null;
+  let modalOpener = null;
 
   function closeModal() {
     if (!openModalEl) return;
     openModalEl.hidden = true;
     openModalEl = null;
     document.body.classList.remove('no-scroll');
+    // Фокус возвращаем на кнопку, которая открыла окно: иначе после Esc он
+    // оказывается в начале страницы и клавиатурой приходится идти заново
+    if (modalOpener && document.contains(modalOpener)) modalOpener.focus({ preventScroll: true });
+    modalOpener = null;
   }
 
   function openModal(name) {
     const el = $(`[data-modal="${name}"]`);
     if (!el) return;
+    const opener = modalOpener;
     closeModal();
+    modalOpener = opener;
     closeAllPanels();
     el.hidden = false;
     openModalEl = el;
     document.body.classList.add('no-scroll');
-    const firstInput = $('input, textarea, button', el);
-    if (firstInput) firstInput.focus({ preventScroll: true });
+    // Первое поле, а не «Закрыть»: крестик стоит в разметке раньше, и общий
+    // селектор наводил фокус на него
+    const first = $('input:not([type="hidden"]), textarea, select', el) || $('button', el);
+    if (first) first.focus({ preventScroll: true });
   }
+
+  /* Фокус не уходит за пределы открытого окна: Tab с последнего элемента
+     возвращается на первый, Shift+Tab с первого — на последний */
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || !openModalEl) return;
+    const items = $$('a[href], button:not([disabled]), input:not([type="hidden"]), textarea, select', openModalEl)
+      .filter((el) => !el.closest('[hidden]') && el.offsetParent !== null);
+    if (!items.length) return;
+    const first = items[0];
+    const last = items[items.length - 1];
+    if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  });
 
   document.addEventListener('click', (e) => {
     const opener = e.target.closest('[data-modal-open]');
     if (opener) {
       e.preventDefault();
+      // Внутри уже открытого окна (например «Забыли пароль?») исходную
+      // кнопку не перезаписываем — возвращаться нужно к ней
+      if (!openModalEl) modalOpener = opener;
       openModal(opener.dataset.modalOpen);
       return;
     }
@@ -365,11 +398,119 @@
   }
 
   /* ---------------------------------------------------------
-     Формы: заглушка отправки + экран успеха
+     Телефон: маска +7 XXX XXX XX XX.
+     В макете это плейсхолдер «+7 ___ ___ __ __», но поле принимало
+     что угодно — теперь ввод приводится к формату по мере набора
+     --------------------------------------------------------- */
+  const PHONE_LEN = 10; // цифр после +7
+
+  function phoneDigits(value) {
+    let digits = String(value).replace(/\D/g, '');
+    // 8 и 7 в начале — это код страны, а не первая цифра номера
+    if (digits[0] === '8' || digits[0] === '7') digits = digits.slice(1);
+    return digits.slice(0, PHONE_LEN);
+  }
+
+  function phoneFormat(value) {
+    const d = phoneDigits(value);
+    if (!d) return '';
+    const parts = [d.slice(0, 3), d.slice(3, 6), d.slice(6, 8), d.slice(8, 10)].filter(Boolean);
+    return '+7 ' + parts.join(' ');
+  }
+
+  $$('input[type="tel"]').forEach((input) => {
+    const reformat = () => {
+      // Курсор держим в конце: маска дописывает пробелы, и вставлять его
+      // в середину пришлось бы пересчитывать на каждый символ
+      input.value = phoneFormat(input.value);
+    };
+    input.addEventListener('input', reformat);
+    input.addEventListener('blur', reformat);
+  });
+
+  /* ---------------------------------------------------------
+     Проверка форм.
+     Браузерные пузыри рисует ОС, к макету их не привести, поэтому
+     формы помечены novalidate, а ошибки показываем сами:
+     подсветка поля (.input--error) и подпись под ним (.field__error)
+     --------------------------------------------------------- */
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  function fieldError(control, message) {
+    const field = control.closest('.field') || control.closest('.checkbox') || control.parentElement;
+    if (!field) return;
+    let note = $('.field__error', field);
+    if (message) {
+      if (!note) {
+        note = document.createElement('span');
+        note.className = 'field__error';
+        field.appendChild(note);
+      }
+      note.textContent = message;
+      note.hidden = false;
+    } else if (note) {
+      note.hidden = true;
+    }
+    if (control.type !== 'checkbox') control.classList.toggle('input--error', !!message);
+  }
+
+  function validateControl(control) {
+    // Поля в скрытых блоках (реквизиты компании, панели доставки) не проверяем
+    if (control.disabled || control.closest('[hidden]')) return '';
+
+    const value = String(control.value || '').trim();
+
+    if (control.type === 'checkbox') {
+      return control.required && !control.checked ? 'Отметьте согласие, чтобы продолжить' : '';
+    }
+    if (control.required && !value) return 'Заполните поле';
+    if (!value) return '';
+    if (control.type === 'email' && !EMAIL_RE.test(value)) return 'Проверьте адрес: нужен вид mail@example.com';
+    if (control.type === 'tel' && phoneDigits(value).length < PHONE_LEN) return 'Номер из 10 цифр после +7';
+    if (control.minLength > 0 && value.length < control.minLength) {
+      return 'Не короче ' + control.minLength + ' символов';
+    }
+    if (control.hasAttribute('data-confirm-password')) {
+      const first = $$('input[type="password"]', control.form).find((i) => i !== control);
+      if (first && first.value !== value) return 'Пароли не совпадают';
+    }
+    return '';
+  }
+
+  function validateForm(form) {
+    const controls = $$('input, textarea, select', form)
+      .filter((c) => c.type !== 'hidden' && c.type !== 'submit' && c.type !== 'button');
+    let firstBad = null;
+    controls.forEach((control) => {
+      const message = validateControl(control);
+      fieldError(control, message);
+      if (message && !firstBad) firstBad = control;
+    });
+    if (firstBad) firstBad.focus({ preventScroll: false });
+    return !firstBad;
+  }
+
+  /* ---------------------------------------------------------
+     Формы: проверка, заглушка отправки и экран успеха
      --------------------------------------------------------- */
   $$('[data-form]').forEach((form) => {
+    form.setAttribute('novalidate', '');
+
+    // Ошибку снимаем, как только поле поправили: держать подсветку до
+    // повторной отправки — раздражает
+    form.addEventListener('input', (e) => {
+      if (e.target.matches('input, textarea, select') && e.target.classList.contains('input--error')) {
+        fieldError(e.target, validateControl(e.target));
+      }
+    });
+    form.addEventListener('change', (e) => {
+      if (e.target.type === 'checkbox') fieldError(e.target, validateControl(e.target));
+    });
+
     form.addEventListener('submit', (e) => {
       e.preventDefault();
+      if (!validateForm(form)) return;
+
       // TODO: интеграция — отправка на бэкенд
       // Оформление заказа ведёт на страницу оформленного заказа
       if (form.dataset.formRedirect) {
@@ -392,6 +533,7 @@
 
       // Форму на странице не трогаем — сообщаем об отправке модалкой
       form.reset();
+      $$('.input--error', form).forEach((el) => fieldError(el, ''));
       openModal('sent');
     });
   });
@@ -541,37 +683,6 @@
   });
 
   /* ---------------------------------------------------------
-     Каталог: дропдаун сортировки
-     --------------------------------------------------------- */
-  $$('[data-sort]').forEach((root) => {
-    const btn = $('[data-sort-btn]', root);
-    const panelEl = $('[data-sort-panel]', root);
-    if (!btn || !panelEl) return;
-
-    const close = () => {
-      panelEl.hidden = true;
-      btn.setAttribute('aria-expanded', 'false');
-    };
-
-    btn.addEventListener('click', () => {
-      const open = panelEl.hidden;
-      panelEl.hidden = !open;
-      btn.setAttribute('aria-expanded', String(open));
-    });
-
-    panelEl.addEventListener('click', (e) => {
-      const option = e.target.closest('.sort__option');
-      if (!option) return;
-      $$('.sort__option', panelEl).forEach((o) => o.classList.toggle('is-active', o === option));
-      // TODO: интеграция — пересортировка выдачи на бэкенде
-      close();
-    });
-
-    document.addEventListener('click', (e) => { if (!e.target.closest('[data-sort]')) close(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-  });
-
-  /* ---------------------------------------------------------
      Главный слайдер: стрелки + автоперелистывание раз в 10 секунд
      --------------------------------------------------------- */
   const hero = $('[data-hero]');
@@ -627,7 +738,156 @@
   }
 
   /* ---------------------------------------------------------
-     Каталог: фильтры
+     Каталог: фильтры, сортировка и страницы.
+     Всё считается в браузере по разметке карточек — статике неоткуда
+     взять выдачу. TODO: интеграция — CS-Cart отдаёт готовую страницу,
+     этот блок заменяется штатным списком товаров с Searchanise.
+     --------------------------------------------------------- */
+  // Пустое состояние есть только у каталога — по нему и опознаём страницу
+  // (сетка .catalog-grid стоит ещё и в избранном, её трогать нельзя)
+  const catalogEmpty = $('[data-catalog-empty]');
+  const catalogGrid = catalogEmpty ? $('.catalog-grid') : null;
+
+  // Состояние выдачи общее для фильтров, сортировки и страниц
+  const catalog = {
+    cards: [],
+    page: 1,
+    perPage: 8,
+    sort: 'default',
+    filters: {},
+  };
+
+  /* Цена карточки — у выбранного объёма: чипсы меняют её на месте */
+  function cardPrice(card) {
+    const active = $('.product-card__volumes .volume.is-active', card);
+    if (active && active.dataset.price) return KO.money.parse(active.dataset.price);
+    const box = $('.product-card__price', card);
+    return box ? KO.money.parse(box.textContent) : 0;
+  }
+
+  /* Объёмы карточки — из чипсов, отдельного атрибута для них не нужно */
+  function cardVolumes(card) {
+    return $$('.product-card__volumes .volume', card).map((v) => v.textContent.trim());
+  }
+
+  function matchesFilters(card) {
+    return Object.keys(catalog.filters).every((group) => {
+      const picked = catalog.filters[group];
+      if (!picked.length) return true;
+      // Внутри группы — «или», между группами — «и»
+      if (group === 'volume') {
+        const volumes = cardVolumes(card);
+        return picked.some((v) => volumes.indexOf(v) !== -1);
+      }
+      return picked.indexOf(card.dataset[group] || '') !== -1;
+    });
+  }
+
+  function renderCatalog() {
+    if (!catalogGrid) return;
+
+    const found = catalog.cards.filter(matchesFilters);
+
+    const sorted = found.slice();
+    if (catalog.sort === 'price') sorted.sort((a, b) => cardPrice(a) - cardPrice(b));
+    // Даты поступления в статике нет: новизна — обратный порядок каталога.
+    // TODO: интеграция — сортировка уходит на бэкенд вместе с запросом выдачи
+    if (catalog.sort === 'new') sorted.reverse();
+
+    const shown = sorted.slice((catalog.page - 1) * catalog.perPage, catalog.page * catalog.perPage);
+
+    catalog.cards.forEach((card) => { card.hidden = true; });
+    shown.forEach((card, i) => {
+      card.hidden = false;
+      card.style.order = String(i);
+    });
+
+    catalogGrid.hidden = found.length === 0;
+    if (catalogEmpty) catalogEmpty.hidden = found.length > 0;
+
+    $$('[data-catalog-count]').forEach((el) => {
+      el.textContent = found.length
+        ? 'Найдено ' + found.length + ' ' + KO.plural(found.length, ['товар', 'товара', 'товаров'])
+        : '';
+    });
+
+    renderPagination(found.length);
+    renderBuyState();
+    renderFavState();
+  }
+
+  /* Пагинация рисуется из реального числа страниц: длинный ряд с многоточием
+     из макета появится, когда выдачу начнёт отдавать бэкенд */
+  function renderPagination(total) {
+    const nav = $('[data-pagination]');
+    const row = $('[data-pagination-row]');
+    const more = $('[data-catalog-more]');
+    if (!nav) return;
+
+    const pages = Math.ceil(total / catalog.perPage);
+    if (more) more.hidden = catalog.page >= pages;
+    if (row) row.hidden = pages <= 1;
+    if (pages <= 1) { nav.innerHTML = ''; return; }
+
+    // Больше семи страниц — прячем середину под многоточие, как в макете
+    let list = [];
+    if (pages <= 7) {
+      for (let i = 1; i <= pages; i += 1) list.push(i);
+    } else if (catalog.page <= 4) {
+      list = [1, 2, 3, 4, 5, '…', pages];
+    } else if (catalog.page >= pages - 3) {
+      list = [1, '…', pages - 4, pages - 3, pages - 2, pages - 1, pages];
+    } else {
+      list = [1, '…', catalog.page - 1, catalog.page, catalog.page + 1, '…', pages];
+    }
+
+    const items = list.map((n) => (n === '…'
+      ? '<span class="pagination__item pagination__dots">…</span>'
+      : '<button class="pagination__item' + (n === catalog.page ? ' is-active' : '')
+        + '" type="button" data-page="' + n + '"'
+        + (n === catalog.page ? ' aria-current="page"' : '') + '>' + n + '</button>'));
+
+    if (catalog.page < pages) {
+      items.push('<button class="pagination__item pagination__next" type="button" data-page="'
+        + (catalog.page + 1) + '">Дальше →</button>');
+    }
+    nav.innerHTML = items.join('');
+  }
+
+  function goToPage(page) {
+    catalog.page = page;
+    renderCatalog();
+    // Возврат к началу сетки, а не к началу страницы: шапка и фильтры остаются в кадре
+    if (catalogGrid) {
+      const top = catalogGrid.getBoundingClientRect().top + window.scrollY - 160;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  }
+
+  if (catalogGrid) {
+    catalog.cards = $$('.product-card', catalogGrid);
+
+    const nav = $('[data-pagination]');
+    if (nav) {
+      nav.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-page]');
+        if (btn) goToPage(Number(btn.dataset.page));
+      });
+    }
+
+    // «Показать ещё» досыпает следующую страницу, а не открывает её отдельно
+    const more = $('[data-catalog-more]');
+    if (more) {
+      more.addEventListener('click', () => {
+        catalog.perPage += 8;
+        catalog.page = 1;
+        renderCatalog();
+      });
+    }
+  }
+
+  /* ---------------------------------------------------------
+     Каталог: строка фильтров и шторка на мобильном
      --------------------------------------------------------- */
   $$('[data-filters]').forEach((root) => {
     const toggle = $('[data-filters-toggle]', root);
@@ -650,17 +910,16 @@
         setOpen(false);
         return;
       }
-      // TODO: интеграция — снятие фильтра должно перезапрашивать выдачу
       const chip = e.target.closest('[data-chip-remove]');
       if (chip) {
         const input = $(`input[value="${chip.dataset.chipRemove}"]`, root);
         if (input) input.checked = false;
-        renderChips();
+        applyFilters();
         return;
       }
       if (e.target.closest('[data-filters-reset]')) {
         $$('[data-select] input:checked', root).forEach((i) => { i.checked = false; });
-        renderChips();
+        applyFilters();
       }
     });
 
@@ -673,8 +932,8 @@
       if (!active) return;
       const picked = $$('[data-select] input:checked', root).map((i) => i.value);
       active.innerHTML = picked.map((v) =>
-        `<button class="chip chip--removable" type="button" data-chip-remove="${v}">`
-        + `${v} <svg><use href="#i-close"></use></svg></button>`).join('');
+        `<button class="chip chip--removable" type="button" data-chip-remove="${escapeHtml(v)}">`
+        + `${escapeHtml(v)} <svg><use href="#i-close"></use></svg></button>`).join('');
       if (reset) {
         active.appendChild(reset);
         reset.hidden = !picked.length;
@@ -682,10 +941,60 @@
       active.hidden = !picked.length;
     }
 
+    // Отмеченные чекбоксы → состояние выдачи. Смена набора возвращает на первую страницу
+    function applyFilters() {
+      const next = {};
+      $$('[data-filter]', root).forEach((group) => {
+        next[group.dataset.filter] = $$('input:checked', group).map((i) => i.value);
+      });
+      catalog.filters = next;
+      catalog.page = 1;
+      renderChips();
+      renderCatalog();
+    }
+
     root.addEventListener('change', (e) => {
-      if (e.target.matches('[data-select] input[type="checkbox"]')) renderChips();
+      if (e.target.matches('[data-select] input[type="checkbox"]')) applyFilters();
     });
-    renderChips();
+    applyFilters();
+  });
+
+  /* ---------------------------------------------------------
+     Каталог: дропдаун сортировки
+     --------------------------------------------------------- */
+  $$('[data-sort]').forEach((root) => {
+    const btn = $('[data-sort-btn]', root);
+    const panelEl = $('[data-sort-panel]', root);
+    if (!btn || !panelEl) return;
+
+    const label = $('[data-sort-label]', btn) || btn;
+
+    const close = () => {
+      panelEl.hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+    };
+
+    btn.addEventListener('click', () => {
+      const open = panelEl.hidden;
+      panelEl.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+    });
+
+    panelEl.addEventListener('click', (e) => {
+      const option = e.target.closest('.sort__option');
+      if (!option) return;
+      $$('.sort__option', panelEl).forEach((o) => o.classList.toggle('is-active', o === option));
+      // Выбранный вариант выносим в подпись кнопки: иначе текущую сортировку
+      // видно только с открытой панелью
+      label.textContent = option.textContent.trim();
+      catalog.sort = option.dataset.sort || 'default';
+      catalog.page = 1;
+      renderCatalog();
+      close();
+    });
+
+    document.addEventListener('click', (e) => { if (!e.target.closest('[data-sort]')) close(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
   });
 
   /* ---------------------------------------------------------
@@ -700,12 +1009,48 @@
     });
   });
 
-  /* Наличие зависит от объёма: у закончившегося варианта строка становится
-     серой, «В корзину» и степпер прячутся, вместо них — «Уведомить о поступлении».
-     Состояния в макете нет — см. docs/22-stock-states.md */
+  /* Цена, старая цена, скидка, артикул и единица — свои у каждого объёма */
+  function applyVolumePrice(tab, info) {
+    const volume = tab.textContent.trim();
+    const now = tab.dataset.price;
+    const old = tab.dataset.old;
+
+    const nowEl   = $('.product-info__price-now', info);
+    const oldEl   = $('.product-info__price-old', info);
+    const unitEl  = $('.product-info__price-unit', info);
+    const badgeEl = $('[data-sale-badge]', info);
+    const skuEl   = $('[data-sku-value]', info);
+    const tagEl   = $('[data-volume-tag]', info);
+
+    if (nowEl && now) nowEl.textContent = now;
+    if (unitEl) unitEl.textContent = '/ ' + volume;
+    if (tagEl) tagEl.textContent = volume.toUpperCase();
+    if (skuEl && tab.dataset.sku) skuEl.textContent = tab.dataset.sku;
+
+    if (oldEl) {
+      oldEl.textContent = old || '';
+      oldEl.hidden = !old;
+    }
+    // Процент считаем, а не храним: иначе он разъедется с ценами варианта
+    if (badgeEl) {
+      const nowValue = KO.money.parse(now);
+      const oldValue = KO.money.parse(old);
+      const off = oldValue > nowValue ? Math.round((oldValue - nowValue) / oldValue * 100) : 0;
+      badgeEl.hidden = off === 0;
+      if (off) badgeEl.textContent = '−' + off + ' %';
+    }
+  }
+
+  /* Объём — вариант одного товара: клик меняет цену, артикул, единицу и наличие
+     на месте, без перехода на другую страницу (решение №37 от 4 сентября).
+     У закончившегося варианта строка наличия становится серой, «В корзину»
+     и степпер прячутся, вместо них — «Уведомить о поступлении».
+     Состояния «нет в наличии» в макете нет — см. docs/22-stock-states.md */
   function applyStock(tab) {
     const info = tab.closest('.product-info');
     if (!info) return;
+
+    applyVolumePrice(tab, info);
 
     const left    = Number(tab.dataset.stock);
     const inStock = left > 0;
@@ -740,31 +1085,46 @@
   /* ---------------------------------------------------------
      Степпер количества
      --------------------------------------------------------- */
-  $$('[data-stepper]').forEach((root) => {
-    const input = $('input', root);
-    if (!input) return;
+  /* Функцией, а не разовым проходом: строки корзины перерисовываются
+     из состояния, и новым степперам тоже нужны обработчики.
+     О смене количества сообщаем событием ko:qty — его слушает корзина */
+  function initSteppers(ctx) {
+    $$('[data-stepper]', ctx || document).forEach((root) => {
+      if (root.dataset.stepperReady) return;
+      root.dataset.stepperReady = '1';
 
-    const min = Number(input.min) || 1;
-    const max = Number(input.max) || Infinity;
+      const input = $('input', root);
+      if (!input) return;
 
-    const clamp = () => {
-      const value = Math.min(max, Math.max(min, Number(input.value) || min));
-      input.value = String(value);
-      $$('[data-step]', root).forEach((btn) => {
-        const next = value + Number(btn.dataset.step);
-        btn.disabled = next < min || next > max;
+      const min = Number(input.min) || 1;
+      const max = Number(input.max) || Infinity;
+
+      const clamp = (notify) => {
+        const before = input.value;
+        const value = Math.min(max, Math.max(min, Number(input.value) || min));
+        input.value = String(value);
+        $$('[data-step]', root).forEach((btn) => {
+          const next = value + Number(btn.dataset.step);
+          btn.disabled = next < min || next > max;
+        });
+        if (notify) {
+          root.dispatchEvent(new CustomEvent('ko:qty', { bubbles: true, detail: { value } }));
+        }
+        return before;
+      };
+
+      root.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-step]');
+        if (!btn || btn.disabled) return;
+        input.value = String(Number(input.value) + Number(btn.dataset.step));
+        clamp(true);
       });
-    };
-
-    root.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-step]');
-      if (!btn) return;
-      input.value = String(Number(input.value) + Number(btn.dataset.step));
-      clamp();
+      input.addEventListener('change', () => clamp(true));
+      clamp(false);
     });
-    input.addEventListener('change', clamp);
-    clamp();
-  });
+  }
+
+  initSteppers(document);
 
   /* ---------------------------------------------------------
      Галерея товара: превью переключают главный кадр
@@ -784,59 +1144,366 @@
   });
 
   /* ---------------------------------------------------------
-     Корзина: удаление позиции и пустое состояние.
-     Страницы нет в макете — поведение стандартное.
+     Магазин: корзина и избранное.
+     Состояние живёт в js/store.js (localStorage) — при переносе
+     в CS-Cart этот слой заменяется корзиной движка, разметка
+     и обработчики остаются те же.
+     Страниц корзины и избранного в макете нет, поведение стандартное.
      --------------------------------------------------------- */
-  (function () {
-    const list = $('[data-cart-list]');
-    if (!list) return;
-    const empty = $('[data-cart-empty]');
-    const summary = $('[data-cart-summary]');
 
-    function sync() {
-      const left = $$('.cart-row', list).length;
-      list.hidden = left === 0;
-      if (empty) empty.hidden = left > 0;
-      if (summary) summary.hidden = left === 0;
+  // Цифры взяты со страницы «Доставка» (delivery.html), чтобы корзина
+  // и раздел доставки не расходились
+  const COURIER_PRICE = 200;   // курьер по городу
+  const TK_PRICE = 300;        // ТК до порога: на странице «300–1000 ₽», берём нижнюю границу
+  const FREE_FROM = 5000;      // от этой суммы отправка ТК бесплатна
+
+  /* Промокоды: статике проверять негде, поэтому таблица зашита здесь.
+     TODO: интеграция — код уходит на проверку бэкенду, скидка приходит ответом */
+  const PROMO_CODES = {
+    KINGOIL10: { percent: 10, label: 'Промокод применён: −10% на заказ' },
+    OIL500:    { amount: 500, label: 'Промокод применён: −500 ₽' },
+  };
+  const PROMO_KEY = 'ko-promo';
+
+  function readPromo() {
+    try { return JSON.parse(localStorage.getItem(PROMO_KEY)) || null; } catch (err) { return null; }
+  }
+  function writePromo(value) {
+    try {
+      if (value) localStorage.setItem(PROMO_KEY, JSON.stringify(value));
+      else localStorage.removeItem(PROMO_KEY);
+    } catch (err) { /* приватный режим */ }
+  }
+
+  /* Карточка товара в разметке → позиция корзины.
+     Читаем из DOM, а не из data-атрибутов: карточка одна и та же
+     на главной, в каталоге, в избранном и в «похожих» */
+  function cardData(card) {
+    const titleEl = $('.product-card__title', card);
+    const title = (titleEl ? titleEl.textContent : '').trim();
+    const img = $('.product-card__media img', card);
+    const activeVolume = $('.product-card__volumes .volume.is-active', card);
+    const volume = activeVolume ? activeVolume.textContent.trim() : '';
+    const priceBox = $('.product-card__price', card);
+    // Цена лежит первым текстовым узлом: рядом может стоять зачёркнутая старая
+    const priceNode = priceBox && [...priceBox.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
+    const old = priceBox && $('.product-card__price-old', priceBox);
+    return {
+      id: KO.productId(title, volume),
+      title,
+      volume,
+      price: priceNode ? priceNode.textContent.trim() : (priceBox ? priceBox.textContent.trim() : '0'),
+      old: old ? old.textContent.trim() : '',
+      img: img ? img.getAttribute('src') : '',
+      href: titleEl ? titleEl.getAttribute('href') : 'product.html',
+      qty: 1,
+    };
+  }
+
+  /* Счётчики на иконках шапки и таббара. Ноль не показываем —
+     по макету бейдж появляется только при непустой корзине */
+  function renderBadges() {
+    const inCart = KO.cart.count();
+    const inFav = KO.fav.count();
+    $$('[data-cart-count]').forEach((el) => { el.textContent = String(inCart); el.hidden = inCart === 0; });
+    $$('[data-fav-count]').forEach((el) => { el.textContent = String(inFav); el.hidden = inFav === 0; });
+  }
+
+  /* Сердце в карточке подсвечено, если товар уже в избранном */
+  function renderFavState() {
+    $$('.product-card').forEach((card) => {
+      const btn = $('.product-card__fav', card);
+      if (!btn || btn.hasAttribute('data-wish-remove')) return;
+      const on = KO.fav.has(cardData(card).id);
+      btn.classList.toggle('is-active', on);
+      btn.setAttribute('aria-label', on ? 'Убрать из избранного' : 'В избранное');
+    });
+  }
+
+  /* Кнопка «В корзину» показывает, что товар уже добавлен */
+  function renderBuyState() {
+    $$('.product-card').forEach((card) => {
+      const btn = $('.product-card__buy', card);
+      if (!btn) return;
+      const inCart = KO.cart.has(cardData(card).id);
+      btn.classList.toggle('is-added', inCart);
+      btn.textContent = inCart ? 'В корзине' : 'В корзину';
+    });
+  }
+
+  /* Клик по «В корзину» и по сердцу — общий обработчик на документе:
+     карточки появляются динамически (выдача поиска, фильтры каталога) */
+  document.addEventListener('click', (e) => {
+    const buy = e.target.closest('.product-card__buy');
+    if (buy) {
+      const card = buy.closest('.product-card');
+      if (!card) return;
+      const item = cardData(card);
+      // Повторный клик по уже добавленному товару ведёт в корзину
+      if (KO.cart.has(item.id)) { window.location.href = 'cart.html'; return; }
+      KO.cart.add(item);
+      return;
     }
 
-    list.addEventListener('click', (e) => {
-      if (e.target.closest('[data-cart-clear]')) {
-        $$('.cart-row', list).forEach((row) => row.remove());
-        sync();
-        return;
-      }
-      const btn = e.target.closest('[data-cart-remove]');
-      if (!btn) return;
-      btn.closest('.cart-row').remove();
-      sync();
-    });
+    // На странице избранного у сердца своя роль — убрать карточку
+    const fav = e.target.closest('.product-card__fav:not([data-wish-remove])');
+    if (fav) {
+      const card = fav.closest('.product-card');
+      if (card) KO.fav.toggle(cardData(card).id);
+    }
+  });
 
-    // TODO: интеграция — проверка промокода на бэкенде
-    const promo = $('[data-promo]');
-    if (promo) promo.addEventListener('submit', (e) => e.preventDefault());
-  })();
+  /* Карточка товара: «В корзину» берёт выбранный объём и количество */
+  const productAdd = $('[data-add-to-cart]');
+  if (productAdd) {
+    productAdd.addEventListener('click', () => {
+      const info = productAdd.closest('.product-info') || document;
+      const tab = $('[data-tabs] [data-tab].is-active', info);
+      const qty = $('.stepper__input', info);
+      const priceNow = $('.product-info__price-now', info);
+      const priceOld = $('.product-info__price-old', info);
+      const heading = $('h1');
+      const img = $('.gallery__main img');
+      const oneClick = $('[data-buy-now]', info);
+      const title = (heading ? heading.textContent : '').trim();
+      const item = {
+        id: KO.productId(title, tab ? tab.textContent.trim() : ''),
+        title,
+        volume: tab ? tab.textContent.trim() : '',
+        sku: (tab && tab.dataset.sku) || (oneClick && oneClick.dataset.sku) || '',
+        price: priceNow ? priceNow.textContent.trim() : '0',
+        old: priceOld ? priceOld.textContent.trim() : '',
+        img: img ? img.getAttribute('src') : '',
+        href: 'product.html',
+        max: tab && tab.dataset.stock ? Number(tab.dataset.stock) : 99,
+        qty: qty ? Number(qty.value) || 1 : 1,
+      };
+      KO.cart.add(item);
+      productAdd.textContent = 'В корзине';
+      productAdd.classList.add('is-added');
+    });
+  }
 
   /* ---------------------------------------------------------
-     Избранное: сердце убирает карточку, при пустом списке — заглушка.
-     Страницы нет в макете — поведение стандартное.
+     Страница корзины: список рисуется из состояния
      --------------------------------------------------------- */
-  (function () {
-    const root = $('[data-wishlist]');
-    if (!root) return;
-    const grid = $('.catalog-grid', root);
-    const empty = $('[data-wishlist-empty]', root);
+  const cartList = $('[data-cart-list]');
+  if (cartList) {
+    const cartEmpty = $('[data-cart-empty]');
+    const cartSummary = $('[data-cart-summary]');
 
-    root.addEventListener('click', (e) => {
+    const cartRowHtml = (item) => {
+      const sum = KO.money.format(KO.money.parse(item.price) * item.qty);
+      const stockClass = item.stockLow ? ' cart-row__stock--low' : '';
+      const name = item.title + (item.volume ? ', ' + item.volume : '');
+      const href = escapeHtml(item.href || 'product.html');
+      return '<article class="cart-row" data-cart-id="' + escapeHtml(item.id) + '">'
+        + '<a class="cart-row__media" href="' + href + '"><img src="' + escapeHtml(item.img)
+        + '" width="560" height="560" alt="' + escapeHtml(name) + '" loading="lazy"></a>'
+        + '<div class="cart-row__info">'
+        + '<a class="cart-row__title" href="' + href + '">' + escapeHtml(name) + '</a>'
+        + '<p class="cart-row__meta">' + (item.sku ? 'Артикул ' + escapeHtml(item.sku) : '') + '</p>'
+        + '<p class="cart-row__stock' + stockClass + '">' + escapeHtml(item.stock || 'В наличии') + '</p>'
+        + '</div>'
+        + '<p class="cart-row__unit"><span class="cart-row__label">Цена</span>' + escapeHtml(item.price) + '</p>'
+        + '<div class="stepper stepper--sm" data-stepper>'
+        + '<button class="stepper__btn" type="button" data-step="-1" aria-label="Меньше"><svg><use href="#i-minus"></use></svg></button>'
+        + '<input class="stepper__input" type="number" value="' + item.qty + '" min="1" max="' + (item.max || 99) + '" aria-label="Количество">'
+        + '<button class="stepper__btn stepper__btn--plus" type="button" data-step="1" aria-label="Больше"><svg><use href="#i-plus"></use></svg></button>'
+        + '</div>'
+        + '<p class="cart-row__price"><span class="cart-row__label">Сумма</span>' + sum + '</p>'
+        + '<button class="cart-row__remove" type="button" data-cart-remove aria-label="Убрать из корзины"><svg><use href="#i-close"></use></svg></button>'
+        + '</article>';
+    };
+
+    const renderCart = () => {
+      const items = KO.cart.items();
+      $$('.cart-row', cartList).forEach((row) => row.remove());
+      const head = $('.cart-head', cartList);
+      const html = items.map(cartRowHtml).join('');
+      if (head) head.insertAdjacentHTML('afterend', html);
+      else cartList.insertAdjacentHTML('afterbegin', html);
+
+      cartList.hidden = items.length === 0;
+      if (cartEmpty) cartEmpty.hidden = items.length > 0;
+      if (cartSummary) cartSummary.hidden = items.length === 0;
+      initSteppers(cartList);
+    };
+
+    cartList.addEventListener('click', (e) => {
+      if (e.target.closest('[data-cart-clear]')) { KO.cart.clear(); return; }
+      const btn = e.target.closest('[data-cart-remove]');
+      if (!btn) return;
+      const row = btn.closest('[data-cart-id]');
+      if (row) KO.cart.remove(row.dataset.cartId);
+    });
+
+    // Степпер строки правит количество в состоянии, а не только в поле
+    cartList.addEventListener('ko:qty', (e) => {
+      const row = e.target.closest('[data-cart-id]');
+      if (row) KO.cart.setQty(row.dataset.cartId, e.detail.value);
+    });
+
+    document.addEventListener('ko:cart', renderCart);
+    renderCart();
+  }
+
+  /* ---------------------------------------------------------
+     Итоги заказа — общие для корзины и оформления
+     --------------------------------------------------------- */
+  function shippingCost() {
+    const picked = $$('input[name="shipping"]').find((i) => i.checked);
+    const method = picked ? picked.value : 'courier';
+    if (method === 'pickup') return 0;
+    if (method === 'tk') return KO.cart.total() >= FREE_FROM ? 0 : TK_PRICE;
+    return COURIER_PRICE;
+  }
+
+  function promoDiscount(subtotal) {
+    const promo = readPromo();
+    const rule = promo && PROMO_CODES[promo.code];
+    if (!rule) return 0;
+    return rule.percent ? Math.round(subtotal * rule.percent / 100) : Math.min(rule.amount, subtotal);
+  }
+
+  function renderTotals() {
+    const items = KO.cart.items();
+    const units = KO.cart.units();
+    const subtotal = KO.cart.total();
+    const discount = KO.cart.discount() + promoDiscount(subtotal);
+    const shipping = shippingCost();
+
+    $$('[data-total-items-label]').forEach((el) => {
+      el.textContent = 'Товары, ' + units + ' шт.';
+    });
+    $$('[data-total-items]').forEach((el) => { el.textContent = KO.money.format(subtotal); });
+    $$('[data-total-discount-row]').forEach((el) => { el.hidden = discount === 0; });
+    $$('[data-total-discount]').forEach((el) => { el.textContent = '−' + KO.money.format(discount); });
+    $$('[data-total-shipping]').forEach((el) => {
+      el.textContent = shipping === 0 ? 'бесплатно' : KO.money.format(shipping);
+    });
+    $$('[data-total-grand]').forEach((el) => {
+      el.textContent = KO.money.format(Math.max(0, subtotal - discount) + shipping);
+    });
+
+    // Плашка про бесплатную отправку в регионы: считаем, сколько не хватает
+    $$('[data-free-shipping-note]').forEach((el) => {
+      const left = FREE_FROM - subtotal;
+      el.innerHTML = left > 0
+        ? 'До бесплатной доставки в регионы не хватает <b>' + KO.money.format(left) + '</b> по маслам и фильтрам.'
+        : 'Отправка транспортной компанией в регионы для этого заказа <b>бесплатна</b>.';
+    });
+
+    // Состав заказа на оформлении
+    $$('[data-cart-items]').forEach((box) => {
+      box.innerHTML = items.map((i) => {
+        const name = i.title + (i.volume ? ', ' + i.volume : '');
+        return '<li><span>' + escapeHtml(name) + ' × ' + i.qty + '</span>'
+          + '<span>' + KO.money.format(KO.money.parse(i.price) * i.qty) + '</span></li>';
+      }).join('');
+    });
+  }
+
+  /* Промокод */
+  const promoForm = $('[data-promo]');
+  if (promoForm) {
+    const promoNote = $('[data-promo-note]');
+    const promoInput = $('input', promoForm);
+    const savedPromo = readPromo();
+
+    const showPromoNote = (text, ok) => {
+      if (!promoNote) return;
+      promoNote.hidden = !text;
+      promoNote.textContent = text;
+      promoNote.classList.toggle('cart__promo-note--ok', !!ok);
+    };
+
+    if (savedPromo && PROMO_CODES[savedPromo.code]) {
+      if (promoInput) promoInput.value = savedPromo.code;
+      showPromoNote(PROMO_CODES[savedPromo.code].label, true);
+    }
+
+    promoForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // TODO: интеграция — код проверяет бэкенд, здесь зашитая таблица
+      const code = (promoInput.value || '').trim().toUpperCase();
+      const rule = PROMO_CODES[code];
+      if (!code) {
+        writePromo(null);
+        promoInput.classList.remove('input--error');
+        showPromoNote('', false);
+      } else if (rule) {
+        writePromo({ code });
+        promoInput.classList.remove('input--error');
+        showPromoNote(rule.label, true);
+      } else {
+        writePromo(null);
+        promoInput.classList.add('input--error');
+        showPromoNote('Промокод не найден или больше не действует', false);
+      }
+      renderTotals();
+    });
+  }
+
+  document.addEventListener('ko:cart', () => { renderTotals(); renderBadges(); renderBuyState(); });
+  document.addEventListener('ko:fav', () => { renderBadges(); renderFavState(); });
+  $$('input[name="shipping"]').forEach((i) => i.addEventListener('change', renderTotals));
+
+  /* Пустая корзина и пустое избранное открывают мини-модалку вместо перехода
+     (docs/02-header.md, «Пустая корзина / пустое избранное») */
+  document.addEventListener('click', (e) => {
+    const cartLink = e.target.closest('[data-cart-link]');
+    if (cartLink && KO.cart.count() === 0 && panels['cart-empty']) {
+      e.preventDefault();
+      togglePanel('cart-empty');
+      return;
+    }
+    const favLink = e.target.closest('[data-fav-link]');
+    if (favLink && KO.fav.count() === 0 && panels['fav-empty']) {
+      e.preventDefault();
+      togglePanel('fav-empty');
+    }
+  });
+
+  /* ---------------------------------------------------------
+     Страница избранного: карточки берутся из состояния
+     --------------------------------------------------------- */
+  const wishlist = $('[data-wishlist]');
+  if (wishlist) {
+    const wishGrid = $('.catalog-grid', wishlist);
+    const wishEmpty = $('[data-wishlist-empty]', wishlist);
+
+    // Стартовый состав избранного лежит в store.js, здесь только
+    // подписываем карточки идентификаторами, чтобы их прятать и показывать
+    if (wishGrid) {
+      $$('.product-card', wishGrid).forEach((card) => { card.dataset.favId = cardData(card).id; });
+    }
+
+    const renderWishlist = () => {
+      if (!wishGrid) return;
+      const ids = KO.fav.ids();
+      const cards = $$('.product-card', wishGrid);
+      cards.forEach((card) => { card.hidden = ids.indexOf(card.dataset.favId) === -1; });
+      const left = cards.filter((c) => !c.hidden).length;
+      wishGrid.hidden = left === 0;
+      if (wishEmpty) wishEmpty.hidden = left > 0;
+    };
+
+    wishlist.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-wish-remove]');
       if (!btn) return;
-      btn.closest('.product-card').remove();
-      if (grid && !$('.product-card', grid)) {
-        grid.hidden = true;
-        if (empty) empty.hidden = false;
-      }
+      const card = btn.closest('.product-card');
+      if (card) KO.fav.remove(card.dataset.favId);
     });
-  })();
+
+    document.addEventListener('ko:fav', renderWishlist);
+    renderWishlist();
+  }
+
+  renderTotals();
+  renderBadges();
+  renderFavState();
+  renderBuyState();
 
   /* ---------------------------------------------------------
      Выбор города: подставляет телефон, адрес, часы и точки на карте.
@@ -875,9 +1542,7 @@
 
   function cityMeta(city) {
     const main = city.points.find((p) => p.main) || city.points[0];
-    const n = city.points.length;
-    const word = n === 1 ? 'точка самовывоза' : (n < 5 ? 'точки самовывоза' : 'точек самовывоза');
-    return { address: main.address, hours: main.hours, count: n + ' ' + word };
+    return { address: main.address, hours: main.hours };
   }
 
   function applyCity(key) {
@@ -902,7 +1567,6 @@
       const rest = meta.hours.split(',').slice(1).join(',').trim();
       el.textContent = rest ? `Воскресенье — ${rest.replace(/^Вс\s*/, '')}` : 'Воскресенье — выходной';
     });
-    $$('[data-city-points-count]').forEach((el) => { el.textContent = meta.count; });
     $$('[data-city-set]').forEach((btn) => {
       btn.classList.toggle('is-active', btn.dataset.citySet === key);
     });
@@ -1025,31 +1689,25 @@
   }
 
   /* ---------------------------------------------------------
-     Карточка товара: объём и избранное.
+     Чипсы объёма в плитке каталога.
      Объём — вариант одного товара, поэтому цена меняется на месте,
      без перехода на другую страницу (решение от 4 сентября).
      --------------------------------------------------------- */
   document.addEventListener('click', (e) => {
     const chip = e.target.closest('.volume');
-    if (chip) {
-      const row = chip.closest('.product-card__volumes');
-      $$('.volume', row).forEach((b) => b.classList.toggle('is-active', b === chip));
-      const card = chip.closest('.product-card');
-      const price = card && $('.product-card__price', card);
-      if (price && chip.dataset.price) {
-        // цену держим в первом текстовом узле, чтобы не потерять зачёркнутую старую
-        const node = [...price.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
-        if (node) node.textContent = chip.dataset.price + ' ';
-      }
-      return;
+    if (!chip) return;
+    const row = chip.closest('.product-card__volumes');
+    $$('.volume', row).forEach((b) => b.classList.toggle('is-active', b === chip));
+    const card = chip.closest('.product-card');
+    const price = card && $('.product-card__price', card);
+    if (price && chip.dataset.price) {
+      // цену держим в первом текстовом узле, чтобы не потерять зачёркнутую старую
+      const node = [...price.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
+      if (node) node.textContent = chip.dataset.price + ' ';
     }
-
-    // На странице избранного сердце убирает карточку — обработчик ниже
-    const fav = e.target.closest('.product-card__fav:not([data-wish-remove])');
-    if (fav) {
-      const on = fav.classList.toggle('is-active');
-      fav.setAttribute('aria-label', on ? 'Убрать из избранного' : 'В избранное');
-    }
+    // У каждого объёма своя позиция в корзине и своё избранное — пересобираем состояния
+    renderBuyState();
+    renderFavState();
   });
 
   /* ---------------------------------------------------------
@@ -1113,10 +1771,6 @@
     });
   }
 
-  const escapeHtml = (str) => String(str).replace(/[&<>"]/g, (ch) => (
-    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]
-  ));
-
   /* ---------------------------------------------------------
      Живой поиск в шапке: по мере ввода панель показывает товары,
      при пустом запросе — историю и популярное, при нуле совпадений —
@@ -1133,6 +1787,7 @@
     const groupPopular  = $('[data-search-popular]', searchPanel);
     const SEARCH_LIMIT  = 6;
 
+
     /* Подсказки-чипсы над результатами: категории и бренды, попавшие в выдачу.
        В макете это варианты уточнения запроса (26886 mobile-search-process) */
     function suggestFor(found) {
@@ -1148,7 +1803,7 @@
 
       if (!q) {
         if (blockDefault) blockDefault.hidden = false;
-        if (groupRecent) groupRecent.hidden = false;
+        if (groupRecent) groupRecent.hidden = KO.recent.list().length === 0;
         if (groupPopular) groupPopular.hidden = false;
         if (blockLive) blockLive.hidden = true;
         if (blockEmpty) blockEmpty.hidden = true;
@@ -1159,7 +1814,7 @@
       const found = searchProducts(q);
       // При пустой выдаче история остаётся под плашкой, популярные товары уходят
       if (blockDefault) blockDefault.hidden = found.length > 0;
-      if (groupRecent) groupRecent.hidden = false;
+      if (groupRecent) groupRecent.hidden = KO.recent.list().length === 0;
       if (groupPopular) groupPopular.hidden = true;
       if (blockEmpty) blockEmpty.hidden = found.length > 0;
       if (blockLive) blockLive.hidden = found.length === 0;
@@ -1192,26 +1847,42 @@
     });
     searchInput.addEventListener('focus', renderSearch);
 
-    // Enter и лупа ведут на страницу выдачи; пустой запрос не отправляем
+    // Enter и лупа ведут на страницу выдачи; пустой запрос не отправляем,
+    // отправленный — попадает в историю
     search.addEventListener('submit', (e) => {
-      if (!searchInput.value.trim()) e.preventDefault();
+      const q = searchInput.value.trim();
+      if (!q) { e.preventDefault(); return; }
+      KO.recent.push(q);
     });
 
-    // «Очистить» убирает историю запросов целиком, крестик — одну строку
-    const clearRecent = $('[data-search-clear-recent]', searchPanel);
-    if (clearRecent) {
-      clearRecent.addEventListener('click', () => {
-        $$('[data-search-recent]', searchPanel).forEach((row) => row.remove());
-        if (groupRecent) groupRecent.hidden = true;
-      });
+    /* История запросов — из состояния, а не из разметки: раньше три строки
+       стояли в HTML и «удаление» не переживало перезагрузку страницы */
+    const recentList = $('[data-search-recent-list]', searchPanel);
+
+    function renderRecent() {
+      if (!recentList) return;
+      const list = KO.recent.list();
+      recentList.innerHTML = list.map((q) =>
+        '<span class="search__row" data-search-recent>'
+        + '<a href="search.html?q=' + encodeURIComponent(q) + '">' + escapeHtml(q) + '</a>'
+        + '<button type="button" data-search-forget="' + escapeHtml(q) + '" aria-label="Убрать запрос из истории">'
+        + '<svg><use href="#i-close"></use></svg></button></span>').join('');
+      if (groupRecent) groupRecent.hidden = list.length === 0;
     }
+
+    // «Очистить» убирает историю целиком, крестик — одну строку
+    const clearRecent = $('[data-search-clear-recent]', searchPanel);
+    if (clearRecent) clearRecent.addEventListener('click', () => KO.recent.clear());
+
     searchPanel.addEventListener('click', (e) => {
-      const row = e.target.closest('[data-search-recent]');
-      if (!row) return;
+      const forget = e.target.closest('[data-search-forget]');
+      if (!forget) return;
       e.preventDefault();
-      row.remove();
-      if (groupRecent && !$('[data-search-recent]', groupRecent)) groupRecent.hidden = true;
+      KO.recent.remove(forget.dataset.searchForget);
     });
+
+    document.addEventListener('ko:recent', () => { renderRecent(); renderSearch(); });
+    renderRecent();
   }
 
   /* ---------------------------------------------------------
@@ -1267,4 +1938,13 @@
      Год в копирайте
      --------------------------------------------------------- */
   $$('[data-year]').forEach((el) => { el.textContent = String(new Date().getFullYear()); });
+
+  /* Дата заказа. TODO: интеграция — приходит с заказом, здесь ставим сегодняшнюю,
+     чтобы страница подтверждения не показывала прошлогоднее число */
+  const MONTHS = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
+    'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
+  $$('[data-order-date]').forEach((el) => {
+    const d = new Date();
+    el.textContent = d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear();
+  });
 })();

@@ -10,11 +10,11 @@
     <form class="modal__body" data-form data-form-redirect="account.html">
       <label class="field">
         <span class="field__label">E-mail</span>
-        <input class="input" type="email" placeholder="mail@example.com" autocomplete="email">
+        <input class="input" type="email" placeholder="mail@example.com" autocomplete="email" required>
       </label>
       <label class="field field--password">
         <span class="field__label">Пароль</span>
-        <input class="input" type="password" autocomplete="current-password">
+        <input class="input" type="password" autocomplete="current-password" required minlength="6">
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <a class="modal__link" href="#" data-modal-open="recover">Забыли пароль?</a>
@@ -33,17 +33,17 @@
     <h2 class="h5 modal__title" id="register-title">Регистрация в King-Oil</h2>
 
     <form class="modal__body" data-form data-form-redirect="account.html">
-      <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" placeholder="Александр Федосенко" autocomplete="name"></label>
-      <label class="field"><span class="field__label">E-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email"></label>
-      <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel"></label>
+      <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" placeholder="Александр Федосенко" autocomplete="name" required></label>
+      <label class="field"><span class="field__label">E-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email" required></label>
+      <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel" required></label>
       <label class="field field--password">
         <span class="field__label">Придумайте пароль</span>
-        <input class="input" type="password" autocomplete="new-password">
+        <input class="input" type="password" autocomplete="new-password" required minlength="6">
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <label class="field field--password">
         <span class="field__label">Повторите пароль</span>
-        <input class="input" type="password" autocomplete="new-password">
+        <input class="input" type="password" autocomplete="new-password" required minlength="6" data-confirm-password>
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <label class="switch"><input type="checkbox" data-toggle-company>Аккаунт для компании</label>
@@ -59,7 +59,7 @@
       </div>
 
       <label class="checkbox">
-        <input type="checkbox">
+        <input type="checkbox" required>
         <span>Я даю согласие на обработку моих персональных данных в порядке и на условиях, указанных в <a href="legal.html">Согласии на обработку персональных данных</a>, и подтверждаю ознакомление с <a href="legal.html">Политикой конфиденциальности</a> и <a href="legal.html">Пользовательским соглашением</a></span>
       </label>
     </form>

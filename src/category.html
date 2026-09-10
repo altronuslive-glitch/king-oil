@@ -127,11 +127,12 @@
         <div class="search__panel" hidden data-search-panel>
           <!-- Состояние по умолчанию: показывается при пустом вводе -->
           <div data-search-default>
+            <!-- История запросов живёт в браузере (js/store.js): строки рисует
+                 js/main.js, отправленный запрос поднимается наверх списка.
+                 Раньше три строки стояли в разметке и «удаление» не переживало перезагрузку -->
             <div class="search__group" data-search-recent-group>
               <div class="search__group-head"><span>Вы искали</span><button class="link" type="button" data-search-clear-recent>Очистить</button></div>
-              <button class="search__row" type="button" data-search-recent><span>Моторное масло 5W-30</span><svg><use href="#i-close"></use></svg></button>
-              <button class="search__row" type="button" data-search-recent><span>Castrol EDGE</span><svg><use href="#i-close"></use></svg></button>
-              <button class="search__row" type="button" data-search-recent><span>Антифриз G12</span><svg><use href="#i-close"></use></svg></button>
+              <div data-search-recent-list></div>
             </div>
             <div class="search__group" data-search-popular>
               <div class="search__group-head"><span>Популярные товары</span><a class="link link--accent" href="category.html">Показать все</a></div>
@@ -173,7 +174,17 @@
 
       <div class="header__actions">
         <div class="header__action-wrap">
-          <a class="icon-btn" href="wishlist.html" aria-label="Избранное"><svg><use href="#i-heart"></use></svg></a>
+          <a class="icon-btn" href="wishlist.html" aria-label="Избранное" data-fav-link>
+            <svg><use href="#i-heart"></use></svg><span class="icon-btn__badge" hidden data-fav-count>0</span>
+          </a>
+          <!-- Пустое избранное: по макету клик открывает мини-модалку, а не уводит
+               на страницу (docs/02-header.md, «Пустая корзина / пустое избранное») -->
+          <div class="mini-modal" hidden data-panel="fav-empty">
+            <button class="mini-modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+            <div class="mini-modal__icon"><svg><use href="#i-heart"></use></svg></div>
+            <p class="mini-modal__title">Нет товаров в избранном!</p>
+            <p class="mini-modal__text">Добавьте товары в избранное,<br>чтобы перейти в раздел</p>
+          </div>
         </div>
 
         <div class="header__action-wrap">
@@ -191,9 +202,15 @@
         </div>
 
         <div class="header__action-wrap">
-          <a class="icon-btn" href="cart.html" aria-label="Корзина" style="color:var(--ko-icon-brand)">
-            <svg><use href="#i-cart"></use></svg><span class="icon-btn__badge">1</span>
+          <a class="icon-btn" href="cart.html" aria-label="Корзина" style="color:var(--ko-icon-brand)" data-cart-link>
+            <svg><use href="#i-cart"></use></svg><span class="icon-btn__badge" hidden data-cart-count>0</span>
           </a>
+          <div class="mini-modal" hidden data-panel="cart-empty">
+            <button class="mini-modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+            <div class="mini-modal__icon"><svg><use href="#i-cart"></use></svg></div>
+            <p class="mini-modal__title">В корзине пусто!</p>
+            <p class="mini-modal__text">Добавьте товары в корзину,<br>чтобы продолжить покупку</p>
+          </div>
         </div>
       </div>
     </div>
@@ -324,29 +341,7 @@
     <h1 class="h2 page-head__title">Моторные масла</h1>
   </div>
 
-  <!-- ============ 3. Подбор по автомобилю ============ -->
-  <section class="section section--pt-32 section--pb-48">
-    <div class="container">
-      <form class="car-picker">
-        <h2 class="h5 car-picker__title">Подбор по автомобилю</h2>
-        <div class="car-picker__row">
-          <label class="field">
-            <span class="field__label">Госномер</span>
-            <input class="input input--white" type="text" name="plate" placeholder="А 000 АА 000" autocomplete="off">
-          </label>
-          <label class="field">
-            <!-- В макете у обоих полей стоит один плейсхолдер «А 000 АА 000»;
-                 во втором это очевидная копия, подставлена осмысленная подсказка -->
-            <span class="field__label">Быстрый поиск</span>
-            <input class="input input--white" type="text" name="q" placeholder="Марка, модель или артикул" autocomplete="off">
-          </label>
-          <button class="btn btn--primary" type="submit">Подобрать</button>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <!-- ============ 4–6. Бренды, сортировка, фильтры ============ -->
+  <!-- ============ 3–5. Бренды, сортировка, фильтры ============ -->
   <div class="container">
 
     <div class="brands">
@@ -363,15 +358,15 @@
     </div>
 
     <div class="sort-row">
-      <p class="sort-row__count">Найдено 128 товаров</p>
+      <p class="sort-row__count" data-catalog-count>Найдено 12 товаров</p>
       <div class="sort" data-sort>
         <button class="sort__btn" type="button" data-sort-btn aria-expanded="false">
-          Сортировка <svg><use href="#i-chevron"></use></svg>
+          <span data-sort-label>Сортировка</span> <svg><use href="#i-chevron"></use></svg>
         </button>
         <div class="sort__panel" hidden data-sort-panel>
-          <button class="sort__option is-active" type="button">По популярности</button>
-          <button class="sort__option" type="button">По цене</button>
-          <button class="sort__option" type="button">По новизне</button>
+          <button class="sort__option is-active" type="button" data-sort="default">По популярности</button>
+          <button class="sort__option" type="button" data-sort="price">По цене</button>
+          <button class="sort__option" type="button" data-sort="new">По новизне</button>
         </div>
       </div>
     </div>
@@ -385,50 +380,51 @@
         <button class="filters__drawer-close" type="button" data-filters-close aria-label="Закрыть фильтры"><svg><use href="#i-close"></use></svg></button>
       </div>
       <div class="filters__row">
-        <div class="select" data-label="Вязкость" data-select data-select-multi>
+        <div class="select" data-label="Вязкость" data-filter="viscosity" data-select data-select-multi>
           <button class="select__btn" type="button" data-select-btn aria-expanded="false">
             <span class="select__value select__value--muted">Вязкость</span><svg><use href="#i-chevron"></use></svg>
           </button>
           <div class="select__panel" hidden data-select-panel>
-            <label class="select__option"><input type="checkbox" value="0W-20">0W-20</label>
-            <label class="select__option"><input type="checkbox" value="5W-30" checked>5W-30</label>
+            <label class="select__option"><input type="checkbox" value="0W-30">0W-30</label>
+            <label class="select__option"><input type="checkbox" value="0W-40">0W-40</label>
+            <label class="select__option"><input type="checkbox" value="5W-30">5W-30</label>
             <label class="select__option"><input type="checkbox" value="5W-40">5W-40</label>
             <label class="select__option"><input type="checkbox" value="10W-40">10W-40</label>
           </div>
         </div>
-        <div class="select" data-label="Тип масла" data-select data-select-multi>
+        <div class="select" data-label="Тип масла" data-filter="type" data-select data-select-multi>
           <button class="select__btn" type="button" data-select-btn aria-expanded="false">
             <span class="select__value select__value--muted">Тип масла</span><svg><use href="#i-chevron"></use></svg>
           </button>
           <div class="select__panel" hidden data-select-panel>
-            <label class="select__option"><input type="checkbox" value="Синтетическое" checked>Синтетическое</label>
+            <label class="select__option"><input type="checkbox" value="Синтетическое">Синтетическое</label>
             <label class="select__option"><input type="checkbox" value="Полусинтетическое">Полусинтетическое</label>
             <label class="select__option"><input type="checkbox" value="Минеральное">Минеральное</label>
           </div>
         </div>
-        <div class="select" data-label="Объём" data-select data-select-multi>
+        <div class="select" data-label="Объём" data-filter="volume" data-select data-select-multi>
           <button class="select__btn" type="button" data-select-btn aria-expanded="false">
             <span class="select__value select__value--muted">Объём</span><svg><use href="#i-chevron"></use></svg>
           </button>
           <div class="select__panel" hidden data-select-panel>
             <label class="select__option"><input type="checkbox" value="1 л">1 л</label>
+            <label class="select__option"><input type="checkbox" value="3 л">3 л</label>
             <label class="select__option"><input type="checkbox" value="4 л">4 л</label>
-            <label class="select__option"><input type="checkbox" value="5 л">5 л</label>
             <label class="select__option"><input type="checkbox" value="20 л">20 л</label>
           </div>
         </div>
-        <div class="select" data-label="Бренд" data-select data-select-multi>
+        <div class="select" data-label="Бренд" data-filter="brand" data-select data-select-multi>
           <button class="select__btn" type="button" data-select-btn aria-expanded="false">
             <span class="select__value select__value--muted">Бренд</span><svg><use href="#i-chevron"></use></svg>
           </button>
           <div class="select__panel" hidden data-select-panel>
-            <label class="select__option"><input type="checkbox" value="Castrol" checked>Castrol</label>
+            <label class="select__option"><input type="checkbox" value="Castrol">Castrol</label>
             <label class="select__option"><input type="checkbox" value="Mobil">Mobil</label>
             <label class="select__option"><input type="checkbox" value="Shell">Shell</label>
             <label class="select__option"><input type="checkbox" value="Lukoil">Lukoil</label>
           </div>
         </div>
-        <div class="select" data-label="Допуск" data-select data-select-multi>
+        <div class="select" data-label="Допуск" data-filter="approval" data-select data-select-multi>
           <button class="select__btn" type="button" data-select-btn aria-expanded="false">
             <span class="select__value select__value--muted">Допуск</span><svg><use href="#i-chevron"></use></svg>
           </button>
@@ -458,7 +454,7 @@
     <div class="container">
       <!-- TODO: контент — карточки придут из CS-Cart -->
       <div class="catalog-grid">
-        <article class="product-card">
+        <article class="product-card" data-viscosity="5W-30" data-type="Синтетическое" data-brand="Castrol" data-approval="API SN">
           <a class="product-card__media" href="product.html">
             <img src="img/products/p14.jpg" width="560" height="560" alt="CASTROL 5W-30 MAGNATEC AP 4L" loading="lazy">
           </a>
@@ -474,7 +470,7 @@
             <button class="product-card__buy" type="button">В корзину</button>
           </div>
         </article>
-        <article class="product-card">
+        <article class="product-card" data-viscosity="5W-40" data-type="Синтетическое" data-brand="Castrol" data-approval="ACEA A3/B4">
           <a class="product-card__media" href="product.html">
             <img src="img/products/p15.jpg" width="560" height="560" alt="Castrol Magnatec C3 5W40 4l" loading="lazy">
           </a>
@@ -490,7 +486,7 @@
             <button class="product-card__buy" type="button">В корзину</button>
           </div>
         </article>
-        <article class="product-card">
+        <article class="product-card" data-viscosity="5W-30" data-type="Синтетическое" data-brand="Castrol" data-approval="VW 502.00">
           <a class="product-card__media" href="product.html">
             <img src="img/products/p16.jpg" width="560" height="560" alt="Castrol Edge 5W-30 LL (синтетика) 4 л" loading="lazy">
             <span class="badge badge--hit product-card__badge-hit">Хит продаж</span>
@@ -507,7 +503,7 @@
             <button class="product-card__buy" type="button">В корзину</button>
           </div>
         </article>
-        <article class="product-card">
+        <article class="product-card" data-viscosity="0W-30" data-type="Синтетическое" data-brand="Castrol" data-approval="ACEA A3/B4">
           <a class="product-card__media" href="product.html">
             <img src="img/products/p17.jpg" width="560" height="560" alt="Castrol Edge 0W-30 A3/B4 (синтетика) 4 л" loading="lazy">
           </a>
@@ -523,7 +519,7 @@
             <button class="product-card__buy" type="button">В корзину</button>
           </div>
         </article>
-        <article class="product-card">
+        <article class="product-card" data-viscosity="0W-30" data-type="Синтетическое" data-brand="Castrol" data-approval="BMW LL-01">
           <a class="product-card__media" href="product.html">
             <img src="img/products/p18.jpg" width="560" height="560" alt="Castrol Edge 0W-30 A5/B5 (синтетика) 4 л" loading="lazy">
           </a>
@@ -539,7 +535,7 @@
             <button class="product-card__buy" type="button">В корзину</button>
           </div>
         </article>
-        <article class="product-card">
+        <article class="product-card" data-viscosity="5W-30" data-type="Синтетическое" data-brand="Lukoil" data-approval="API SN">
           <a class="product-card__media" href="product.html">
             <img src="img/products/p19.jpg" width="560" height="560" alt="Лукойл Genesis Armortech JP 5w30 (розлив)" loading="lazy">
             <span class="badge badge--sale product-card__badge-sale">−15%</span>
@@ -556,14 +552,14 @@
             <button class="product-card__buy" type="button">В корзину</button>
           </div>
         </article>
-        <article class="product-card">
+        <article class="product-card" data-viscosity="0W-40" data-type="Синтетическое" data-brand="Lukoil" data-approval="ACEA A3/B4">
           <a class="product-card__media" href="product.html">
-            <img src="img/products/p20.jpg" width="560" height="560" alt="Лукойл Genesisc Armortech 0w-40 1l (розлив)" loading="lazy">
+            <img src="img/products/p20.jpg" width="560" height="560" alt="Лукойл Genesis Armortech 0w-40 1 л (розлив)" loading="lazy">
           </a>
           <button class="product-card__fav" type="button" aria-label="В избранное"><svg><use href="#i-heart"></use></svg></button>
           <div class="product-card__info">
             <div class="product-card__price">2 350 ₽</div>
-            <a class="product-card__title" href="product.html">Лукойл Genesisc Armortech 0w-40 1l (розлив)</a>
+            <a class="product-card__title" href="product.html">Лукойл Genesis Armortech 0w-40 1 л (розлив)</a>
             <div class="product-card__volumes">
               <button class="volume" type="button" data-price="890 ₽">1 л</button>
               <button class="volume is-active" type="button" data-price="2 350 ₽">3 л</button>
@@ -572,7 +568,7 @@
             <button class="product-card__buy" type="button">В корзину</button>
           </div>
         </article>
-        <article class="product-card">
+        <article class="product-card" data-viscosity="10W-40" data-type="Полусинтетическое" data-brand="Lukoil" data-approval="API SN">
           <a class="product-card__media" href="product.html">
             <img src="img/products/p21.jpg" width="560" height="560" alt="Лукойл Супер 10w40 4L" loading="lazy">
           </a>
@@ -588,7 +584,7 @@
             <button class="product-card__buy" type="button">В корзину</button>
           </div>
         </article>
-        <article class="product-card">
+        <article class="product-card" data-viscosity="5W-40" data-type="Полусинтетическое" data-brand="Lukoil" data-approval="API SN">
           <a class="product-card__media" href="product.html">
             <img src="img/products/p22.jpg" width="560" height="560" alt="Лукойл Super 5w40 (полусинтетика) 4л." loading="lazy">
           </a>
@@ -605,7 +601,7 @@
           </div>
         </article>
         <!-- Товар закончился: состояния в макете нет, см. docs/22-stock-states.md -->
-        <article class="product-card product-card--out">
+        <article class="product-card product-card--out" data-viscosity="10W-40" data-type="Полусинтетическое" data-brand="Lukoil" data-approval="ACEA A3/B4">
           <a class="product-card__media" href="product.html">
             <img src="img/products/p23.jpg" width="560" height="560" alt="Лукойл Люкс П/Синт 10w40 4L" loading="lazy">
             <span class="badge badge--out product-card__badge-out">Нет в наличии</span>
@@ -622,7 +618,7 @@
             <button class="product-card__buy product-card__buy--out" type="button" data-modal-open="callback">Уведомить о поступлении</button>
           </div>
         </article>
-        <article class="product-card">
+        <article class="product-card" data-viscosity="5W-40" data-type="Полусинтетическое" data-brand="Lukoil" data-approval="ACEA A3/B4">
           <a class="product-card__media" href="product.html">
             <img src="img/products/p24.jpg" width="560" height="560" alt="Лукойл Люкс П/Синт 5w40 4L" loading="lazy">
             <span class="badge badge--sale product-card__badge-sale">−10%</span>
@@ -639,7 +635,7 @@
             <button class="product-card__buy" type="button">В корзину</button>
           </div>
         </article>
-        <article class="product-card">
+        <article class="product-card" data-viscosity="10W-40" data-type="Полусинтетическое" data-brand="Lukoil" data-approval="API SN">
           <a class="product-card__media" href="product.html">
             <img src="img/products/p25.jpg" width="560" height="560" alt="Лукойл Genesis Universal П/Синт 10w40 4 л." loading="lazy">
             <span class="badge badge--hit product-card__badge-hit">Хит продаж</span>
@@ -664,17 +660,13 @@
         <p>Попробуйте убрать часть фильтров или подобрать масло по автомобилю.</p>
       </div>
 
-      <div class="pagination-row">
-        <button class="btn btn--primary pagination-row__more" type="button">Показать ещё</button>
-        <nav class="pagination" aria-label="Страницы каталога">
-          <a class="pagination__item is-active" href="#">1</a>
-          <a class="pagination__item" href="#">2</a>
-          <a class="pagination__item" href="#">3</a>
-          <a class="pagination__item" href="#">4</a>
-          <span class="pagination__item pagination__dots">…</span>
-          <a class="pagination__item" href="#">12</a>
-          <a class="pagination__item pagination__next" href="#">Дальше →</a>
-        </nav>
+      <!-- Пагинация собирается из реального числа страниц выдачи (js/main.js):
+           раньше ссылки вели на «#» и клик просто прыгал в начало страницы.
+           В макете показано 12 страниц — это демонстрация компонента
+           на полном каталоге, см. docs/26-logic-pass.md -->
+      <div class="pagination-row" data-pagination-row>
+        <button class="btn btn--primary pagination-row__more" type="button" data-catalog-more>Показать ещё</button>
+        <nav class="pagination" aria-label="Страницы каталога" data-pagination></nav>
       </div>
     </div>
   </section>
@@ -893,9 +885,9 @@
 <!-- ============ ТАББАР (мобильный) ============ -->
 <nav class="tabbar">
   <a href="index.html" aria-label="Главная"><svg><use href="#i-home"></use></svg></a>
-  <a href="wishlist.html" aria-label="Избранное"><svg><use href="#i-heart"></use></svg></a>
+  <a href="wishlist.html" aria-label="Избранное"><svg><use href="#i-heart"></use></svg><span class="tabbar__badge" hidden data-fav-count>0</span></a>
   <a href="catalog.html" aria-label="Каталог"><svg><use href="#i-grid"></use></svg></a>
-  <a href="cart.html" aria-label="Корзина"><svg><use href="#i-bag"></use></svg><span class="tabbar__badge">1</span></a>
+  <a href="cart.html" aria-label="Корзина"><svg><use href="#i-bag"></use></svg><span class="tabbar__badge" hidden data-cart-count>0</span></a>
   <a href="account.html" aria-label="Профиль"><svg><use href="#i-user"></use></svg></a>
 </nav>
 <!-- /@shared:tabbar -->
@@ -913,11 +905,11 @@
     <form class="modal__body" data-form data-form-redirect="account.html">
       <label class="field">
         <span class="field__label">E-mail</span>
-        <input class="input" type="email" placeholder="mail@example.com" autocomplete="email">
+        <input class="input" type="email" placeholder="mail@example.com" autocomplete="email" required>
       </label>
       <label class="field field--password">
         <span class="field__label">Пароль</span>
-        <input class="input" type="password" autocomplete="current-password">
+        <input class="input" type="password" autocomplete="current-password" required minlength="6">
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <a class="modal__link" href="#" data-modal-open="recover">Забыли пароль?</a>
@@ -936,17 +928,17 @@
     <h2 class="h5 modal__title" id="register-title">Регистрация в King-Oil</h2>
 
     <form class="modal__body" data-form data-form-redirect="account.html">
-      <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" placeholder="Александр Федосенко" autocomplete="name"></label>
-      <label class="field"><span class="field__label">E-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email"></label>
-      <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel"></label>
+      <label class="field"><span class="field__label">Ваше имя</span><input class="input" type="text" placeholder="Александр Федосенко" autocomplete="name" required></label>
+      <label class="field"><span class="field__label">E-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email" required></label>
+      <label class="field"><span class="field__label">Телефон</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel" required></label>
       <label class="field field--password">
         <span class="field__label">Придумайте пароль</span>
-        <input class="input" type="password" autocomplete="new-password">
+        <input class="input" type="password" autocomplete="new-password" required minlength="6">
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <label class="field field--password">
         <span class="field__label">Повторите пароль</span>
-        <input class="input" type="password" autocomplete="new-password">
+        <input class="input" type="password" autocomplete="new-password" required minlength="6" data-confirm-password>
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <label class="switch"><input type="checkbox" data-toggle-company>Аккаунт для компании</label>
@@ -962,7 +954,7 @@
       </div>
 
       <label class="checkbox">
-        <input type="checkbox">
+        <input type="checkbox" required>
         <span>Я даю согласие на обработку моих персональных данных в порядке и на условиях, указанных в <a href="legal.html">Согласии на обработку персональных данных</a>, и подтверждаю ознакомление с <a href="legal.html">Политикой конфиденциальности</a> и <a href="legal.html">Пользовательским соглашением</a></span>
       </label>
     </form>
@@ -1154,6 +1146,7 @@
 </div>
 <!-- /@shared:overlays -->
 
+<script src="js/store.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>

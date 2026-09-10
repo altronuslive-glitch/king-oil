@@ -64,11 +64,12 @@
         <div class="search__panel" hidden data-search-panel>
           <!-- Состояние по умолчанию: показывается при пустом вводе -->
           <div data-search-default>
+            <!-- История запросов живёт в браузере (js/store.js): строки рисует
+                 js/main.js, отправленный запрос поднимается наверх списка.
+                 Раньше три строки стояли в разметке и «удаление» не переживало перезагрузку -->
             <div class="search__group" data-search-recent-group>
               <div class="search__group-head"><span>Вы искали</span><button class="link" type="button" data-search-clear-recent>Очистить</button></div>
-              <button class="search__row" type="button" data-search-recent><span>Моторное масло 5W-30</span><svg><use href="#i-close"></use></svg></button>
-              <button class="search__row" type="button" data-search-recent><span>Castrol EDGE</span><svg><use href="#i-close"></use></svg></button>
-              <button class="search__row" type="button" data-search-recent><span>Антифриз G12</span><svg><use href="#i-close"></use></svg></button>
+              <div data-search-recent-list></div>
             </div>
             <div class="search__group" data-search-popular>
               <div class="search__group-head"><span>Популярные товары</span><a class="link link--accent" href="category.html">Показать все</a></div>
@@ -110,7 +111,17 @@
 
       <div class="header__actions">
         <div class="header__action-wrap">
-          <a class="icon-btn" href="wishlist.html" aria-label="Избранное"><svg><use href="#i-heart"></use></svg></a>
+          <a class="icon-btn" href="wishlist.html" aria-label="Избранное" data-fav-link>
+            <svg><use href="#i-heart"></use></svg><span class="icon-btn__badge" hidden data-fav-count>0</span>
+          </a>
+          <!-- Пустое избранное: по макету клик открывает мини-модалку, а не уводит
+               на страницу (docs/02-header.md, «Пустая корзина / пустое избранное») -->
+          <div class="mini-modal" hidden data-panel="fav-empty">
+            <button class="mini-modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+            <div class="mini-modal__icon"><svg><use href="#i-heart"></use></svg></div>
+            <p class="mini-modal__title">Нет товаров в избранном!</p>
+            <p class="mini-modal__text">Добавьте товары в избранное,<br>чтобы перейти в раздел</p>
+          </div>
         </div>
 
         <div class="header__action-wrap">
@@ -128,9 +139,15 @@
         </div>
 
         <div class="header__action-wrap">
-          <a class="icon-btn" href="cart.html" aria-label="Корзина" style="color:var(--ko-icon-brand)">
-            <svg><use href="#i-cart"></use></svg><span class="icon-btn__badge">1</span>
+          <a class="icon-btn" href="cart.html" aria-label="Корзина" style="color:var(--ko-icon-brand)" data-cart-link>
+            <svg><use href="#i-cart"></use></svg><span class="icon-btn__badge" hidden data-cart-count>0</span>
           </a>
+          <div class="mini-modal" hidden data-panel="cart-empty">
+            <button class="mini-modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+            <div class="mini-modal__icon"><svg><use href="#i-cart"></use></svg></div>
+            <p class="mini-modal__title">В корзине пусто!</p>
+            <p class="mini-modal__text">Добавьте товары в корзину,<br>чтобы продолжить покупку</p>
+          </div>
         </div>
       </div>
     </div>

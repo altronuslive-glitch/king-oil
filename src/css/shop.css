@@ -188,6 +188,15 @@
 .cart__promo .btn { height: var(--ko-control-h); }
 .cart__promo .input { background: var(--ko-bg-0); }
 
+/* Ответ на промокод: ошибка красным, применённый код — брендовым.
+   Строки в макете нет, добавлена вместе с проверкой кода */
+.cart__promo-note {
+  margin: calc(-1 * var(--ko-space-12)) 0 var(--ko-space-20);
+  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
+  color: var(--ko-border-error);
+}
+.cart__promo-note--ok { color: var(--ko-text-links); }
+
 .cart__submit { height: var(--ko-control-h); }
 
 .cart__note {

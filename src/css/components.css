@@ -429,6 +429,13 @@ textarea.input { min-height: 96px; resize: vertical; }
    текст остаётся оранжевым. Срабатывает только на самой кнопке */
 .product-card__buy:hover { background: var(--ko-btn-brand-soft-hover); color: var(--ko-text-links); }
 
+/* Состояние «уже в корзине». В макете его нет: без обратной связи кнопка
+   выглядит нерабочей, а повторный клик уводил бы в корзину молча.
+   Заливка — брендовая (Primary buttons), чтобы не заводить новый цвет.
+   Отклонение зафиксировано в docs/26-logic-pass.md */
+.product-card__buy.is-added,
+.product-card__buy.is-added:hover { background: var(--ko-btn-brand); color: var(--ko-text-0); }
+
 /* ---------- Мобильная плитка (макет spec tile в 26886:5930, ширина 166) ----------
    Картинка 160 с полями 16/24, между блоками 16, цена Large 1 20/26,
    название Small 15/20 в одну строку, чипсы и кнопка 14/20 */

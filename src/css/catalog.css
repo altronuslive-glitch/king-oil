@@ -3,35 +3,6 @@
    Размеры выверены по метаданным Figma (артборд 1900, контейнер 1420)
    ============================================================ */
 
-/* ---------- Подбор по автомобилю — 1900×308 (макет 26756:604) ----------
-   Панель 1420×228 на подложке --ko-bg-1, паддинг 40.
-   Ряд: два поля по 585 («Госномер», «Быстрый поиск») и кнопка 146×52, гэп 12.
-*/
-.car-picker {
-  padding: var(--ko-space-40);
-  background: var(--ko-bg-1);
-}
-.car-picker__title { margin-bottom: var(--ko-space-32); }
-/* В макете подпись поля ровно 18 (26756:609) */
-.car-picker .field__label { line-height: 18px; }
-.car-picker__row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 146px;
-  gap: var(--ko-space-12);
-  align-items: end;
-}
-.car-picker__row .btn { height: var(--ko-control-h); }
-.car-picker__row .input { min-height: var(--ko-control-h); }
-
-@media (max-width: 1024px) {
-  .car-picker { padding: var(--ko-space-24); }
-  .car-picker__row { grid-template-columns: repeat(2, 1fr); }
-  .car-picker__row .btn { grid-column: 1 / -1; }
-}
-@media (max-width: 480px) {
-  .car-picker__row { grid-template-columns: 1fr; }
-}
-
 /* ---------- Популярные бренды — 1900×100 (макет 26756:631) ----------
    Ряд чипов 52 без подписи сверху, снизу отступ 48.
 */
