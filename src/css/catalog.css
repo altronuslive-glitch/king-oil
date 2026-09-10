@@ -17,6 +17,16 @@
   color: var(--ko-text-0);
 }
 
+/* Раздел каталога (catalog.html): брендов больше двадцати, и ряд из 52-х чипов
+   занимал пол-экрана, а 48 сверху отрывали его от заголовка «Бренды».
+   Здесь чипсы возвращаются к базовому размеру 36/12, ряд встаёт под заголовок.
+   На странице категории остаётся выверенный по макету размер 52/24
+   (просьба заказчика 10 сентября 2026) */
+.brands--compact { margin-top: 0; }
+.brands--compact .brands__list { gap: var(--ko-space-8); }
+.brands--compact .brands__list .chip { height: 36px; padding-inline: var(--ko-space-12); }
+.section-head--brands { margin-bottom: var(--ko-space-24); }
+
 /* ---------- Найдено N товаров + сортировка — 1900×80 ---------- */
 .sort-row {
   display: flex;

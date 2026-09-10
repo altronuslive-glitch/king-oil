@@ -260,12 +260,14 @@
     <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
     <h2 class="h5 modal__title" id="city-title">Выберите город</h2>
     <p class="modal__subtitle">От города зависят телефоны, адреса пунктов выдачи и сроки доставки.</p>
+    <!-- Булавки слева убраны, выбранный город помечается брендовой подложкой
+         и галочкой справа вместо рамки (просьба заказчика 10 сентября 2026) -->
     <div class="city-choice">
       <button class="city-choice__item is-active" type="button" data-city-set="omsk">
-        <svg><use href="#i-pin"></use></svg><span>Омск</span>
+        <span>Омск</span><svg class="city-choice__check"><use href="#i-check"></use></svg>
       </button>
       <button class="city-choice__item" type="button" data-city-set="tyumen">
-        <svg><use href="#i-pin"></use></svg><span>Тюмень</span>
+        <span>Тюмень</span><svg class="city-choice__check"><use href="#i-check"></use></svg>
       </button>
     </div>
   </div>

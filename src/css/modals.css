@@ -41,22 +41,30 @@
 
 /* Выбор города в модалке: строки на всю ширину, активная — брендовой рамкой */
 .city-choice { display: grid; gap: var(--ko-space-8); }
+/* Ни рамки, ни булавок: выбранный город — брендовая подложка и галочка справа
+   (просьба заказчика 10 сентября 2026) */
 .city-choice__item {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: var(--ko-space-12);
   padding: var(--ko-space-12) var(--ko-space-16);
   background: var(--ko-bg-1);
-  border: 2px solid transparent;
+  border: 0;
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
   color: var(--ko-text-1);
   text-align: left;
-  transition: border-color .15s ease, background-color .15s ease;
+  transition: background-color .15s ease, color .15s ease;
 }
-.city-choice__item svg { width: 20px; height: 20px; color: var(--ko-icon-2); }
 .city-choice__item:hover { background: var(--ko-bg-2); }
-.city-choice__item.is-active { border-color: var(--ko-border-brand); background: var(--ko-bg-0); }
-.city-choice__item.is-active svg { color: var(--ko-icon-brand); }
+/* Галочка не удаляется из потока, а прячется — иначе строки разной высоты */
+.city-choice__check { flex: none; width: 20px; height: 20px; color: var(--ko-icon-brand); visibility: hidden; }
+.city-choice__item.is-active {
+  background: var(--ko-btn-brand-soft);
+  color: var(--ko-text-links);
+}
+.city-choice__item.is-active:hover { background: var(--ko-btn-brand-soft-hover); }
+.city-choice__item.is-active .city-choice__check { visibility: visible; }
 .modal__subtitle {
   margin-bottom: var(--ko-space-24);
   font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
@@ -183,6 +191,9 @@
 body.no-scroll .cookies { display: none; }
 
 @media (max-width: 768px) {
+  /* От краёв экрана 12 вместо 24: на 375 окно становилось заметно уже экрана
+     и текст в нём переносился чаще нужного (10 сентября 2026) */
+  .modal { padding: var(--ko-space-12); }
   .modal__dialog { padding: var(--ko-space-24) var(--ko-space-20); }
   .code-input input { width: 100%; }
   .cookies { flex-direction: column; align-items: flex-start; bottom: 80px; }

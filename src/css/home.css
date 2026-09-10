@@ -25,6 +25,12 @@
      упирались в верхнюю границу и срезались */
   background-position: center 35%;
 }
+/* Второй баннер — своя фотография из мобильного слайдера макета.
+   Сюжет светлее и «шире», поэтому кадр берём по центру (10 сентября 2026) */
+.hero__slide--oil {
+  background-image: url("../img/hero-oil.jpg");
+  background-position: center 55%;
+}
 /* Текст уезжает вместе со слайдом, но гаснет — на новом месте он появляется заново */
 .hero__slide .hero__content {
   opacity: 0;
@@ -108,16 +114,19 @@
 @media (max-width: 768px) {
   /* В макете фото прижато к низу, а верх под текстом — ровная тёмная заливка.
      Поэтому не cover: кадр высотой 420 внизу, канистры выведены по центру */
+  /* Высота баннера снижена с 640 до 560, кадр — с 420 до 380
+     (просьба заказчика 10 сентября 2026: экран занимал слишком много) */
   .hero__slide {
-    background-size: auto 420px;
+    background-size: auto 380px;
     background-position: 85% bottom;
   }
+  .hero__slide--oil { background-position: center bottom; }
   /* В макете поверх фото нет ни градиента, ни затемнения: только заливка
      #131927 под кадром, поэтому наложение убираем совсем */
   .hero__slide::before { content: none; }
   .hero__slide .container {
     padding-block: var(--ko-space-32) var(--ko-space-16);
-    min-height: 640px;
+    min-height: 560px;
   }
   .hero__content { min-height: 0; gap: var(--ko-space-20); }
   .hero__content .btn { margin-top: auto; width: 200px; min-width: 0; }

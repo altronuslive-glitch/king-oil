@@ -152,6 +152,20 @@
                 <img src="img/products/p53.jpg" width="40" height="40" alt="" loading="lazy">
                 <span><span class="search__product-name">Nissan ATF Matic D (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
               </a>
+              <!-- Шесть позиций — столько же, сколько живая выдача по запросу
+                   (SEARCH_LIMIT в js/main.js). Просьба заказчика 10 сентября 2026 -->
+              <a class="search__product" href="product.html">
+                <img src="img/products/p16.jpg" width="40" height="40" alt="" loading="lazy">
+                <span><span class="search__product-name">Castrol Edge 5W-30 LL (синтетика) 4 л</span><br><span class="search__product-cat">Моторные масла</span></span>
+              </a>
+              <a class="search__product" href="product.html">
+                <img src="img/products/p25.jpg" width="40" height="40" alt="" loading="lazy">
+                <span><span class="search__product-name">Лукойл Genesis Universal П/Синт 10w40 4 л</span><br><span class="search__product-cat">Моторные масла</span></span>
+              </a>
+              <a class="search__product" href="product.html">
+                <img src="img/products/p14.jpg" width="40" height="40" alt="" loading="lazy">
+                <span><span class="search__product-name">CASTROL 5W-30 MAGNATEC AP 4L</span><br><span class="search__product-cat">Моторные масла</span></span>
+              </a>
               <a class="search__row" href="catalog.html"><span>Показать все</span></a>
             </div>
           </div>
@@ -408,8 +422,9 @@
           <button class="cart-row__remove" type="button" data-cart-remove aria-label="Убрать из корзины"><svg><use href="#i-close"></use></svg></button>
         </article>
 
+        <!-- «Продолжить покупки» убрана 10 сентября 2026: из корзины ведут
+             и шапка, и таббар, и слайдер «С этим покупают» ниже -->
         <div class="cart__actions">
-          <a class="link cart__back" href="catalog.html"><svg><use href="#i-arrow-left"></use></svg>Продолжить покупки</a>
           <button class="link cart__clear" type="button" data-cart-clear>Очистить корзину</button>
         </div>
       </div>
@@ -447,83 +462,97 @@
     </div>
   </section>
 
+  <!-- ============ 4. С этим покупают ============
+       Кросс-сейл под сводкой заказа: в макете блока нет, собран из плитки
+       каталога и карусели главной (решение от 10 сентября 2026).
+       TODO: интеграция — состав приходит от CS-Cart по товарам в корзине -->
+  <section class="section section--pt-0 section--pb-120" data-carousel>
+    <div class="container">
+      <div class="section-head section-head--tight"><h2 class="h3">С этим покупают</h2></div>
+
+      <div class="carousel cross-sell" data-carousel-track>
+        <article class="product-card">
+          <a class="product-card__media" href="product.html">
+            <img src="img/products/p81.jpg" width="560" height="560" alt="Фильтр масляный MANN W 914/2" loading="lazy">
+          </a>
+          <button class="product-card__fav" type="button" aria-label="В избранное"><svg><use href="#i-heart"></use></svg></button>
+          <div class="product-card__info">
+            <div class="product-card__price">540 ₽</div>
+            <a class="product-card__title" href="product.html">Фильтр масляный MANN W 914/2</a>
+            <button class="product-card__buy" type="button">В корзину</button>
+          </div>
+        </article>
+        <article class="product-card">
+          <a class="product-card__media" href="product.html">
+            <img src="img/products/p82.jpg" width="560" height="560" alt="Фильтр воздушный MANN C 25 114/1" loading="lazy">
+          </a>
+          <button class="product-card__fav" type="button" aria-label="В избранное"><svg><use href="#i-heart"></use></svg></button>
+          <div class="product-card__info">
+            <div class="product-card__price">820 ₽</div>
+            <a class="product-card__title" href="product.html">Фильтр воздушный MANN C 25 114/1</a>
+            <button class="product-card__buy" type="button">В корзину</button>
+          </div>
+        </article>
+        <article class="product-card">
+          <a class="product-card__media" href="product.html">
+            <img src="img/products/p83.jpg" width="560" height="560" alt="Фильтр салонный MANN CU 2545" loading="lazy">
+          </a>
+          <button class="product-card__fav" type="button" aria-label="В избранное"><svg><use href="#i-heart"></use></svg></button>
+          <div class="product-card__info">
+            <div class="product-card__price">690 ₽</div>
+            <a class="product-card__title" href="product.html">Фильтр салонный MANN CU 2545</a>
+            <button class="product-card__buy" type="button">В корзину</button>
+          </div>
+        </article>
+        <article class="product-card">
+          <a class="product-card__media" href="product.html">
+            <img src="img/products/p61.jpg" width="560" height="560" alt="Антифриз Sintec Unlimited G12++ 5 кг" loading="lazy">
+          </a>
+          <button class="product-card__fav" type="button" aria-label="В избранное"><svg><use href="#i-heart"></use></svg></button>
+          <div class="product-card__info">
+            <div class="product-card__price">1 690 ₽</div>
+            <a class="product-card__title" href="product.html">Антифриз Sintec Unlimited G12++ 5 кг</a>
+            <button class="product-card__buy" type="button">В корзину</button>
+          </div>
+        </article>
+        <article class="product-card">
+          <a class="product-card__media" href="product.html">
+            <img src="img/products/p63.jpg" width="560" height="560" alt="Антифриз ЛУКОЙЛ G11 зелёный 5 кг" loading="lazy">
+          </a>
+          <button class="product-card__fav" type="button" aria-label="В избранное"><svg><use href="#i-heart"></use></svg></button>
+          <div class="product-card__info">
+            <div class="product-card__price">1 180 ₽</div>
+            <a class="product-card__title" href="product.html">Антифриз ЛУКОЙЛ G11 зелёный 5 кг</a>
+            <button class="product-card__buy" type="button">В корзину</button>
+          </div>
+        </article>
+        <article class="product-card">
+          <a class="product-card__media" href="product.html">
+            <img src="img/products/p91.jpg" width="560" height="560" alt="Лампа Osram Night Breaker H4 12V 60/55W" loading="lazy">
+          </a>
+          <button class="product-card__fav" type="button" aria-label="В избранное"><svg><use href="#i-heart"></use></svg></button>
+          <div class="product-card__info">
+            <div class="product-card__price">1 320 ₽</div>
+            <a class="product-card__title" href="product.html">Лампа Osram Night Breaker H4 12V 60/55W</a>
+            <button class="product-card__buy" type="button">В корзину</button>
+          </div>
+        </article>
+      </div>
+
+      <div class="carousel-foot">
+        <div class="carousel-progress"><div class="carousel-progress__bar" data-carousel-bar></div></div>
+        <div class="carousel-nav">
+          <button class="arrow-btn" type="button" data-carousel-prev aria-label="Назад"><svg><use href="#i-arrow-left"></use></svg></button>
+          <button class="arrow-btn" type="button" data-carousel-next aria-label="Вперёд"><svg><use href="#i-arrow-right"></use></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
-<!-- @shared:footer -->
-<!-- ============ ФУТЕР ============ -->
-<!-- Макет: компонент 26846:23236 (1900x974), инстанс на странице 926 — водяной знак подрезан -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer__cols">
-      <div class="footer__brand">
-        <p class="footer__about">Оригинальные моторные масла, антифризы и автотовары. Прямые поставки от авторизованных дистрибьюторов.</p>
-        <div class="footer__contacts">
-          <a class="footer__phone" href="tel:+73812475777" data-city-phone>8 (3812) 475-777</a>
-          <a class="footer__mail" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
-        </div>
-        <p class="footer__hours">Пн–Сб 9–20, Вс 10–19</p>
-      </div>
-
-      <nav class="footer__col">
-        <p class="footer__col-title">Каталог</p>
-        <ul class="footer__links">
-          <li><a href="category.html">Моторные масла</a></li>
-          <li><a href="category.html">Трансмиссионные масла</a></li>
-          <li><a href="category.html">Антифриз</a></li>
-          <li><a href="category.html">Аккумуляторы</a></li>
-          <li><a href="category.html">Фильтры</a></li>
-          <li><a href="category.html">Лампы</a></li>
-        </ul>
-      </nav>
-
-      <nav class="footer__col">
-        <p class="footer__col-title">Покупателям</p>
-        <ul class="footer__links">
-          <li><a href="about.html">О компании</a></li>
-          <li><a href="how-to-buy.html">Как купить</a></li>
-          <li><a href="loyalty.html">Бонусные баллы</a></li>
-          <li><a href="delivery.html">Доставка</a></li>
-          <li><a href="payment.html">Оплата</a></li>
-          <li><a href="returns.html">Возврат и обмен</a></li>
-          <li><a href="reviews.html">Отзывы</a></li>
-          <li><a href="promo.html">Акции</a></li>
-          <li><a href="contacts.html">Контакты</a></li>
-        </ul>
-      </nav>
-
-      <div class="footer__col footer__col--contacts">
-        <p class="footer__col-title">Контакты</p>
-        <ul class="footer__addresses">
-          <li>Омск, ул. Герцена, 197а</li>
-          <li>Омск, ул. Енисейская, 1</li>
-          <li>Омск, ул. Энтузиастов, 2/2</li>
-          <li>Тюмень, ул. 50 лет Октября, 211</li>
-        </ul>
-        <div class="footer__social">
-          <a href="#" aria-label="ВКонтакте"><img src="img/icons/vk.svg" width="24" height="24" alt=""></a>
-          <a href="#" aria-label="Telegram"><img src="img/icons/telegram.svg" width="24" height="24" alt=""></a>
-        </div>
-      </div>
-    </div>
-
-    <hr class="footer__divider">
-
-    <div class="footer__copy">
-      <span>© 2004–<span data-year>2026</span> King-Oil. Все права защищены.</span>
-      <a href="legal.html">Политика конфиденциальности</a>
-      <!-- Реквизиты сверены с king-oil.ru (страница «Контакты», блок «О нас») -->
-      <span class="footer__legal">ООО «Сити Ойл» · ОГРН 1205500020318 · ИНН 5503193478</span>
-    </div>
-
-    <!-- Водяной знак: в макете вектор 1420x245, нижние 48px срезаны краем страницы -->
-    <div class="footer__mark" aria-hidden="true">
-      <svg viewBox="0 0 1420 245" role="presentation" focusable="false">
-        <text x="0" y="245" textLength="1420" lengthAdjust="spacingAndGlyphs">KING-OIL</text>
-      </svg>
-    </div>
-  </div>
-</footer>
-<!-- /@shared:footer -->
+<!-- Подвал в корзине не показываем: уводит из оформления, как и на checkout.
+     Решение от 10 сентября 2026 -->
 
 <!-- @shared:tabbar -->
 <!-- ============ ТАББАР (мобильный) ============ -->
@@ -799,12 +828,14 @@
     <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
     <h2 class="h5 modal__title" id="city-title">Выберите город</h2>
     <p class="modal__subtitle">От города зависят телефоны, адреса пунктов выдачи и сроки доставки.</p>
+    <!-- Булавки слева убраны, выбранный город помечается брендовой подложкой
+         и галочкой справа вместо рамки (просьба заказчика 10 сентября 2026) -->
     <div class="city-choice">
       <button class="city-choice__item is-active" type="button" data-city-set="omsk">
-        <svg><use href="#i-pin"></use></svg><span>Омск</span>
+        <span>Омск</span><svg class="city-choice__check"><use href="#i-check"></use></svg>
       </button>
       <button class="city-choice__item" type="button" data-city-set="tyumen">
-        <svg><use href="#i-pin"></use></svg><span>Тюмень</span>
+        <span>Тюмень</span><svg class="city-choice__check"><use href="#i-check"></use></svg>
       </button>
     </div>
   </div>

@@ -537,8 +537,9 @@
     width: auto;
     max-height: none;
     padding: var(--ko-space-16) 0;
+    /* Разделителя под полем нет: поле уже отделено рамкой, а линия лишь дробила
+       экран пополам (просьба заказчика 10 сентября 2026) */
     border: 0;
-    border-top: 1px solid var(--ko-border-1);
     box-shadow: none;
   }
 

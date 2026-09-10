@@ -117,9 +117,7 @@
   gap: var(--ko-space-16);
   padding-top: var(--ko-space-24);
 }
-.cart__back { display: inline-flex; align-items: center; gap: var(--ko-space-8); color: var(--ko-text-2); }
-.cart__back svg { width: 16px; height: 16px; }
-.cart__back:hover { color: var(--ko-text-accent); }
+/* Ссылка «Продолжить покупки» и её стили .cart__back убраны 10 сентября 2026 */
 .cart__clear { color: var(--ko-text-3); }
 .cart__clear:hover { color: var(--ko-border-error); }
 
@@ -148,7 +146,8 @@
 .cart__summary {
   position: sticky;
   top: 176px;
-  padding: var(--ko-space-32);
+  /* 20 вместо 32 — просьба заказчика от 10 сентября 2026 */
+  padding: var(--ko-space-20);
   background: var(--ko-bg-1);
 }
 .cart__summary-title {
@@ -214,6 +213,16 @@
 }
 .cart__note-icon { flex: none; width: 16px; height: 16px; margin-top: 2px; color: var(--ko-icon-2); }
 .cart__note b { font-weight: 600; color: var(--ko-text-2); }
+
+/* ---------- «С этим покупают» под сводкой корзины ----------
+   Плитка та же, что в каталоге; ширина колонок повторяет «Похожие товары»
+   на карточке товара (product.css), блок в макете не нарисован */
+.cross-sell {
+  gap: var(--ko-space-20);
+  grid-auto-columns: calc((100% - var(--ko-space-20) * 3) / 4);
+}
+@media (max-width: 1024px) { .cross-sell { grid-auto-columns: calc((100% - var(--ko-space-20)) / 2); } }
+@media (max-width: 768px)  { .cross-sell { grid-auto-columns: 166px; gap: var(--ko-space-12); } }
 
 .checkout__items {
   display: grid;
@@ -368,11 +377,16 @@
   padding: var(--ko-space-32);
   background: var(--ko-bg-1);
 }
-.account__profile-mail {
-  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
-  color: var(--ko-text-3);
+/* Строка .account__profile-mail убрана 10 сентября 2026 — дублировала поле «Email».
+   Имя стало первой строкой карточки, бейдж «Организация» встаёт с ним в один ряд
+   и переносится целиком, а не свисает отдельной строкой */
+.account__profile-name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ko-space-8);
+  margin-top: 0;
 }
-.account__profile-name { margin-top: var(--ko-space-8); }
 .account__profile-fields {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 260px));
@@ -396,7 +410,6 @@
    Без класса is-company (частное лицо) и бейдж, и реквизиты скрыты */
 .account__badge {
   display: inline-block;
-  margin-left: var(--ko-space-8);
   padding: var(--ko-space-4) var(--ko-space-10);
   background: var(--ko-bg-2);
   vertical-align: middle;
@@ -742,7 +755,9 @@
 @media (max-width: 1024px) {
   .cart, .order { grid-template-columns: 1fr; }
   .cart__summary { position: static; }
-  .account { grid-template-columns: 1fr; }
+  /* Одна колонка: 48 из десктопной сетки превращались в вертикальный провал
+     между лентой разделов и содержимым (10 сентября 2026) */
+  .account { grid-template-columns: 1fr; gap: var(--ko-space-24); }
   .account__cards { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 768px) {
@@ -754,7 +769,8 @@
     gap: var(--ko-space-8);
     overflow-x: auto;
     scrollbar-width: none;
-    margin-bottom: var(--ko-space-24);
+    /* Отступ до содержимого держит gap самой сетки .account: свой margin-bottom
+       складывался с ним и давал 48 (10 сентября 2026) */
     margin-inline: calc(var(--ko-page-pad) * -1);
     padding-inline: var(--ko-page-pad);
   }
@@ -783,13 +799,17 @@
   /* Таблица разворачивается в карточки: подписи колонок переезжают внутрь строк */
   .cart-head { display: none; }
 
+  /* Сумма позиции переехала под счётчик (10 сентября 2026): пока она стояла
+     в третьей колонке, та растягивалась под «195 000 ₽» и на название
+     оставалась узкая полоса. Теперь справа только крестик 32, а название,
+     счётчик и сумма тянутся почти до правого края */
   .cart-row {
-    /* третья колонка держит и крестик, и сумму — поэтому auto, а не 32px */
-    grid-template-columns: 72px minmax(0, 1fr) auto;
+    grid-template-columns: 72px minmax(0, 1fr) 32px;
     grid-template-areas:
-      "media info   remove"
-      "media unit   unit"
-      "media step   price";
+      "media info  remove"
+      "media unit  unit"
+      "media step  step"
+      "media price price";
     column-gap: var(--ko-space-16);
     row-gap: var(--ko-space-12);
     align-items: start;
@@ -803,8 +823,9 @@
   .cart-row__media { grid-area: media; width: 72px; height: 72px; }
   .cart-row__info  { grid-area: info; }
   .cart-row__unit  { grid-area: unit; text-align: left; }
-  .cart-row .stepper { grid-area: step; justify-self: start; }
-  .cart-row__price { grid-area: price; align-self: center; }
+  /* Счётчик занимает всю освободившуюся ширину, сумма — строкой под ним */
+  .cart-row .stepper { grid-area: step; justify-self: stretch; width: 100%; }
+  .cart-row__price { grid-area: price; align-self: center; text-align: left; }
   .cart-row__remove { grid-area: remove; }
 
   .cart-row__label {

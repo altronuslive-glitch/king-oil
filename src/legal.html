@@ -152,6 +152,20 @@
                 <img src="img/products/p53.jpg" width="40" height="40" alt="" loading="lazy">
                 <span><span class="search__product-name">Nissan ATF Matic D (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
               </a>
+              <!-- Шесть позиций — столько же, сколько живая выдача по запросу
+                   (SEARCH_LIMIT в js/main.js). Просьба заказчика 10 сентября 2026 -->
+              <a class="search__product" href="product.html">
+                <img src="img/products/p16.jpg" width="40" height="40" alt="" loading="lazy">
+                <span><span class="search__product-name">Castrol Edge 5W-30 LL (синтетика) 4 л</span><br><span class="search__product-cat">Моторные масла</span></span>
+              </a>
+              <a class="search__product" href="product.html">
+                <img src="img/products/p25.jpg" width="40" height="40" alt="" loading="lazy">
+                <span><span class="search__product-name">Лукойл Genesis Universal П/Синт 10w40 4 л</span><br><span class="search__product-cat">Моторные масла</span></span>
+              </a>
+              <a class="search__product" href="product.html">
+                <img src="img/products/p14.jpg" width="40" height="40" alt="" loading="lazy">
+                <span><span class="search__product-name">CASTROL 5W-30 MAGNATEC AP 4L</span><br><span class="search__product-cat">Моторные масла</span></span>
+              </a>
               <a class="search__row" href="catalog.html"><span>Показать все</span></a>
             </div>
           </div>
@@ -769,12 +783,14 @@
     <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
     <h2 class="h5 modal__title" id="city-title">Выберите город</h2>
     <p class="modal__subtitle">От города зависят телефоны, адреса пунктов выдачи и сроки доставки.</p>
+    <!-- Булавки слева убраны, выбранный город помечается брендовой подложкой
+         и галочкой справа вместо рамки (просьба заказчика 10 сентября 2026) -->
     <div class="city-choice">
       <button class="city-choice__item is-active" type="button" data-city-set="omsk">
-        <svg><use href="#i-pin"></use></svg><span>Омск</span>
+        <span>Омск</span><svg class="city-choice__check"><use href="#i-check"></use></svg>
       </button>
       <button class="city-choice__item" type="button" data-city-set="tyumen">
-        <svg><use href="#i-pin"></use></svg><span>Тюмень</span>
+        <span>Тюмень</span><svg class="city-choice__check"><use href="#i-check"></use></svg>
       </button>
     </div>
   </div>
