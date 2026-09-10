@@ -235,7 +235,17 @@
 .search__field { position: relative; }
 .search__back,
 .search__clear { display: none; }
-.search__suggest { display: flex; flex-wrap: wrap; gap: var(--ko-space-8); }
+/* Подсказки-чипсы над выдачей (макет State 2, 1910:15679: ряд 68 = 20 сверху,
+   чипс 36, 12 снизу, гэп 8). Своих отступов у ряда не было — чипсы липли
+   к краю панели и к первой строке товара. По бокам держим 20, как у строк
+   списка ниже, иначе ряд не встаёт с ними на одну вертикаль */
+.search__suggest {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ko-space-8);
+  padding: 0 var(--ko-space-20) var(--ko-space-12);
+}
+.search__suggest .chip { flex: none; }
 
 /* ---------- Ряд 3: категории (56) ---------- */
 .header__nav { height: 56px; border-bottom: 2px solid var(--ko-border-1); }
@@ -482,6 +492,16 @@
   .header.is-search-open .search { display: block; }
   .search__input { height: 44px; padding-right: 46px; font-size: var(--ko-small-size); }
   .search__submit { right: var(--ko-space-12); height: 44px; }
+
+  /* Подсказки — лентой с прокруткой: на 375 три-четыре чипса переносятся
+     на несколько строк и съедают высоту панели. Так же сделаны ряд разделов
+     и меню каталога */
+  .search__suggest {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .search__suggest::-webkit-scrollbar { display: none; }
 
   /* Ряд разделов превращается в горизонтальную ленту чипсов 36 px */
   .header__nav {
