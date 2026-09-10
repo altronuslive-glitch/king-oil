@@ -178,6 +178,9 @@
 }
 .cookies__text a { color: var(--ko-text-accent); }
 .cookies__actions { display: flex; gap: var(--ko-space-8); flex: none; }
+/* Пока открыто полноэкранное меню, шторка фильтров или модалка, плашку прячем:
+   она стоит поверх (z-index 90) и закрывала телефон и выбор города в меню */
+body.no-scroll .cookies { display: none; }
 
 @media (max-width: 768px) {
   .modal__dialog { padding: var(--ko-space-24) var(--ko-space-20); }

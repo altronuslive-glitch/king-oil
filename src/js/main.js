@@ -204,6 +204,9 @@
       closeSearch();
     }
     if (headerSpacer) headerSpacer.style.height = `${header.offsetHeight}px`;
+    // Полноэкранная панель поиска начинается под шапкой, а её высота зависит
+    // от состояния: отдаём число в CSS переменной
+    document.documentElement.style.setProperty('--ko-search-top', `${header.offsetHeight}px`);
   }
 
   if (searchToggle) searchToggle.addEventListener('click', () => setSearchOpen(!header.classList.contains('is-search-open')));

@@ -493,6 +493,42 @@
   .search__input { height: 44px; padding-right: 46px; font-size: var(--ko-small-size); }
   .search__submit { right: var(--ko-space-12); height: 44px; }
 
+  /* Полноэкранный поиск (макет «После нажатия на поиск»): строка со стрелкой
+     «назад» и полем, под ней — раздел во весь экран до таббара.
+     Раньше панель выпадала под инпутом шириной с контейнер и обрывалась на 60vh */
+  .header.is-search-open .search {
+    display: flex;
+    align-items: center;
+    gap: var(--ko-space-12);
+  }
+  .header.is-search-open .search__back {
+    display: flex;
+    flex: none;
+    width: 24px; height: 24px;
+    color: var(--ko-icon-3);
+  }
+  .header.is-search-open .search__back svg { width: 100%; height: 100%; }
+  .header.is-search-open .search__field { flex: 1; min-width: 0; }
+
+  /* В режиме поиска на экране остаётся только строка поиска: логотип, кнопки
+     и лента разделов уходят, как в макете. Выход — стрелка «назад» */
+  .header.is-search-open .logo,
+  .header.is-search-open .header__mobile-actions,
+  .header.is-search-open .header__nav { display: none; }
+  .header.is-search-open .search { margin-top: 0; }
+
+  .header.is-search-open .search__panel {
+    position: fixed;
+    top: var(--ko-search-top, 116px);
+    left: 0; right: 0; bottom: 64px;
+    width: auto;
+    max-height: none;
+    padding: var(--ko-space-16) 0;
+    border: 0;
+    border-top: 1px solid var(--ko-border-1);
+    box-shadow: none;
+  }
+
   /* Подсказки — лентой с прокруткой: на 375 три-четыре чипса переносятся
      на несколько строк и съедают высоту панели. Так же сделаны ряд разделов
      и меню каталога */
@@ -596,13 +632,15 @@
 /* ---------- Мобильное меню (бургер) ---------- */
 .mobile-menu {
   position: fixed;
-  inset: 0 0 64px;
+  /* На всю высоту экрана, поверх таббара (z-index 60): раньше меню
+     обрывалось за 64 px до низа и под ним оставалась полоска таббара */
+  inset: 0;
   z-index: 70;
   /* Колонка во всю высоту: контакты прижимаются к низу автоотступом,
      иначе меню обрывалось на середине экрана и под ним висела пустота */
   display: flex;
   flex-direction: column;
-  gap: var(--ko-space-8);
+  gap: var(--ko-space-4);
   padding: var(--ko-space-20);
   background: var(--ko-bg-0);
   overflow-y: auto;
@@ -620,18 +658,8 @@
 
 .mobile-menu { position: fixed; }
 
-.mobile-menu__user {
-  display: grid;
-  grid-template-columns: 48px 1fr;
-  gap: var(--ko-space-12);
-  align-items: center;
-  padding: var(--ko-space-12);
-  background: var(--ko-bg-1);
-  margin-bottom: var(--ko-space-12);
-}
-.mobile-menu__avatar { width: 48px; height: 48px; border-radius: var(--ko-radius-max); background: var(--ko-bg-3); }
 /* Разделов в меню много, поэтому строка компактнее: 8 по вертикали вместо 12,
-   кегль 16 вместо 18 (решение от 8 сентября) */
+   кегль 16 вместо 18 (решение от 8 сентября). Зазор между пунктами — 4 */
 .mobile-menu__link {
   display: flex;
   align-items: center;
@@ -639,7 +667,5 @@
   padding: var(--ko-space-8) var(--ko-space-12);
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
 }
-.mobile-menu__link svg { width: 20px; height: 20px; color: var(--ko-icon-2); }
-.mobile-menu__sep { margin: var(--ko-space-8) 0; border: 0; border-top: 1px solid var(--ko-border-1); }
 .mobile-menu__contacts { display: grid; gap: var(--ko-space-8); margin-top: auto; padding: var(--ko-space-12) var(--ko-space-12) 0; }
 .mobile-menu__phone { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); }
