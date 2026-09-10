@@ -50,14 +50,25 @@
 .icon-btn:hover { background: var(--ko-bg-1); color: var(--ko-icon-3); }
 .icon-btn svg { width: var(--ko-icon-normal); height: var(--ko-icon-normal); }
 
+/* Корзина брендовая только когда в ней что-то есть — это вариант Add=Yes
+   компонента Header btn (2099:58392, Icon Color/icon-brand). Пустая корзина
+   серая, как все остальные иконки (2099:58390, Icon Color/icon-2).
+   Класс ставит js/main.js вместе со счётчиком */
+.icon-btn--cart.is-filled,
+.icon-btn--cart.is-filled:hover { color: var(--ko-icon-brand); }
+
 /* Счётчик на иконке */
 .icon-btn { position: relative; }
+/* Бейдж по макету (2099:58392): бокс 16×22 в правом верхнем углу кнопки 52,
+   текст Caption xl m — Inter Medium 15/22. Было 11/1 со смещением 8/8 */
 .icon-btn__badge {
   position: absolute;
-  top: 8px;
-  right: 8px;
-  font: 500 11px/1 var(--ko-font);
-  /* цвет наследуем от кнопки: у корзины он брендовый */
+  top: 0;
+  right: 0;
+  width: 16px;
+  text-align: center;
+  font: 500 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  /* цвет наследуем от кнопки: у непустой корзины он брендовый */
 }
 
 /* Стрелки каруселей — по макету 48×48, вплотную друг к другу */

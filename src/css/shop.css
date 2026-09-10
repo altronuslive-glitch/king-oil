@@ -133,6 +133,11 @@
   text-align: center;
   background: var(--ko-bg-1);
 }
+/* Круг под иконкой на серой панели совпадал с её фоном и пропадал — иконка
+   висела в воздухе. Внутри панели подложку делаем белой, как у мини-модалки.
+   Страниц пустой корзины и пустого избранного в макете нет */
+.cart__empty .mini-modal__icon { background: var(--ko-bg-0); }
+
 .cart__empty-text {
   max-width: 420px;
   font: 400 var(--ko-small-size)/var(--ko-small-lh-long) var(--ko-font);

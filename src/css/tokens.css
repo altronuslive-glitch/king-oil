@@ -87,8 +87,9 @@
 
   /* ---------- Иконки ---------- */
   --ko-icon-md: 20px;
-  --ko-icon-normal: 24px;
+  --ko-icon-normal: 24px;   /* Icon size/icon-normal — иконки шапки в кнопке 52 */
   --ko-icon-lg: 32px;
+  --ko-icon-featured: 36px; /* иконка в круге 80 «Featured icon» (2099:57024) */
 
   /* ---------- Контролы ---------- */
   --ko-control-pad-y: 14px;   /* вертикальный паддинг кнопки и инпута */

@@ -1207,6 +1207,8 @@
     const inFav = KO.fav.count();
     $$('[data-cart-count]').forEach((el) => { el.textContent = String(inCart); el.hidden = inCart === 0; });
     $$('[data-fav-count]').forEach((el) => { el.textContent = String(inFav); el.hidden = inFav === 0; });
+    // Пустая корзина в шапке серая, как остальные иконки (вариант Add=Yes в макете)
+    $$('[data-cart-link]').forEach((el) => el.classList.toggle('is-filled', inCart > 0));
   }
 
   /* Сердце в карточке подсвечено, если товар уже в избранном */

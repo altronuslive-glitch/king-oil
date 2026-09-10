@@ -391,8 +391,8 @@
   border-radius: var(--ko-radius-max);
   color: var(--ko-icon-2);
 }
-/* Icon size/icon-medium = 20 */
-.mini-modal__icon svg { width: 20px; height: 20px; }
+/* В круге 80 иконка 36 с полями 22 (Featured icon 7270:4477) */
+.mini-modal__icon svg { width: var(--ko-icon-featured); height: var(--ko-icon-featured); }
 .mini-modal__title { font: 500 var(--ko-h6-size)/var(--ko-h6-lh) var(--ko-font); margin-bottom: var(--ko-space-12); }
 .mini-modal__text {
   font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
