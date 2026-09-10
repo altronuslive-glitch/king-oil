@@ -333,7 +333,8 @@
     if (openModalEl && e.target === openModalEl) closeModal();
   });
 
-  /* Показать/скрыть пароль */
+  /* Показать/скрыть пароль. Вместе с типом поля меняется и сама иконка:
+     открытый пароль — перечёркнутый глаз (макет 2099:53466) */
   document.addEventListener('click', (e) => {
     const eye = e.target.closest('[data-toggle-password]');
     if (!eye) return;
@@ -342,6 +343,8 @@
     const shown = input.type === 'text';
     input.type = shown ? 'password' : 'text';
     eye.setAttribute('aria-label', shown ? 'Показать пароль' : 'Скрыть пароль');
+    const use = $('use', eye);
+    if (use) use.setAttribute('href', shown ? '#i-eye' : '#i-eye-off');
   });
 
   /* Табы «Телефон / E-mail» */
@@ -437,7 +440,15 @@
   const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   function fieldError(control, message) {
-    const field = control.closest('.field') || control.closest('.checkbox') || control.parentElement;
+    /* У чекбокса подписи нет: он стоит в сетке «квадрат + текст», и подпись
+       попадала в 18-пиксельную колонку, где текст ломался по букве.
+       Незаполненное согласие показываем красной рамкой самого квадрата */
+    if (control.type === 'checkbox') {
+      control.classList.toggle('is-error', !!message);
+      return;
+    }
+
+    const field = control.closest('.field') || control.parentElement;
     if (!field) return;
     let note = $('.field__error', field);
     if (message) {
@@ -451,7 +462,7 @@
     } else if (note) {
       note.hidden = true;
     }
-    if (control.type !== 'checkbox') control.classList.toggle('input--error', !!message);
+    control.classList.toggle('input--error', !!message);
   }
 
   function validateControl(control) {

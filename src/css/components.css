@@ -252,6 +252,12 @@ textarea.input { min-height: 96px; resize: vertical; }
   background: var(--ko-bg-brand);
   border-color: var(--ko-bg-brand);
 }
+/* Незаполненное обязательное согласие: подписи под чекбоксом не делаем,
+   помечаем сам квадрат — рамка и заливка как у поля с ошибкой */
+.checkbox input.is-error {
+  border-color: var(--ko-border-error);
+  background: var(--ko-bg-error);
+}
 .checkbox input:checked::after {
   content: "";
   display: block;
