@@ -361,8 +361,11 @@
   <!-- ============ 3–5. Бренды, сортировка, фильтры ============ -->
   <div class="container">
 
-    <div class="brands">
-      <div class="brands__list">
+    <!-- Ряд брендов — горизонтальная лента: листается свайпом, на десктопе
+         ещё и стрелками. Подвал прячется сам, когда все чипсы влезли в ряд
+         (просьба заказчика 10 сентября 2026) -->
+    <div class="brands" data-carousel>
+      <div class="brands__list" data-carousel-track>
         <a class="chip" href="category.html">Castrol</a>
         <a class="chip" href="category.html">Mobil</a>
         <a class="chip" href="category.html">Shell</a>
@@ -371,6 +374,13 @@
         <a class="chip" href="category.html">Motul</a>
         <a class="chip" href="category.html">ZIC</a>
         <a class="chip" href="category.html">Liqui Moly</a>
+      </div>
+      <div class="carousel-foot">
+        <div class="carousel-progress"><div class="carousel-progress__bar" data-carousel-bar></div></div>
+        <div class="carousel-nav">
+          <button class="arrow-btn" type="button" data-carousel-prev aria-label="Предыдущие бренды"><svg><use href="#i-arrow-left"></use></svg></button>
+          <button class="arrow-btn" type="button" data-carousel-next aria-label="Следующие бренды"><svg><use href="#i-arrow-right"></use></svg></button>
+        </div>
       </div>
     </div>
 

@@ -269,6 +269,10 @@
 .checkout__body { clear: both; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--ko-space-20); }
 .checkout__grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--ko-space-20); }
 .checkout__grid--shipping { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+/* Поле не должно задавать ширину колонки собственным min-content: у выбора
+   даты она больше колонки, и поле вылезало за рамку карточки */
+.checkout__grid > *,
+.checkout__body > * { min-width: 0; }
 
 /* Уточняющие поля под списком способов получения.
    Панель своя у каждого способа, переключается в js/main.js */
@@ -840,8 +844,12 @@
 }
 
 @media (max-width: 768px) {
-  .checkout__block { padding: var(--ko-space-20); }
-  .checkout__sub { padding: var(--ko-space-16); }
+  /* Внутренний отступ карточки шага — 16 (просьба заказчика 10 сентября 2026) */
+  .checkout__block { padding: var(--ko-space-16); }
+  /* Уточняющий блок своих боковых полей не держит: с ними нижние поля
+     (реквизиты, адрес, дата) уезжали вправо на лишние 16 и не вставали
+     в одну линию с полями выше. Остаются отступ сверху и разделитель */
+  .checkout__sub { padding: var(--ko-space-16) 0 0; }
   /* Цена способа доставки уходит под описание, чтобы не сжимать текст */
   .option {
     grid-template-columns: 20px minmax(0, 1fr);
@@ -849,8 +857,11 @@
   }
   .option__price { grid-column: 2; }
 
+  /* minmax(0, …), а не 1fr: у input[type="date"] своя минимальная ширина
+     с иконкой календаря, и обычный 1fr не давал колонке сжаться — поле
+     вылезало за рамку карточки (10 сентября 2026) */
   .checkout__grid,
-  .checkout__grid--shipping { grid-template-columns: 1fr; }
+  .checkout__grid--shipping { grid-template-columns: minmax(0, 1fr); }
   .account__cards { grid-template-columns: 1fr; }
 
   .notfound__actions { flex-direction: column; width: 100%; }

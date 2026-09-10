@@ -413,8 +413,10 @@
   <section class="section section--pt-0 section--pb-48">
     <div class="container">
       <div class="section-head section-head--tight section-head--brands"><h2 class="h3">Бренды</h2></div>
-      <div class="brands brands--compact">
-        <div class="brands__list">
+      <!-- Ряд брендов — горизонтальная лента: два десятка чипов больше не
+           разваливаются на семь строк (просьба заказчика 10 сентября 2026) -->
+      <div class="brands" data-carousel>
+        <div class="brands__list" data-carousel-track>
           <a class="chip" href="category.html">Оригинальные масла</a>
           <a class="chip" href="category.html">ЛУКОЙЛ</a>
           <a class="chip" href="category.html">BARDAHL</a>
@@ -436,6 +438,13 @@
           <a class="chip" href="category.html">Tubor</a>
           <a class="chip" href="category.html">Topla</a>
           <a class="chip" href="category.html">Mutlu</a>
+        </div>
+        <div class="carousel-foot">
+          <div class="carousel-progress"><div class="carousel-progress__bar" data-carousel-bar></div></div>
+          <div class="carousel-nav">
+            <button class="arrow-btn" type="button" data-carousel-prev aria-label="Предыдущие бренды"><svg><use href="#i-arrow-left"></use></svg></button>
+            <button class="arrow-btn" type="button" data-carousel-next aria-label="Следующие бренды"><svg><use href="#i-arrow-right"></use></svg></button>
+          </div>
         </div>
       </div>
     </div>

@@ -3,29 +3,38 @@
    Размеры выверены по метаданным Figma (артборд 1900, контейнер 1420)
    ============================================================ */
 
-/* ---------- Популярные бренды — 1900×100 (макет 26756:631) ----------
-   Ряд чипов 52 без подписи сверху, снизу отступ 48.
-   Сверху тоже 48 до H1: блок «Подбор по автомобилю» из макета снят (docs/06),
-   без него бренды прилипали к заголовку. Решение от 10 сентября 2026.
+/* ---------- Популярные бренды — макет 26756:631 ----------
+   В макете это ряд чипов 52 с полями 24, переносящийся на несколько строк.
+   Заказчик 10 сентября 2026 попросил компактнее и лентой: чипсы вернулись
+   к базовому размеру 36/12, ряд больше не переносится, а листается по
+   горизонтали общим движком каруселей. Отклонение от макета — docs/27-pass-10-sep.md
 */
-.brands { margin-top: var(--ko-space-48); margin-bottom: var(--ko-space-48); }
-.brands__list { display: flex; flex-wrap: wrap; gap: var(--ko-space-10); }
-/* Боковые поля 24 — по макету (26756:631): «Castrol» ~109, «ZIC» ~82 при высоте 52 */
-.brands__list .chip { height: var(--ko-control-h); padding-inline: var(--ko-space-24); }
+.brands { margin-top: var(--ko-space-24); margin-bottom: var(--ko-space-48); }
+/* Лента: каждый чип держит свою ширину и не сжимается, полосу прокрутки прячем —
+   листают свайп и стрелки под рядом */
+.brands__list {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: max-content;
+  gap: var(--ko-space-8);
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+.brands__list::-webkit-scrollbar { display: none; }
+.brands__list > * { scroll-snap-align: start; }
+.brands__list .chip { height: 36px; padding-inline: var(--ko-space-12); }
 .brands__list .chip.is-active {
   background: var(--ko-bg-brand);
   color: var(--ko-text-0);
 }
+/* Подвал ленты прижат к чипсам: 48, как у больших каруселей, здесь избыточны.
+   Когда все бренды влезли в ряд, js/main.js прячет подвал целиком */
+.brands .carousel-foot { margin-top: var(--ko-space-16); height: auto; }
 
-/* Раздел каталога (catalog.html): брендов больше двадцати, и ряд из 52-х чипов
-   занимал пол-экрана, а 48 сверху отрывали его от заголовка «Бренды».
-   Здесь чипсы возвращаются к базовому размеру 36/12, ряд встаёт под заголовок.
-   На странице категории остаётся выверенный по макету размер 52/24
-   (просьба заказчика 10 сентября 2026) */
-.brands--compact { margin-top: 0; }
-.brands--compact .brands__list { gap: var(--ko-space-8); }
-.brands--compact .brands__list .chip { height: 36px; padding-inline: var(--ko-space-12); }
+/* Под заголовком «Бренды» (catalog.html) свой верхний отступ ряду не нужен */
 .section-head--brands { margin-bottom: var(--ko-space-24); }
+.section-head + .brands { margin-top: 0; }
 
 /* ---------- Найдено N товаров + сортировка — 1900×80 ---------- */
 .sort-row {

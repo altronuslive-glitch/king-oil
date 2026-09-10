@@ -1064,7 +1064,10 @@ textarea.input { min-height: 96px; resize: vertical; }
 .categories__row:hover .categories__name { color: var(--ko-text-2); }
 
 @media (max-width: 1280px) {
-  .categories__row { grid-template-columns: minmax(0, 1fr) auto minmax(0, 275fr) 32px; }
+  /* Первая колонка держала 1fr против 275fr у описания и схлопывалась
+     до трёх пикселей — название печаталось по букве в строку. Доля названия
+     та же, что в базовом правиле (найдено 10 сентября 2026) */
+  .categories__row { grid-template-columns: minmax(0, 380fr) auto minmax(0, 275fr) 32px; }
 }
 @media (max-width: 1024px) {
   .categories__row { grid-template-columns: 1fr auto 32px; gap: var(--ko-space-16); }
