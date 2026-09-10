@@ -616,7 +616,7 @@
               <button class="volume is-active" type="button" data-price="2 890 ₽">3 л</button>
               <button class="volume" type="button" data-price="3 670 ₽">4 л</button>
             </div>
-            <button class="product-card__buy product-card__buy--out" type="button" data-modal-open="callback">Уведомить о поступлении</button>
+            <button class="product-card__buy product-card__buy--out" type="button" data-modal-open="notify">Уведомить о поступлении</button>
           </div>
         </article>
         <article class="product-card" data-viscosity="5W-40" data-type="Полусинтетическое" data-brand="Lukoil" data-approval="ACEA A3/B4">
@@ -959,6 +959,31 @@
         <span>Я даю согласие на обработку моих персональных данных в порядке и на условиях, указанных в <a href="legal.html">Согласии на обработку персональных данных</a>, и подтверждаю ознакомление с <a href="legal.html">Политикой конфиденциальности</a> и <a href="legal.html">Пользовательским соглашением</a></span>
       </label>
     </form>
+  </div>
+</div>
+
+<!-- Уведомление о поступлении.
+     Раньше кнопка «Уведомить о поступлении» открывала форму обратного звонка
+     как заглушку (docs/22-stock-states.md) — теперь у подписки своя форма -->
+<div class="modal" hidden data-modal="notify">
+  <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="notify-title">
+    <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
+    <h2 class="h5 modal__title" id="notify-title">Уведомить о поступлении</h2>
+    <p class="modal__subtitle">Напишем, как только <b data-notify-product>товар</b> снова появится на складе. Письмо придёт один раз, на рассылку не подписываем.</p>
+
+    <form class="modal__body" data-form>
+      <label class="field"><span class="field__label">E-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email" required></label>
+      <label class="field"><span class="field__label">Телефон, если удобнее позвонить</span><input class="input" type="tel" placeholder="+7 ___ ___ __ __" autocomplete="tel"></label>
+      <label class="checkbox"><input type="checkbox" required><span>Я согласен с <a href="legal.html">политикой конфиденциальности</a> и обработкой персональных данных</span></label>
+      <div class="modal__actions"><button class="btn btn--primary btn--block" type="submit">Уведомить</button></div>
+    </form>
+
+    <div class="modal__success" hidden data-form-success>
+      <div class="modal__icon"><svg><use href="#i-check"></use></svg></div>
+      <h3 class="h5">Готово, подписали</h3>
+      <p class="modal__subtitle">Сообщим, как только товар появится на складе.</p>
+      <button class="btn btn--primary btn--block" type="button" data-close>Хорошо</button>
+    </div>
   </div>
 </div>
 

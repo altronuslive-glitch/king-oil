@@ -300,6 +300,19 @@
     el.hidden = false;
     openModalEl = el;
     document.body.classList.add('no-scroll');
+
+    // После отправки в окне остаётся экран успеха. При повторном открытии
+    // (например подписка на второй товар) возвращаем форму
+    const doneForm = $('[data-form]', el);
+    const doneScreen = $('[data-form-success]', el);
+    if (doneForm && doneScreen && !doneScreen.hidden) {
+      doneScreen.hidden = true;
+      doneForm.hidden = false;
+      doneForm.reset();
+      $$('.modal__title, .modal__subtitle', el)
+        .filter((node) => !doneScreen.contains(node))
+        .forEach((node) => { node.hidden = false; });
+    }
     // Первое поле, а не «Закрыть»: крестик стоит в разметке раньше, и общий
     // селектор наводил фокус на него
     const first = $('input:not([type="hidden"]), textarea, select', el) || $('button', el);
@@ -1261,10 +1274,12 @@
     });
   }
 
-  /* Кнопка «В корзину» показывает, что товар уже добавлен */
+  /* Кнопка «В корзину» показывает, что товар уже добавлен.
+     У закончившегося товара на её месте «Уведомить о поступлении» —
+     такую кнопку не трогаем, иначе подпись затрётся на «В корзину» */
   function renderBuyState() {
     $$('.product-card').forEach((card) => {
-      const btn = $('.product-card__buy', card);
+      const btn = $('.product-card__buy:not(.product-card__buy--out)', card);
       if (!btn) return;
       const inCart = KO.cart.has(cardData(card).id);
       btn.classList.toggle('is-added', inCart);
@@ -1275,7 +1290,7 @@
   /* Клик по «В корзину» и по сердцу — общий обработчик на документе:
      карточки появляются динамически (выдача поиска, фильтры каталога) */
   document.addEventListener('click', (e) => {
-    const buy = e.target.closest('.product-card__buy');
+    const buy = e.target.closest('.product-card__buy:not(.product-card__buy--out)');
     if (buy) {
       const card = buy.closest('.product-card');
       if (!card) return;
@@ -1292,6 +1307,26 @@
       const card = fav.closest('.product-card');
       if (card) KO.fav.toggle(cardData(card));
     }
+  });
+
+  /* Подписка на поступление: в форму подставляем товар, ради которого её открыли */
+  document.addEventListener('click', (e) => {
+    const opener = e.target.closest('[data-modal-open="notify"]');
+    if (!opener) return;
+
+    const card = opener.closest('.product-card');
+    const info = opener.closest('.product-info');
+    let name = '';
+    if (card) {
+      const title = $('.product-card__title', card);
+      const volume = $('.product-card__volumes .volume.is-active', card);
+      name = (title ? title.textContent.trim() : '') + (volume ? ', ' + volume.textContent.trim() : '');
+    } else if (info) {
+      const heading = $('h1');
+      const tab = $('[data-tabs] [data-tab].is-active', info);
+      name = (heading ? heading.textContent.trim() : '') + (tab ? ', ' + tab.textContent.trim() : '');
+    }
+    $$('[data-notify-product]').forEach((el) => { el.textContent = name || 'товар'; });
   });
 
   /* Карточка товара: «В корзину» берёт выбранный объём и количество */
