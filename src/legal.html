@@ -83,7 +83,7 @@
           <a class="link" href="payment.html">Оплата</a>
           <a class="link" href="reviews.html">Отзывы</a>
           <a class="link" href="contacts.html">Контакты</a>
-          <a class="link link--accent" href="account.html#loyalty">Бонусные баллы</a>
+          <a class="link link--accent" href="loyalty.html">Бонусные баллы</a>
         </nav>
       </div>
       <div class="header__top-right">
@@ -135,8 +135,11 @@
               <div class="search__group-head"><span>Вы искали</span><button class="link" type="button" data-search-clear-recent>Очистить</button></div>
               <div data-search-recent-list></div>
             </div>
+            <!-- «Показать все» стоит строкой под списком, а не в заголовке группы:
+                 при вводе запроса ссылка на полную выдачу выглядит именно так,
+                 и два разных вида одной ссылки путали (10 сентября 2026) -->
             <div class="search__group" data-search-popular>
-              <div class="search__group-head"><span>Популярные товары</span><a class="link link--accent" href="category.html">Показать все</a></div>
+              <div class="search__group-head"><span>Популярные товары</span></div>
               <a class="search__product" href="product.html">
                 <img src="img/products/p51.jpg" width="40" height="40" alt="" loading="lazy">
                 <span><span class="search__product-name">Honda HCF-2 (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
@@ -149,6 +152,7 @@
                 <img src="img/products/p53.jpg" width="40" height="40" alt="" loading="lazy">
                 <span><span class="search__product-name">Nissan ATF Matic D (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
               </a>
+              <a class="search__row" href="catalog.html"><span>Показать все</span></a>
             </div>
           </div>
 
@@ -313,7 +317,7 @@
   <a class="mobile-menu__link" href="payment.html">Оплата</a>
   <a class="mobile-menu__link" href="how-to-buy.html">Как купить</a>
   <a class="mobile-menu__link" href="returns.html">Возврат и обмен</a>
-  <a class="mobile-menu__link" href="account.html#loyalty">Бонусные баллы</a>
+  <a class="mobile-menu__link" href="loyalty.html">Бонусные баллы</a>
   <a class="mobile-menu__link" href="reviews.html">Отзывы</a>
   <a class="mobile-menu__link" href="contacts.html">Контакты</a>
   <div class="mobile-menu__contacts">
@@ -447,7 +451,7 @@
         <ul class="footer__links">
           <li><a href="about.html">О компании</a></li>
           <li><a href="how-to-buy.html">Как купить</a></li>
-          <li><a href="account.html#loyalty">Бонусные баллы</a></li>
+          <li><a href="loyalty.html">Бонусные баллы</a></li>
           <li><a href="delivery.html">Доставка</a></li>
           <li><a href="payment.html">Оплата</a></li>
           <li><a href="returns.html">Возврат и обмен</a></li>
@@ -672,10 +676,10 @@
     <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
     <h2 class="h5 modal__title" id="delete-account-title">Удалить аккаунт</h2>
     <p class="modal__subtitle">Вместе с аккаунтом удалятся история заказов, избранное и накопленные баллы. Восстановить их будет нельзя.</p>
-    <form class="modal__body">
+    <form class="modal__body" data-form>
       <label class="field field--password">
         <span class="field__label">Текущий пароль</span>
-        <input class="input" type="password" autocomplete="current-password">
+        <input class="input" type="password" autocomplete="current-password" required>
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <div class="modal__actions">
@@ -683,6 +687,15 @@
         <button class="btn btn--secondary btn--block" type="button" data-close>Отмена</button>
       </div>
     </form>
+
+    <!-- Подтверждение удаления: заказчик попросил закрывать все три операции
+         с аккаунтом экраном успеха (10 сентября 2026) -->
+    <div class="modal__success" hidden data-form-success>
+      <div class="modal__icon"><svg><use href="#i-check"></use></svg></div>
+      <h3 class="h5">Аккаунт удалён</h3>
+      <p class="modal__subtitle">Мы удалили профиль и связанные с ним данные. Спасибо, что были с нами — вернуться можно в любой момент, зарегистрировавшись заново.</p>
+      <a class="btn btn--primary btn--block" href="index.html">На главную</a>
+    </div>
   </div>
 </div>
 
@@ -692,11 +705,11 @@
     <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
     <h2 class="h5 modal__title" id="email-title">Смена e-mail</h2>
     <p class="modal__subtitle">Текущий адрес — e.raskudaev@gmail.com. На новый мы отправим письмо со ссылкой для подтверждения.</p>
-    <form class="modal__body">
-      <label class="field"><span class="field__label">Новый e-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email"></label>
+    <form class="modal__body" data-form>
+      <label class="field"><span class="field__label">Новый e-mail</span><input class="input" type="email" placeholder="mail@example.com" autocomplete="email" required></label>
       <label class="field field--password">
         <span class="field__label">Текущий пароль</span>
-        <input class="input" type="password" autocomplete="current-password">
+        <input class="input" type="password" autocomplete="current-password" required>
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <div class="modal__actions">
@@ -704,6 +717,13 @@
         <button class="btn btn--secondary btn--block" type="button" data-close>Отмена</button>
       </div>
     </form>
+
+    <div class="modal__success" hidden data-form-success>
+      <div class="modal__icon"><svg><use href="#i-check"></use></svg></div>
+      <h3 class="h5">E-mail изменён</h3>
+      <p class="modal__subtitle">Письмо со ссылкой для подтверждения ушло на новый адрес. Пока вы не перейдёте по ссылке, вход остаётся по старому e-mail.</p>
+      <button class="btn btn--primary btn--block" type="button" data-close>Понятно</button>
+    </div>
   </div>
 </div>
 
@@ -712,20 +732,20 @@
   <div class="modal__dialog" role="dialog" aria-modal="true" aria-labelledby="password-title">
     <button class="modal__close" type="button" data-close aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>
     <h2 class="h5 modal__title" id="password-title">Смена пароля</h2>
-    <form class="modal__body">
+    <form class="modal__body" data-form>
       <label class="field field--password">
         <span class="field__label">Текущий пароль</span>
-        <input class="input" type="password" autocomplete="current-password">
+        <input class="input" type="password" autocomplete="current-password" required>
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <label class="field field--password">
         <span class="field__label">Новый пароль</span>
-        <input class="input" type="password" autocomplete="new-password">
+        <input class="input" type="password" autocomplete="new-password" required minlength="6">
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <label class="field field--password">
         <span class="field__label">Повторите новый пароль</span>
-        <input class="input" type="password" autocomplete="new-password">
+        <input class="input" type="password" autocomplete="new-password" required minlength="6" data-confirm-password>
         <button class="field__eye" type="button" data-toggle-password aria-label="Показать пароль"><svg><use href="#i-eye"></use></svg></button>
       </label>
       <div class="modal__actions">
@@ -733,6 +753,13 @@
         <button class="btn btn--secondary btn--block" type="button" data-close>Отмена</button>
       </div>
     </form>
+
+    <div class="modal__success" hidden data-form-success>
+      <div class="modal__icon"><svg><use href="#i-check"></use></svg></div>
+      <h3 class="h5">Пароль изменён</h3>
+      <p class="modal__subtitle">Новый пароль уже действует. В следующий раз входите с ним — на других устройствах может потребоваться повторный вход.</p>
+      <button class="btn btn--primary btn--block" type="button" data-close>Понятно</button>
+    </div>
   </div>
 </div>
 

@@ -223,7 +223,10 @@
   border-bottom: 1px solid var(--ko-border-1);
 }
 .checkout__items li { display: flex; justify-content: space-between; gap: var(--ko-space-16); }
-.checkout__items li span:first-child { color: var(--ko-text-3); }
+.checkout__items li span:first-child { min-width: 0; color: var(--ko-text-3); }
+/* Сумма позиции держится в одну строку: «30 420 ₽» ломался на «30 420» и «₽»
+   отдельной строкой — название забирало всю ширину (10 сентября 2026) */
+.checkout__items li span:last-child { flex: none; white-space: nowrap; }
 
 /* ---------- Оформление заказа ----------
    Каждый шаг — карточка с рамкой: видно, где кончается один блок
@@ -267,8 +270,11 @@
   padding-top: var(--ko-space-20);
   border-top: 1px solid var(--ko-border-1);
 }
+/* Карта зоны доставки. Пропорция поднята с 1020/320 до 1020/440
+   (10 сентября 2026): в прежней полосе дом было не разглядеть, а по нему
+   теперь кликают, чтобы подставить адрес */
 .checkout__map {
-  aspect-ratio: 1020 / 320;
+  aspect-ratio: 1020 / 440;
   background: var(--ko-bg-2);
   overflow: hidden;
 }
@@ -508,20 +514,10 @@
 }
 .loyalty__status svg { width: 14px; height: 14px; }
 
-.loyalty__levels {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: var(--ko-space-12);
-  margin-top: var(--ko-space-24);
-}
-.loyalty__level { display: grid; gap: var(--ko-space-8); }
-.loyalty__level-bar { height: 4px; background: var(--ko-bg-3); }
-.loyalty__level.is-done .loyalty__level-bar { background: var(--ko-bg-brand); }
-.loyalty__level-name {
-  font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font);
-  color: var(--ko-text-3);
-}
-.loyalty__level.is-done .loyalty__level-name { color: var(--ko-text-1); }
+/* Прогресс-бар с этапами («Карта оформлена → Баллы активированы → Оплата
+   до 50 %») снят 10 сентября 2026: заказчик попросил оставить в карточке
+   только правило 50 % и списание по номеру телефона. Вместе с ним ушёл
+   список преимуществ .loyalty__benefits — см. docs/19-account.md */
 .loyalty__note {
   margin-top: var(--ko-space-20);
   max-width: 620px;
@@ -529,28 +525,8 @@
   color: var(--ko-text-2);
 }
 
-/* Карта не активирована: заголовок с предложением и список преимуществ */
+/* Карта не оформлена: заголовок и пояснение, как её получить */
 .loyalty__title { margin-top: var(--ko-space-8); max-width: 620px; }
-.loyalty__benefits {
-  display: grid;
-  gap: var(--ko-space-12);
-  margin-top: var(--ko-space-24);
-  list-style: none;
-}
-.loyalty__benefits li {
-  display: flex;
-  align-items: start;
-  gap: var(--ko-space-12);
-  font: 400 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
-  color: var(--ko-text-2);
-}
-.loyalty__benefits svg {
-  width: 18px;
-  height: 18px;
-  flex: none;
-  margin-top: 1px;
-  color: var(--ko-icon-brand);
-}
 
 /* Действия: кнопка и ссылка «Подробнее об акциях» внутри самой карточки */
 .loyalty__actions {
@@ -798,7 +774,6 @@
   }
   .account__profile-fields { grid-template-columns: 1fr; gap: var(--ko-space-16); }
   .loyalty { padding: var(--ko-space-24); }
-  .loyalty__levels { grid-template-columns: 1fr; }
   .loyalty__head { flex-direction: column; gap: var(--ko-space-12); }
   .loyalty__actions { flex-direction: column; align-items: start; gap: var(--ko-space-16); }
   .order-card { padding: var(--ko-space-20) var(--ko-space-48) var(--ko-space-20) var(--ko-space-20); }

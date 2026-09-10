@@ -195,3 +195,56 @@ body.no-scroll .cookies { display: none; }
 .modal__success .modal__icon { margin: var(--ko-space-8) auto var(--ko-space-32); }
 .modal__success .modal__subtitle { margin-top: var(--ko-space-8); }
 .modal__success .btn { margin-top: var(--ko-space-32); }
+
+/* ---------- Уведомление «Товар добавлен в корзину» ----------
+   В макете состояния нет. Решение от 10 сентября 2026: на странице товара
+   кнопка «В корзину» больше не превращается в «В корзине», вместо этого внизу
+   по центру всплывает плашка со ссылкой в корзину (docs/26-logic-pass.md).
+   Геометрия, фон и тень — как у плашки cookies выше, чтобы не заводить новый вид.
+   Разметку создаёт js/main.js, поэтому в partials её нет. */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--ko-space-24);
+  z-index: 91;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ko-space-16);
+  width: min(420px, calc(100vw - 32px));
+  padding: var(--ko-space-16) var(--ko-space-20);
+  background: var(--ko-bg-0);
+  box-shadow: 0 12px 32px rgba(19, 25, 39, .16);
+  /* Стартовое состояние: чуть ниже места и прозрачная, класс is-open поднимает */
+  opacity: 0;
+  transform: translate(-50%, 12px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+.toast.is-open { opacity: 1; transform: translate(-50%, 0); }
+
+.toast__icon { flex: none; width: 24px; height: 24px; color: var(--ko-icon-brand); }
+.toast__icon svg { width: 24px; height: 24px; }
+.toast__body { flex: 1; min-width: 0; }
+.toast__title { font: 500 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font); color: var(--ko-text-1); }
+/* Название приходит из карточки; когда его нет — строка не занимает место */
+.toast__name {
+  display: block;
+  margin-top: var(--ko-space-4);
+  font: 400 var(--ko-caption-xl-size)/var(--ko-caption-xl-lh) var(--ko-font);
+  color: var(--ko-text-2);
+}
+.toast__name:empty { display: none; }
+.toast__link {
+  display: inline-block;
+  margin-top: var(--ko-space-12);
+  color: var(--ko-text-accent);
+  font: 500 var(--ko-small-size)/var(--ko-small-lh) var(--ko-font);
+}
+.toast__link:hover { text-decoration: underline; }
+.toast__close { flex: none; display: grid; place-items: center; width: 24px; height: 24px; }
+.toast__close svg { width: 16px; height: 16px; color: var(--ko-icon-2); transition: color .15s ease; }
+.toast__close:hover svg { color: var(--ko-icon-3); }
+
+/* На мобильном плашка встаёт над таббаром — как мини-модалки и cookies */
+@media (max-width: 768px) {
+  .toast { bottom: 80px; }
+}

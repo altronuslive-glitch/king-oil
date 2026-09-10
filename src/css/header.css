@@ -141,15 +141,23 @@
 /* У type="search" свой крестик очистки — он дублировал бы нашу кнопку */
 .search__input::-webkit-search-cancel-button { -webkit-appearance: none; appearance: none; }
 .search__input:focus { outline: none; border-color: var(--ko-border-brand); }
-.search__submit {
+/* Лупа и крестик очистки стоят в одной точке справа от поля и подменяют
+   друг друга: пустое поле — лупа, есть запрос — крестик. Просьба заказчика
+   от 10 сентября 2026, переключает js/main.js (docs/21-search.md) */
+.search__submit,
+.search__clear {
   position: absolute;
   right: var(--ko-space-18); top: 0;
   width: var(--ko-icon-normal); height: 52px;
   display: grid;
   place-items: center;
   color: var(--ko-icon-2);
+  transition: color .15s ease;
 }
-.search__submit svg { width: var(--ko-icon-normal); height: var(--ko-icon-normal); }
+.search__submit svg,
+.search__clear svg { width: var(--ko-icon-normal); height: var(--ko-icon-normal); }
+.search__submit:hover,
+.search__clear:hover { color: var(--ko-icon-3); }
 
 /* Выпадающая панель поиска */
 .search__panel {
@@ -165,7 +173,10 @@
   box-shadow: 0 12px 32px rgba(19, 25, 39, .08);
   z-index: 20;
 }
-.search__group + .search__group { margin-top: var(--ko-space-20); }
+/* Отступ нужен только между двумя видимыми группами: когда истории запросов
+   нет, она остаётся в разметке под [hidden], и «Популярные товары» всё равно
+   получали 20 сверху — над списком висел лишний воздух (10 сентября 2026) */
+.search__group:not([hidden]) + .search__group { margin-top: var(--ko-space-20); }
 .search__group-head {
   display: flex;
   align-items: center;
@@ -231,10 +242,11 @@
 .search__empty-face svg { display: block; width: 40px; height: 40px; }
 .search__empty-hint { font: 400 var(--ko-caption-size)/var(--ko-caption-lh) var(--ko-font); text-align: center; }
 
-/* Стрелка «назад», очистка и подсказки живут только в мобильном разделе поиска */
+/* Стрелка «назад» и подсказки живут только в мобильном разделе поиска.
+   Крестик очистки раньше был здесь же и потому не показывался нигде —
+   теперь он работает на обоих разрешениях, см. правило .search__clear выше */
 .search__field { position: relative; }
-.search__back,
-.search__clear { display: none; }
+.search__back { display: none; }
 /* Подсказки-чипсы над выдачей (макет State 2, 1910:15679: ряд 68 = 20 сверху,
    чипс 36, 12 снизу, гэп 8). Своих отступов у ряда не было — чипсы липли
    к краю панели и к первой строке товара. По бокам держим 20, как у строк
@@ -491,7 +503,8 @@
   }
   .header.is-search-open .search { display: block; }
   .search__input { height: 44px; padding-right: 46px; font-size: var(--ko-small-size); }
-  .search__submit { right: var(--ko-space-12); height: 44px; }
+  .search__submit,
+  .search__clear { right: var(--ko-space-12); height: 44px; }
 
   /* Полноэкранный поиск (макет «После нажатия на поиск»): строка со стрелкой
      «назад» и полем, под ней — раздел во весь экран до таббара.

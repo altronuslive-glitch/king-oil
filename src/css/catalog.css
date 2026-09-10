@@ -5,8 +5,10 @@
 
 /* ---------- Популярные бренды — 1900×100 (макет 26756:631) ----------
    Ряд чипов 52 без подписи сверху, снизу отступ 48.
+   Сверху тоже 48 до H1: блок «Подбор по автомобилю» из макета снят (docs/06),
+   без него бренды прилипали к заголовку. Решение от 10 сентября 2026.
 */
-.brands { margin-bottom: var(--ko-space-48); }
+.brands { margin-top: var(--ko-space-48); margin-bottom: var(--ko-space-48); }
 .brands__list { display: flex; flex-wrap: wrap; gap: var(--ko-space-10); }
 /* Боковые поля 24 — по макету (26756:631): «Castrol» ~109, «ZIC» ~82 при высоте 52 */
 .brands__list .chip { height: var(--ko-control-h); padding-inline: var(--ko-space-24); }
@@ -90,8 +92,10 @@
 .chip--removable svg { width: 14px; height: 14px; color: var(--ko-icon-2); }
 .chip--removable:hover svg { color: var(--ko-icon-3); }
 
-/* Отступ до сетки товаров */
-.filters { margin-bottom: var(--ko-space-40); }
+/* Отступ до сетки товаров — 48 (просьба заказчика 10 сентября 2026: товары
+   были слишком далеко от фильтров). Единственный источник этого отступа:
+   у секции сетки в category.html снят .section--pt-40, чтобы не набегало 80. */
+.filters { margin-bottom: var(--ko-space-48); }
 
 /* Мобильная шторка фильтров: макета нет, вид согласован с заказчиком.
    На десктопе обёртка прозрачная — сетка селектов остаётся прямым потомком .filters */

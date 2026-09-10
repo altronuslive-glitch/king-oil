@@ -19,7 +19,7 @@
           <a class="link" href="payment.html">Оплата</a>
           <a class="link" href="reviews.html">Отзывы</a>
           <a class="link" href="contacts.html">Контакты</a>
-          <a class="link link--accent" href="account.html#loyalty">Бонусные баллы</a>
+          <a class="link link--accent" href="loyalty.html">Бонусные баллы</a>
         </nav>
       </div>
       <div class="header__top-right">
@@ -71,8 +71,11 @@
               <div class="search__group-head"><span>Вы искали</span><button class="link" type="button" data-search-clear-recent>Очистить</button></div>
               <div data-search-recent-list></div>
             </div>
+            <!-- «Показать все» стоит строкой под списком, а не в заголовке группы:
+                 при вводе запроса ссылка на полную выдачу выглядит именно так,
+                 и два разных вида одной ссылки путали (10 сентября 2026) -->
             <div class="search__group" data-search-popular>
-              <div class="search__group-head"><span>Популярные товары</span><a class="link link--accent" href="category.html">Показать все</a></div>
+              <div class="search__group-head"><span>Популярные товары</span></div>
               <a class="search__product" href="product.html">
                 <img src="img/products/p51.jpg" width="40" height="40" alt="" loading="lazy">
                 <span><span class="search__product-name">Honda HCF-2 (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
@@ -85,6 +88,7 @@
                 <img src="img/products/p53.jpg" width="40" height="40" alt="" loading="lazy">
                 <span><span class="search__product-name">Nissan ATF Matic D (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
               </a>
+              <a class="search__row" href="catalog.html"><span>Показать все</span></a>
             </div>
           </div>
 
@@ -249,7 +253,7 @@
   <a class="mobile-menu__link" href="payment.html">Оплата</a>
   <a class="mobile-menu__link" href="how-to-buy.html">Как купить</a>
   <a class="mobile-menu__link" href="returns.html">Возврат и обмен</a>
-  <a class="mobile-menu__link" href="account.html#loyalty">Бонусные баллы</a>
+  <a class="mobile-menu__link" href="loyalty.html">Бонусные баллы</a>
   <a class="mobile-menu__link" href="reviews.html">Отзывы</a>
   <a class="mobile-menu__link" href="contacts.html">Контакты</a>
   <div class="mobile-menu__contacts">

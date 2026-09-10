@@ -250,7 +250,17 @@
       history.replaceState(null, '', `#${btn.dataset.accountTab}`);
     });
 
-    // Ссылка «Бонусные баллы» в шапке и подвале ведёт на account.html#loyalty
+    /* Состояния карты лояльности приходят с бэкенда; в статике показать оба
+       иначе нечем, поэтому ?card=new открывает «карта ещё не оформлена».
+       Решение от 10 сентября 2026, см. docs/19-account.md */
+    const cardNew = new URLSearchParams(location.search).get('card') === 'new';
+    const loyaltyOffer = $('[data-loyalty-offer]');
+    const loyaltyActive = $('[data-loyalty-active]');
+    if (loyaltyOffer && loyaltyActive) {
+      loyaltyOffer.hidden = !cardNew;
+      loyaltyActive.hidden = cardNew;
+    }
+
     const fromHash = location.hash.slice(1);
     if (fromHash) showTab(fromHash);
     // Кнопка «назад» в браузере тоже должна переключать раздел
@@ -393,6 +403,18 @@
     syncRecipient($('.select__value', recipient).textContent);
   }
 
+  /* Календарь у поля даты открывается по клику в любое место поля, а не
+     только по иконке справа (просьба заказчика от 10 сентября 2026).
+     showPicker() есть в актуальных браузерах; где его нет — поле остаётся
+     обычным, и календарь по-прежнему открывает иконка */
+  $$('input[type="date"]').forEach((input) => {
+    input.addEventListener('click', () => {
+      if (typeof input.showPicker !== 'function') return;
+      // Вне жеста пользователя браузер бросает NotAllowedError
+      try { input.showPicker(); } catch (err) { /* оставляем поле как есть */ }
+    });
+  });
+
   /* ---------------------------------------------------------
      Оформление заказа: под способом получения своя панель уточнений
      (пункт самовывоза / адрес и карта / город и транспортная компания)
@@ -497,9 +519,12 @@
     if (control.minLength > 0 && value.length < control.minLength) {
       return 'Не короче ' + control.minLength + ' символов';
     }
+    // Сверяем с предыдущим полем пароля, а не с первым в форме: в модалке
+    // смены пароля первое поле — «Текущий пароль», и повтор сравнивался с ним
     if (control.hasAttribute('data-confirm-password')) {
-      const first = $$('input[type="password"]', control.form).find((i) => i !== control);
-      if (first && first.value !== value) return 'Пароли не совпадают';
+      const all = $$('input[type="password"]', control.form);
+      const prev = all[all.indexOf(control) - 1];
+      if (prev && prev.value !== value) return 'Пароли не совпадают';
     }
     return '';
   }
@@ -618,6 +643,28 @@
     if (!e.target.closest('[data-select]')) closeSelect();
   });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSelect(); });
+
+  /* ---------------------------------------------------------
+     Оформление заказа: контакты вошедшего покупателя подставляются сами
+     (просьба заказчика от 10 сентября 2026). У гостя KO.user.get() вернёт
+     null и поля останутся пустыми. Блок стоит после инициализации селектов:
+     получателя переключаем кликом по готовому списку
+     --------------------------------------------------------- */
+  const checkoutForm = $('#checkout-form');
+  const profile = checkoutForm && KO.user && KO.user.get();
+  if (profile) {
+    $$('[data-user]', checkoutForm).forEach((input) => {
+      const value = profile[input.dataset.user];
+      if (value && !input.value) input.value = value;
+    });
+
+    // Получатель-организация: реквизиты для счёта раскрываются сами
+    if (recipient && /организац/i.test(profile.recipient || '')) {
+      const option = $$('.select__option', recipient)
+        .find((o) => /организац/i.test(o.textContent));
+      if (option) option.click();
+    }
+  }
 
   /* ---------------------------------------------------------
      Карусели на scroll-snap
@@ -1332,6 +1379,61 @@
     $$('[data-notify-product]').forEach((el) => { el.textContent = name || 'товар'; });
   });
 
+  /* ---------------------------------------------------------
+     Уведомление «Товар добавлен в корзину»
+     Решение от 10 сентября 2026 (docs/26-logic-pass.md): на странице товара
+     кнопка «В корзину» больше не меняет подпись на «В корзине» — вместо этого
+     внизу по центру всплывает плашка со ссылкой в корзину. Разметка создаётся
+     здесь: держать её в partials на всех страницах ради одного экрана незачем.
+     --------------------------------------------------------- */
+  let toast = null;
+  let toastTimer = 0;
+
+  function hideToast() {
+    if (!toast) return;
+    clearTimeout(toastTimer);
+    toast.classList.remove('is-open');
+    // Убираем из потока только после анимации, иначе плашка исчезает рывком
+    toastTimer = setTimeout(() => { toast.hidden = true; }, 200);
+  }
+
+  function showToast(name) {
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'toast';
+      toast.hidden = true;
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
+      toast.innerHTML =
+        '<span class="toast__icon"><svg><use href="#i-check"></use></svg></span>'
+        + '<div class="toast__body">'
+        +   '<p class="toast__title">Товар добавлен в корзину</p>'
+        +   '<span class="toast__name" data-toast-name></span>'
+        +   '<a class="toast__link" href="cart.html">Перейти в корзину</a>'
+        + '</div>'
+        + '<button class="toast__close" type="button" aria-label="Закрыть"><svg><use href="#i-close"></use></svg></button>';
+      $('.toast__close', toast).addEventListener('click', hideToast);
+      document.body.appendChild(toast);
+    }
+
+    $('[data-toast-name]', toast).textContent = name || '';
+
+    // Плашка cookies стоит там же — внизу по центру, поэтому встаём над ней
+    const cookiesBar = $('[data-cookies]');
+    toast.style.bottom = cookiesBar && !cookiesBar.hidden
+      ? Math.round(window.innerHeight - cookiesBar.getBoundingClientRect().top + 16) + 'px'
+      : '';
+
+    clearTimeout(toastTimer);
+    toast.hidden = false;
+    // Принудительный пересчёт: без него браузер склеит снятие hidden и is-open
+    // в один кадр и появление пройдёт без анимации. requestAnimationFrame здесь
+    // не годится — во вкладке на фоне он не вызывается и плашка осталась бы прозрачной
+    void toast.offsetHeight;
+    toast.classList.add('is-open');
+    toastTimer = setTimeout(hideToast, 5000);
+  }
+
   /* Карточка товара: «В корзину» берёт выбранный объём и количество */
   const productAdd = $('[data-add-to-cart]');
   if (productAdd) {
@@ -1358,8 +1460,8 @@
         qty: qty ? Number(qty.value) || 1 : 1,
       };
       KO.cart.add(item);
-      productAdd.textContent = 'В корзине';
-      productAdd.classList.add('is-added');
+      // Подпись кнопки не трогаем: обратную связь даёт плашка внизу экрана
+      showToast(item.title + (item.volume ? ', ' + item.volume : ''));
     });
   }
 
@@ -1707,6 +1809,35 @@
     $$('[data-map]').forEach((box) => renderMapBox(box, key));
   }
 
+  /* Клик по карте зоны доставки ставит метку и подставляет адрес дома в поле
+     «Улица и дом» (просьба заказчика от 10 сентября 2026). Метку можно
+     перетащить — адрес пересчитается. Обратное геокодирование делает тот же
+     API Яндекса; без ключа оно может не ответить — тогда остаётся только метка,
+     см. docs/27-pass-10-sep.md */
+  function pickAddress(box, ymaps, coords) {
+    if (!box._pin) {
+      box._pin = new ymaps.Placemark(coords, {}, { preset: 'islands#redDotIcon', draggable: true });
+      box._map.geoObjects.add(box._pin);
+      box._pin.events.add('dragend', () => pickAddress(box, ymaps, box._pin.geometry.getCoordinates()));
+    } else {
+      box._pin.geometry.setCoordinates(coords);
+    }
+
+    const panel = box.closest('[data-shipping-panel]') || document;
+    const field = $('[data-address-input]', panel);
+    if (!field) return;
+
+    ymaps.geocode(coords, { results: 1 }).then((res) => {
+      const found = res.geoObjects.get(0);
+      if (!found) return;
+      // Улица и дом без города и страны: город покупатель уже выбрал в шапке
+      const street = found.getThoroughfare ? found.getThoroughfare() : '';
+      const house = found.getPremiseNumber ? found.getPremiseNumber() : '';
+      field.value = [street, house].filter(Boolean).join(', ') || found.getAddressLine();
+      field.dispatchEvent(new Event('input', { bubbles: true }));
+    }).catch(() => { /* геокодер недоступен — метка на карте всё равно осталась */ });
+  }
+
   function renderMapBox(box, key) {
     const city = CITIES[key];
     // Карта зоны доставки: без меток самовывоза и со своим запасным видом
@@ -1718,6 +1849,7 @@
           box._map = new ymaps.Map(box, {
             center: city.center, zoom: city.zoom, controls: ['zoomControl']
           }, { suppressMapOpenBlock: true });
+          box._map.events.add('click', (e) => pickAddress(box, ymaps, e.get('coords')));
         }
         box._map.setCenter(city.center, city.zoom);
       }).catch(() => {
@@ -1873,8 +2005,12 @@
 
     function renderSearch() {
       const q = searchInput.value.trim();
+      // Лупа и крестик занимают одно место справа от поля: пустое поле — лупа,
+      // есть запрос — крестик очистки (просьба заказчика 10 сентября 2026)
       const clearBtn = $('[data-search-clear]', search);
+      const submitBtn = $('.search__submit', search);
       if (clearBtn) clearBtn.hidden = !q;
+      if (submitBtn) submitBtn.hidden = !!q;
 
       if (!q) {
         if (blockDefault) blockDefault.hidden = false;
@@ -1958,6 +2094,8 @@
 
     document.addEventListener('ko:recent', () => { renderRecent(); renderSearch(); });
     renderRecent();
+    // Первый проход: расставляет лупу/крестик, если браузер восстановил ввод
+    renderSearch();
   }
 
   /* ---------------------------------------------------------
@@ -1972,18 +2110,19 @@
     const empty   = $('[data-search-page-empty]', searchPage);
     const countEl = $('[data-search-count]', searchPage);
 
-    // Запрос повторяем под заголовком и в строке поиска шапки
+    /* Запрос повторяем строкой под заголовком. Строку поиска в шапке при этом
+       намеренно оставляем пустой: раньше запрос подставлялся туда и «висел»
+       на всех следующих страницах — заказчик попросил его сбрасывать
+       (10 сентября 2026, docs/21-search.md) */
     $$('[data-search-query]', document).forEach((el) => { el.textContent = query; });
     const queryRow = $('[data-search-query-row]', searchPage);
     if (queryRow) queryRow.hidden = !query;
-    const headerInput = search && $('.search__input', search);
-    if (headerInput && query) headerInput.value = query;
 
     if (countEl) {
       const plural = (n) => (n % 10 === 1 && n % 100 !== 11 ? 'товар'
         : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? 'товара' : 'товаров');
       // Без запроса счёт не показываем: «Найдено 0 товаров» читается как отказ
-      countEl.textContent = query ? `Найдено ${found.length} ${plural(found.length)}` : '';
+      countEl.textContent = query ? ` — найдено ${found.length} ${plural(found.length)}` : '';
     }
 
     if (grid) {

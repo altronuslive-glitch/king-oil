@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Второй литр со скидкой 20 % на масла Castrol | King-Oil</title>
-<meta name="description" content="До конца месяца при покупке двух канистр одной серии скидка на вторую составит 20 %. Действует на позиции из наличия в Омске и Тюмени.">
+<title>Бонусные баллы — программа лояльности | King-Oil</title>
+<meta name="description" content="Бонусные баллы King-Oil: карта оформляется после первой покупки, баллами можно оплатить до 50 % стоимости товара, списание — по номеру телефона в магазине.">
 <link rel="stylesheet" href="css/tokens.css">
 <link rel="stylesheet" href="css/base.css">
 <link rel="stylesheet" href="css/components.css">
@@ -12,6 +12,8 @@
 <link rel="stylesheet" href="css/footer.css">
 <link rel="stylesheet" href="css/modals.css">
 <link rel="stylesheet" href="css/pages.css">
+<!-- shop.css нужен ради блока .loyalty с балансом карты -->
+<link rel="stylesheet" href="css/shop.css">
 </head>
 <body>
 
@@ -333,37 +335,106 @@
 
 <main>
 
-  <!-- ============ 1. Крошки ============ -->
-  <div class="container promo-detail__crumbs">
+  <!-- ============ 1–2. Крошки и заголовок ============
+       Страницы нет в макете: собрана из выверенных блоков информационных
+       разделов (крошки, лид, features, аккордеон) — см. docs/27-pass-10-sep.md -->
+  <div class="container">
     <ol class="breadcrumbs">
       <li><a href="index.html">Главная</a></li>
-      <li><a href="promo.html">Акции</a></li>
-      <li>Страница акции</li>
+      <li>Бонусные баллы</li>
     </ol>
+    <h1 class="h2 page-head__title">Бонусные баллы</h1>
+    <p class="page-head__lead">Копите баллы с каждой покупки и оплачивайте ими до 50 % стоимости товара. Отдельную карту носить с собой не нужно — достаточно назвать номер телефона на кассе.</p>
   </div>
 
-  <!-- ============ 2. Шапка акции ============
-       Макет: «Страница акции — Editorial 1921» (26885:5176), секция Sec / Featured 1900×580 -->
-  <section class="section section--pt-40 section--pb-120">
+  <!-- ============ 3. Как это работает ============ -->
+  <section class="section section--pt-50 section--pb-50" id="how">
     <div class="container">
-      <article class="promo-article">
-        <div class="promo-article__body">
-          <p class="article-card__meta">
-            <span class="article-card__rubric">Акции</span>
-            <span class="article-card__date">5 августа 2026</span>
-          </p>
-          <div class="promo-article__text">
-            <h1 class="h3 promo-article__title">Второй литр со скидкой 20 % на моторные масла Castrol</h1>
-            <p class="promo-article__lead">До конца месяца при покупке двух канистр одной серии скидка на вторую составит 20 %. Действует на позиции из наличия в Омске и Тюмени, суммируется с самовывозом.</p>
-          </div>
-          <button class="btn btn--primary" type="button" data-modal-open="callback">Оставить заявку</button>
-        </div>
-        <div class="promo-article__media"></div>
-      </article>
+      <div class="section-head section-head--tight"><h2 class="h5">Как это работает</h2></div>
+      <ol class="features features--steps">
+        <li class="feature">
+          <div class="feature__icon"><span class="feature__num">01</span></div>
+          <h3 class="feature__title">Первая покупка</h3>
+          <p class="feature__text">Карта оформляется автоматически после первой покупки — онлайн на сайте или в магазине. Заранее заполнять анкету и платить за карту не нужно.</p>
+        </li>
+        <li class="feature">
+          <div class="feature__icon"><span class="feature__num">02</span></div>
+          <h3 class="feature__title">Баллы за заказы</h3>
+          <p class="feature__text">С каждой позиции моторного масла на карту начисляются баллы. Через две недели после покупки они активируются и становятся доступны к списанию.</p>
+        </li>
+        <li class="feature">
+          <div class="feature__icon"><span class="feature__num">03</span></div>
+          <h3 class="feature__title">Оплата баллами</h3>
+          <p class="feature__text">Назовите номер телефона при оплате в магазине — продавец найдёт карту и спишет баллы в счёт покупки.</p>
+        </li>
+      </ol>
     </div>
   </section>
 
-  <!-- ============ 3. Форма «Напишите нам» ============ -->
+  <!-- ============ 4. Условия ============ -->
+  <section class="section section--pt-50 section--pb-50" id="terms">
+    <div class="container">
+      <div class="section-head section-head--tight"><h2 class="h5">Условия программы</h2></div>
+      <div class="features features--3">
+        <article class="feature">
+          <div class="feature__icon"><svg><use href="#i-percent"></use></svg></div>
+          <h3 class="feature__title">До 50 % стоимости</h3>
+          <p class="feature__text">Баллами можно закрыть половину чека, остальное — деньгами. Ограничений по числу покупок нет.</p>
+        </article>
+        <article class="feature">
+          <div class="feature__icon"><svg><use href="#i-phone"></use></svg></div>
+          <h3 class="feature__title">По номеру телефона</h3>
+          <p class="feature__text">Пластик носить с собой не нужно: карта находится по номеру, который вы указали при покупке.</p>
+        </article>
+        <article class="feature">
+          <div class="feature__icon"><svg><use href="#i-bolt"></use></svg></div>
+          <h3 class="feature__title">Баллы не сгорают</h3>
+          <p class="feature__text">Накопленное остаётся на карте: можно копить на крупную замену масла или тратить частями.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 5. Баланс в кабинете ============ -->
+  <section class="section section--pt-50 section--pb-50">
+    <div class="container">
+      <div class="loyalty">
+        <p class="loyalty__eyebrow">Ваш баланс</p>
+        <p class="h6 loyalty__title">Сколько баллов накоплено — видно в личном кабинете</p>
+        <p class="loyalty__note">В разделе «Программа лояльности» показан текущий баланс и статус карты. Если покупок ещё не было, там будет написано, что карта пока не оформлена.</p>
+        <div class="loyalty__actions">
+          <a class="btn btn--primary" href="account.html#loyalty">Открыть кабинет</a>
+          <a class="link link--accent" href="promo.html">Смотреть акции</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 6. Частые вопросы ============ -->
+  <section class="section section--pt-50 section--pb-50" id="faq">
+    <div class="container">
+      <div class="section-head section-head--tight"><h2 class="h5">Частые вопросы</h2></div>
+      <div class="accordion">
+        <div class="accordion__item">
+          <button class="accordion__btn" type="button" aria-expanded="false">Что вам даст карта?<svg class="accordion__chevron"><use href="#i-chevron"></use></svg></button>
+          <div class="accordion__panel"><div><p class="accordion__text">С каждой позиции моторного масла на вашу карту начисляются баллы.</p></div></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__btn" type="button" aria-expanded="false">Как использовать баллы?<svg class="accordion__chevron"><use href="#i-chevron"></use></svg></button>
+          <div class="accordion__panel"><div><p class="accordion__text">По прошествии двух недель баллы активируются. С помощью накопленных бонусов можно оплатить до 50 % стоимости товара — назовите номер телефона при оплате в магазине.</p></div></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__btn" type="button" aria-expanded="false">Как получить карту лояльности?<svg class="accordion__chevron"><use href="#i-chevron"></use></svg></button>
+          <div class="accordion__panel"><div><p class="accordion__text">Карта оформляется автоматически после первой покупки — онлайн на сайте или в магазине. Заполнять анкету и платить за карту не нужно.</p></div></div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__btn" type="button" aria-expanded="false">Несколько простых правил<svg class="accordion__chevron"><use href="#i-chevron"></use></svg></button>
+          <div class="accordion__panel"><div><p class="accordion__text">Карта персональная. Баллы ваши навсегда — они не сгорают. Количество бонусов определяется индивидуально для каждого товара и может изменяться. Бонусные баллы начисляются только при наличном расчёте. На товары, участвующие в других акциях, бонусные баллы не начисляются.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- @shared:cta-form -->
   <section class="section section--grey cta-form">
     <div class="container">

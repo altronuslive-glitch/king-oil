@@ -10,6 +10,16 @@
 .page-head__title { margin-top: 0; }
 .page-head--pb-48 { padding-bottom: var(--ko-space-48); }
 
+/* Подзаголовок выдачи поиска: «По запросу «30» — найдено 7 товаров».
+   Кегль Large и отступ 16 от H1 — по просьбе заказчика от 10 сентября 2026:
+   строка была мелкой (Small) и липла к заголовку. Счётчик дописывает
+   js/main.js в тот же абзац, отдельной полосы над сеткой больше нет */
+.search-head {
+  margin-top: var(--ko-space-16);
+  font: 400 var(--ko-large-size)/var(--ko-large-lh) var(--ko-font);
+  color: var(--ko-text-2);
+}
+
 /* Мелкие вертикальные отступы секций, которых нет в base.css */
 .section--pt-0  { padding-top: 0; }
 .section--pb-0  { padding-bottom: 0; }
