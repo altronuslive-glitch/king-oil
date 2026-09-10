@@ -123,29 +123,42 @@ window.KO = (function () {
   };
 
   /* ---------------------------------------------------------
-     Избранное — только идентификаторы, карточки рисует страница
+     Избранное. Храним карточку целиком, а не один идентификатор:
+     страница избранного рисуется из состояния, и товар, добавленный
+     с главной или из каталога, должен на ней появиться
      --------------------------------------------------------- */
   const fav = {
-    ids: () => read(KEY.fav, null) || [],
-    seed(ids) {
+    items: () => read(KEY.fav, null) || [],
+    ids: () => fav.items().map((i) => i.id),
+
+    seed(items) {
       if (read(KEY.fav, null) !== null) return false;
-      write(KEY.fav, ids);
+      write(KEY.fav, items);
       return true;
     },
-    has: (id) => fav.ids().indexOf(id) !== -1,
-    toggle(id) {
-      const ids = fav.ids();
-      const at = ids.indexOf(id);
-      if (at === -1) ids.push(id); else ids.splice(at, 1);
-      write(KEY.fav, ids);
+
+    has: (id) => fav.items().some((i) => i.id === id),
+
+    add(item) {
+      const items = fav.items();
+      if (!items.some((i) => i.id === item.id)) items.push(item);
+      write(KEY.fav, items);
       emit('fav');
-      return at === -1;
     },
+
+    // Возвращает true, если товар добавлен, и false, если убран
+    toggle(item) {
+      if (fav.has(item.id)) { fav.remove(item.id); return false; }
+      fav.add(item);
+      return true;
+    },
+
     remove(id) {
-      write(KEY.fav, fav.ids().filter((x) => x !== id));
+      write(KEY.fav, fav.items().filter((i) => i.id !== id));
       emit('fav');
     },
-    count: () => fav.ids().length,
+
+    count: () => fav.items().length,
   };
 
   /* ---------------------------------------------------------
@@ -200,13 +213,30 @@ window.KO = (function () {
   ];
 
   const DEMO_FAV = [
-    'тосол felix 5кг. | 3 л',
-    'антифриз aga l40 сине-зеленый 5кг. | 3 л',
-    'антифриз aga l42 зеленый 5кг. | 3 л',
-    'антифриз aga l40 красный 5кг. | 3 л',
+    { id: 'тосол felix 5кг. | 3 л', title: 'Тосол FELIX 5кг.', volume: '3 л',
+      price: '2 990 \u20bd', old: '', img: 'img/products/p54.jpg', href: 'product.html',
+      volumes: [{ label: '1 л', price: '1 140 \u20bd' }, { label: '3 л', price: '2 990 \u20bd' }, { label: '4 л', price: '3 800 \u20bd' }] },
+    { id: 'антифриз aga l40 сине-зеленый 5кг. | 3 л', title: 'Антифриз AGA L40 сине-зеленый 5кг.', volume: '3 л',
+      price: '1 500 \u20bd', old: '', img: 'img/products/p55.jpg', href: 'product.html',
+      volumes: [{ label: '1 л', price: '570 \u20bd' }, { label: '3 л', price: '1 500 \u20bd' }, { label: '4 л', price: '1 900 \u20bd' }] },
+    { id: 'антифриз aga l42 зеленый 5кг. | 3 л', title: 'Антифриз AGA L42 зеленый 5кг.', volume: '3 л',
+      price: '1 340 \u20bd', old: '', img: 'img/products/p56.jpg', href: 'product.html',
+      volumes: [{ label: '1 л', price: '510 \u20bd' }, { label: '3 л', price: '1 340 \u20bd' }, { label: '4 л', price: '1 700 \u20bd' }] },
+    { id: 'антифриз aga l40 красный 5кг. | 3 л', title: 'Антифриз AGA L40 красный 5кг.', volume: '3 л',
+      price: '690 \u20bd', old: '', img: 'img/products/p57.jpg', href: 'product.html',
+      volumes: [{ label: '1 л', price: '260 \u20bd' }, { label: '3 л', price: '690 \u20bd' }, { label: '4 л', price: '880 \u20bd' }] },
   ];
 
   const DEMO_RECENT = ['Моторное масло 5W-30', 'Castrol EDGE', 'Антифриз G12'];
+
+  /* Формат избранного сменился: раньше хранились только идентификаторы,
+     по ним карточку не нарисовать — счётчик показывал число, а страница
+     избранного оставалась пустой. Старые данные сбрасываем, вернётся демо-набор */
+  const savedFav = read(KEY.fav, null);
+  if (Array.isArray(savedFav) && savedFav.some((x) => typeof x === 'string')) {
+    delete memory[KEY.fav];
+    try { localStorage.removeItem(KEY.fav); } catch (err) { /* приватный режим */ }
+  }
 
   cart.seed(DEMO_CART);
   fav.seed(DEMO_FAV);

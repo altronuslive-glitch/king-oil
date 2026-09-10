@@ -1203,12 +1203,40 @@
       id: KO.productId(title, volume),
       title,
       volume,
+      // Чипсы объёма нужны, чтобы карточку можно было нарисовать заново
+      // на странице избранного
+      volumes: $$('.product-card__volumes .volume', card)
+        .map((v) => ({ label: v.textContent.trim(), price: v.dataset.price || '' })),
       price: priceNode ? priceNode.textContent.trim() : (priceBox ? priceBox.textContent.trim() : '0'),
       old: old ? old.textContent.trim() : '',
       img: img ? img.getAttribute('src') : '',
       href: titleEl ? titleEl.getAttribute('href') : 'product.html',
       qty: 1,
     };
+  }
+
+  /* Разметка карточки для страницы избранного: сердце здесь убирает товар,
+     поэтому у него data-wish-remove и класс is-active */
+  function favCardHtml(item) {
+    const href = escapeHtml(item.href || 'product.html');
+    const volumes = (item.volumes || []).map((v) =>
+      '<button class="volume' + (v.label === item.volume ? ' is-active' : '') + '" type="button"'
+      + (v.price ? ' data-price="' + escapeHtml(v.price) + '"' : '') + '>'
+      + escapeHtml(v.label) + '</button>').join('');
+    return '<article class="product-card" data-fav-id="' + escapeHtml(item.id) + '">'
+      + '<a class="product-card__media" href="' + href + '">'
+      + '<img src="' + escapeHtml(item.img) + '" width="560" height="560" alt="'
+      + escapeHtml(item.title) + '" loading="lazy"></a>'
+      + '<button class="product-card__fav is-active" type="button" data-wish-remove'
+      + ' aria-label="Убрать из избранного"><svg><use href="#i-heart"></use></svg></button>'
+      + '<div class="product-card__info">'
+      + '<div class="product-card__price">' + escapeHtml(item.price)
+      + (item.old ? ' <span class="product-card__price-old">' + escapeHtml(item.old) + '</span>' : '')
+      + '</div>'
+      + '<a class="product-card__title" href="' + href + '">' + escapeHtml(item.title) + '</a>'
+      + (volumes ? '<div class="product-card__volumes">' + volumes + '</div>' : '')
+      + '<button class="product-card__buy" type="button">В корзину</button>'
+      + '</div></article>';
   }
 
   /* Счётчики на иконках шапки и таббара. Ноль не показываем —
@@ -1262,7 +1290,7 @@
     const fav = e.target.closest('.product-card__fav:not([data-wish-remove])');
     if (fav) {
       const card = fav.closest('.product-card');
-      if (card) KO.fav.toggle(cardData(card).id);
+      if (card) KO.fav.toggle(cardData(card));
     }
   });
 
@@ -1486,20 +1514,16 @@
     const wishGrid = $('.catalog-grid', wishlist);
     const wishEmpty = $('[data-wishlist-empty]', wishlist);
 
-    // Стартовый состав избранного лежит в store.js, здесь только
-    // подписываем карточки идентификаторами, чтобы их прятать и показывать
-    if (wishGrid) {
-      $$('.product-card', wishGrid).forEach((card) => { card.dataset.favId = cardData(card).id; });
-    }
-
+    /* Сетку рисуем из состояния, а не прячем свёрстанные карточки: иначе
+       товар, добавленный с главной или из каталога, показать нечем —
+       счётчик в шапке показывал число, а страница оставалась пустой */
     const renderWishlist = () => {
       if (!wishGrid) return;
-      const ids = KO.fav.ids();
-      const cards = $$('.product-card', wishGrid);
-      cards.forEach((card) => { card.hidden = ids.indexOf(card.dataset.favId) === -1; });
-      const left = cards.filter((c) => !c.hidden).length;
-      wishGrid.hidden = left === 0;
-      if (wishEmpty) wishEmpty.hidden = left > 0;
+      const items = KO.fav.items();
+      wishGrid.innerHTML = items.map((item) => favCardHtml(item)).join('');
+      wishGrid.hidden = items.length === 0;
+      if (wishEmpty) wishEmpty.hidden = items.length > 0;
+      renderBuyState();
     };
 
     wishlist.addEventListener('click', (e) => {
