@@ -1,0 +1,417 @@
+id	name	price	old_price	qty	slug	cat	viscosity	brand
+3744	ALPHA`S SP 5w40 4L	3990.00	0.00	1	alphas-sp-5w40-4l	166	5w40	NULL
+3965	Bardahl XTEC 5W30 C1 5l	5990.00	0.00	1	bardahl-xtec-5w30-c1-5l	166	5w30	NULL
+3886	Bardahl XTS A3/B4 5w40 4L	5700.00	0.00	1	bardahl-xts-a3-b4-5w40-4l	166	5w40	NULL
+3772	Bardahl XTS SL/CF 5w30 4L	6200.00	0.00	1	bardahl-xts-sl-cf-5w30-4l	166	5w30	NULL
+3589	BP Visco 5w40 (Розлив)	590.00	0.00	1	bp-visco-5w40-rozliv	166	NULL	NULL
+3949	Castrol Magnatec C3 5W40 4l	4490.00	0.00	1	castrol-magnatec-c3-5w40-4l	166	5w40	NULL
+3693	CWORKS Superia Motor Oil 0W20 SP/GF-6A 4л	4690.00	0.00	1	cworks-superia-motor-oil-0w-20-sp-gf-6a	166	0w20	NULL
+3732	ELF 900 5w50 4L	3990.00	0.00	1	elf-900-5w50-4l	166	5w50	NULL
+3973	Ford Motorcraft A5 5W-30 5l	5490.00	0.00	1	ford-motorcraft-a5-5w-30-5l	166	5w30	NULL
+3691	FQ SP/GF-6A 5W30 4л	3990.00	0.00	1	fq-sp-gf-6a-5w-30-4l	166	5w30	NULL
+3327	G-ENERGY Active 5W-40 (Розлив)	490.00	0.00	1	g-energy-f-synth-5w-40-rozliv	166	5w40	NULL
+3326	G-ENERGY SYNTHETIC ACTIVE 5W-30 (Розлив)	490.00	0.00	1	g-energy-synthetic-active-5w-30-rozliv	166	5w30	NULL
+3585	Gazpromnefr Super 10w40 (Розлив)	290.00	0.00	1	gazprom-10w40-rozliv	166	NULL	NULL
+3586	Gazpromneft 5w40 Premium N (Розлив)	390.00	0.00	1	gazprom-5w40-rozliv	166	NULL	NULL
+3969	Honda Ultra Green 0w16 4l	7590.00	0.00	1	honda-ultra-green-0w16-4l	166	0w16	NULL
+3939	Hyundai XTeer ULTRA PROTECTION 5W-30 4 л	2490.00	0.00	1	hyundai-xteer-ultra-protection-5w-30-4-l	166	5w30	NULL
+3935	Lexus 5W40 4 л	3190.00	0.00	1	lexus-5w40-4-l	166	5w30	NULL
+3776	Liqui Moly Special Tec V 0w20 5L	5490.00	0.00	1	liquimoly-special-tec-v-0w20-5l	166	0w20	NULL
+3945	Mannol Extreme 5w40 (Розлив)	590.00	0.00	1	mannol-extreme-5w40-rozliv	166	5w40	NULL
+3938	Mazda 5w30 4l	3490.00	0.00	1	mazda-5w30-4l	166	5w30	NULL
+3806	Mercedes 5w30 Пластик 5L MB 229.52	5390.00	0.00	1	mercedes-5w30-plastik-5l-mb-229.52	166	5w30	NULL
+3944	Mobil 1 FS 0w40 (Розлив)	990.00	0.00	1	mobil-1-fs-0w40-rozliv	166	0w40	NULL
+3785	Mobil 1 X1 5w30 5L	5990.00	0.00	1	mobil-1-x1-5w30-5l	166	5w30	NULL
+3968	MolyGreen Euro Protect C3 5w30 4l	6490.00	0.00	1	molygreen-euro-protect-c3-5w30-4l	166	5w30	NULL
+3707	MolyGreen Premium SP/GF-6 0w30 4L	4990.00	0.00	1	molygreen-premium-sp-gf-6-0w30-4l	166	0w30	NULL
+3706	MolyGreen Pro S SP/GF-6A 0w20 4L	5290.00	0.00	1	molygreen-pro-s-sp-gf-6a-0w20-4l	166	0w20	NULL
+3705	MolyGreen Pro S SP/GF-6A 5w30 4L	5290.00	0.00	1	molygreen-pro-s-sp-gf-6a-5w30-4l	166	5w30	NULL
+3967	MolyGreen Selection  5W-40 (Розлив) 1л	900.00	0.00	1	molygreen-selection-5w-40-rozliv-1l	166	5w40	NULL
+3795	Motul 8100 Eco-lite 0w20 5L	6490.00	0.00	1	motul-8100-eco-lite-0w20-5l	166	0w20	NULL
+3796	Motul 8100 X-Clean EFE 5w30 4L	4490.00	0.00	1	motul-8100-x-clean-efe-5w30-4l	166	5w30	NULL
+3792	MOTUL LPG-CNG  5w40 4L	3990.00	0.00	1	motul-lpg-cng-5w40-4l	166	5w40	NULL
+3844	Nissan 10w40 A3/B4 5L	3790.00	0.00	1	nissan-10w40-a3-b4-5l	166	10w40	NULL
+3933	NORD OIL Toyota/Lexus 5w30 5L	2800.00	0.00	1	nord-oil-toyota-lexus-5w30-5l	166	NULL	NULL
+3775	Petro-Canada Синт 5w30 (Розлив) 1L	800.00	0.00	1	petro-canada-sint-5w30-rozliv-1l	166	5w30	NULL
+3373	PROFIX 5w40  4L	3890.00	0.00	1	profix-5w40-4l	166	5w40	NULL
+3818	Ravenol FO 5W30, розлив 1L	950.00	0.00	1	ravenol-fo-5w30-rozliv-1l	166	5w30	NULL
+641	Rolf Energy 10W-40 (п/синтетика) 4л	1990.00	0.00	1	motornoe-maslo-rolf-energy-10w-40-p-sintetika-4l	166	10w40	Rolf
+479	Rolf GT 5W-40 (Синтетика) 4л	2890.00	1600.00	1	motornoe-maslo-rolf-gt-5w-40-sintetika-4l	166	5w40	Rolf
+3905	Rolf Ultra A3/B4 5W40 4l	4190.00	0.00	1	rolf-ultra-a3-b4-5w40-4l	166	NULL	NULL
+3903	Rolf Ultra SN C5 0W20 4l	4690.00	0.00	1	rolf-ultra-sn-c5-0w20-4l	166	NULL	NULL
+3954	Rosneft Magnum Ultratec 5W-40, 1L (Розлив)	590.00	0.00	1	rosneft-magnum-ultratec-5w-40-1l-rozliv	166	5w40	NULL
+3952	Rosneft Magnum Ultratec A5 5W-30, 4L	2490.00	0.00	1	rosneft-magnum-ultratec-a5-5w-30-4l	166	5w30	NULL
+3953	Rosneft Magnum Ultratec C3 5W-30, 4L	2490.00	0.00	1	rosneft-magnum-ultratec-c3-5w-30-4l	166	5w30	NULL
+3720	Rosneft Maximum полусинт. 5w40 4L	1350.00	0.00	1	rosneft-maximum-polusint.-5w40-4l	166	5w40	NULL
+3824	Sintec Platinum 7000 GF-6A синтетика 5w30 (Розлив) 1L	450.00	0.00	1	sintec-platinum-7000-gf-6a-sintetika-5w30-rozliv-1l	166	5w30	NULL
+3086	Takayama 5w30  ILSAC-GF5 (Розлив )	590.00	0.00	1	takayama-5w30-ilsac-gf5-rozliv	166	5w30	NULL
+3087	Takayama 5w40  A3/B4 (Розлив )	590.00	0.00	1	takayama-5w40-a3-b4-rozliv	166	5w40	NULL
+3763	TCL Disel DL-1 5w30 4L	4190.00	0.00	1	tcl-disel-dl-1-5w30-4l	166	5w30	NULL
+3950	TCL Zero Line 0w20 1l (Розлив)	750.00	0.00	1	tcl-zero-line-0w20-1l-rozliv	166	0w20	NULL
+3951	TCL Zero Line 5w30 1l (Розлив)	690.00	0.00	1	tcl-zero-line-5w30-1l-rozliv	166	5w30	NULL
+3804	TCL Zero Line SP GF6 0w20 4L	3990.00	0.00	1	tcl-zero-line-sp-gf6-0w20-4l	166	0w20	NULL
+3787	TEBOIL Diamond  5w40 4L	2990.00	0.00	1	teboil-diamond-5w40-4l	166	5w40	NULL
+3788	TEBOIL Diamond ECP C3 5w30 4L	3690.00	0.00	1	teboil-diamond-ecp-c3-5w30-4l	166	5w30	NULL
+3970	TEBOIL DIAMOND ECP C5 0W‑20	4590.00	0.00	1	teboil-diamond-ecp-c5-0w20	166	0w20	NULL
+3790	TEBOIL Diamond FS 5w30 4L	2890.00	0.00	1	teboil-diamond-fs-5w30-4l	166	5w30	NULL
+3974	TEBOIL DIAMOND FS 5W‑30 (Розлив) 1л	590.00	0.00	1	teboil-diamond-fs-5w30-rozliv-1l	166	5w30	NULL
+3789	TEBOIL Diamond Multi 5w40 4L	2890.00	0.00	1	teboil-diamond-multi-5w40-4l	166	5w40	NULL
+3786	TEBOIL Gold FE 5w30 4L	2190.00	0.00	1	teboil-gold-fe-5w30-4l	166	5w30	NULL
+3681	Teboil Gold L 5w30 4l	2190.00	0.00	1	teboil-gold-5w30-4l-1l	166	5w30	NULL
+3680	Teboil Gold L 5w40 4l	2390.00	0.00	1	teboil-gold-5w40-4l-1l	166	5w40	NULL
+3677	Teboil Silver 10w40 4l	1890.00	0.00	1	teboil-silver-10w40-4l-1l	166	NULL	NULL
+3679	Teboil Silver 5w30 4l	1890.00	0.00	1	teboil-silver-5w30-4l-1l	166	5w30	NULL
+3678	Teboil Silver 5w40 4l	1990.00	0.00	1	teboil-silver-5w40-4l-1l	166	5w40	NULL
+3697	Toyota 0W30 1l (Розлив)	990.00	0.00	1	toyota-0w30-1l-rozliv	166	0w30	NULL
+3943	Лукойл Genesis Armortech 5w30 A5/B5 (Розлив)	590.00	0.00	1	lukoyl-genesis-armortech-5w30-a5-b5-rozliv	166	5w30	NULL
+3885	Лукойл Genesis Armortech CN 5w40 4L	2990.00	0.00	1	lukoyl-genesis-armortech-cn-5w40-4l	166	5w40	NULL
+3942	Лукойл Genesis Armortech GC 0w20 4l	4490.00	0.00	1	lukoyl-genesis-armortech-gc-0w20-4l	166	0w20	NULL
+3934	Лукойл Genesis Armortech JP 0w20 (Розлив)	650.00	0.00	1	lukoyl-genesis-armortech-jp-0w20-rozliv	166	NULL	NULL
+3666	Лукойл Genesis Armortech JP 5w30 (Розлив)	590.00	0.00	1	lukoyl-genesis-armortech-jp-5w30-rozliv	166	5w30	NULL
+3964	Лукойл Genesisc Armortech 0w-40 1l (Розлив)	750.00	0.00	1	lukoyl-genesisc-armortech-0w-40-1l-rozliv	166	0w40	NULL
+3984	Лукойл Genesisc Armortech GC 0w20 1l (Розлив)	990.00	0.00	1	lukoyl-genesisc-armortech-gc-0w20-1l-rozliv	166	0w20	NULL
+3810	Лукойл Люкс П/Синт 10w40 4L	1590.00	0.00	1	lukoyl-lyuks-p-sint-10w40-4l	166	10w40	NULL
+3808	Лукойл Люкс П/Синт 5w40 4L	1790.00	0.00	1	lukoyl-lyuks-p-sint-5w40-4l	166	5w40	NULL
+3807	Лукойл Люкс Синт 5w30 4L	2290.00	0.00	1	lukoyl-lyuks-sint-5w30-4l	166	5w30	NULL
+3809	Лукойл Люкс Синт 5w40 4L	2290.00	0.00	1	lukoyl-lyuks-sint-5w40-4l	166	5w40	NULL
+3812	Лукойл Супер 10w40 4L	1490.00	0.00	1	lukoyl-super-10w40-4l	166	10w40	NULL
+3689	Масло моторное Rosneft Magnum Maxtec 5w30 4L	1550.00	0.00	1	maslo-motornoe-rosneft-magnum-maxtec-5w30-4l	166	5w30	NULL
+340	Mobil 1 5W-50, (синтетика) 4л.	4390.00	0.00	1	mobil-1-5w-50-sintetika-4l.	167	5w50	Mobil
+517	Mobil 1 Advanced Fuel Economy 0w20 4L	5490.00	0.00	1	mobil-1-advanced-fuel-economy-0w20-4l	167	0w20	Mobil
+3450	MOBIL 1 ESP 0W-30 4 л	5690.00	0.00	1	mobil-1-esp-0w-30-4-l	167	0w30	NULL
+3688	Mobil 1 ESP 0w20 X2 5L	6500.00	0.00	1	mobil-1-esp-0w20-x2-5l	167	0w20	NULL
+2200	Mobil 1 ESP 5w30 1l (Розлив)	990.00	0.00	1	mobil-1-esp-5w30-1l-rozliv	167	5w30	NULL
+3477	Mobil 1 ESP 5w30 5л.	5690.00	0.00	1	mobil-1-esp-5w30-5l.	167	NULL	NULL
+435	MOBIL 1 ESP Formula 5W-30 4 л	5490.00	0.00	1	mobil-1-esp-formula-5w-30-4-l	167	5w30	Mobil
+266	Mobil 1 FS 0W-40, (синтетика) 4л.	4990.00	0.00	1	mobil-1-0w-40-sintetika-4l.	167	0w40	Mobil
+3662	Mobil 1 X1 5w30 (РОЗЛИВ)	990.00	0.00	1	mobil-1-x1-5w30-rozliv	167	5w30	NULL
+2202	Mobil 3000 5w30 1l (Розлив)	690.00	0.00	1	mobil-3000-5w30-1l-rozliv	167	5w30	NULL
+2204	Mobil 3000 5w40 1l (Розлив)	690.00	0.00	1	mobil-3000-5w40-1l-rozliv	167	5w40	NULL
+3474	Mobil Super 2000 X1 5W-30, (п/синтетика) 4л.	2990.00	0.00	1	mobil-2000-5w30	167	5w30	NULL
+262	Mobil SUPER 3000 FE 5W30 (синтетика), 4л.	3990.00	0.00	1	mobil-super-3000-x1-f-fe-5w30-sintetika-4l.	167	5w30	Mobil
+3240	Mobil Super 3000 X1 5W-40, (синтетика) 4л.	3990.00	0.00	1	mobil-super-3000-x1-5w-40-sintetika-4l.-ru-2	167	5w40	NULL
+3243	Mobil SUPER 3000 XE dexos2 5W30 (синтетика), 4л.	3990.00	0.00	1	mobil-super-3000-xe-dexos2-5w30-sintetika-4l.	167	5w30	NULL
+2216	Ford 5w30 1l (Розлив)	800.00	0.00	1	ford-5w30-1l-rozliv	174	5w30	NULL
+280	ford formula F 5w30, (синтетика) 5л.	5490.00	0.00	1	ford-formula-f-5w30-sintetika-5l.	174	5w30	Ford
+2212	Gm 5w30 1l (Розлив)	690.00	0.00	1	gm-5w30-1l-rozliv	174	5w30	NULL
+1720	GM Dexos 2 5W30 (синтетика) 4л.	2990.00	0.00	1	gm-dexos-2-5w30-sintetika-4l.	174	5w30	GM
+431	GM Dexos 2 5W30 (синтетика) 5л.	3790.00	0.00	1	gm-dexos-2-5w30-sintetika-5l.	174	5w30	GM
+2214	Honda 5w30 1l (Розлив)	800.00	0.00	1	honda-5w30-1l-rozliv	174	5w30	NULL
+865	Honda 5W30 ULTRA LTD (синтетика) 4л	4490.00	4490.00	1	akciya-honda-5w30-ultra-ltd-08218-99974-sintetika-yaponiya-4l-originalnyy-maslyanyy-filtr-honda-v-podarok.	174	5w30	Honda
+507	Honda Ultra LEO 0w20 железная банка (синтетика) 4L	5690.00	0.00	1	honda-ultra-leo-0w20-zheleznaya-banka-sintetika-4l	174	0w20	Honda
+3405	Kia/ Hyundai 5w30 4L	4290.00	0.00	1	kia-hyundai-5w30-4l	174	5w30	NULL
+3351	Lexus 0w20 5L	4990.00	0.00	1	lexus-0w20-5l	174	0w20	NULL
+2210	Mazda 5w30 1l (Розлив)	800.00	0.00	1	mazda-5w30-1l-rozliv	174	5w30	NULL
+3273	Mazda 5w30 4L ЖБ	3990.00	0.00	1	mazda-5w30-4l-zhb	174	5w30	NULL
+455	Mazda Original oil ultra 5W30 5л	5790.00	0.00	1	mazda-original-oil-ultra-5w30-5l	174	5w30	Mazda
+849	MAZDA Масло моторное 0W-20 830077986 Original Oil (синтетика) 5L	6490.00	0.00	1	mazda-maslo-motornoe-0w-20-830077986-original-oil-sintetika-5l	174	0w20	Mazda
+3076	MERCEDES 5W-40 (MB 229.5) (Розлив)	990.00	0.00	1	mercedes-5w-40-mb-229.5-rozliv	174	5w40	NULL
+767	MERCEDES 5W-40 (MB 229.5) 5L	5990.00	0.00	1	mercedes-maslo-motornoe-5w-40-a0009898301aaa4-pkw-synthetic-motorenol-mb-229.5-5l	174	5w40	Mersedes
+2020	Mercedes 5w30 Пластик 5L MB 229.51	5790.00	0.00	1	mercedes-5w30-plastik-5l	174	5w30	NULL
+845	MITSUBISHI 0W-30 API SN 4L	3890.00	0.00	1	mitsubishi-maslo-motornoe-0w-30-genuine-oil-synthetic-sn-cf-4l	174	0w30	Mitsubishi
+3275	Mitsubishi DiaQueen 0W20 SN/GF-5, 4 л	3990.00	0.00	1	mitsubishi-diaqueen-0w20-sn-gf-5-4-l	174	0w20	NULL
+3341	Mitsubishi DiaQueen Diesel DL-1 5W30, 4л	3190.00	0.00	1	mitsubishi-diaqueen-diesel-dl-1-5w30-4l	174	5w30	NULL
+3400	Mitsubishi SM-X 5w30	4490.00	0.00	1	mitsubishi-sm-x-5w30	174	5w30	NULL
+3434	Nissan 0w20 4л  ЖБ	4390.00	0.00	1	nissan-0w20-4l-zhb	174	NULL	NULL
+382	Nissan 5W-30 Ж/Б (синтетика) 4L	4490.00	0.00	1	akciya-nissan-sn-5w-30-klan3-05304-zheleznaya-banka-sintetika-yaponiya-4-l-originalnyy-maslyanyy-filtr-nissan-v-podarok	174	5w30	Nissan
+360	Nissan 5W-40 (синтетика) 5л	5490.00	0.00	1	nissan-ke900-90042-motor-oil-5w-40-sintetika-5l	174	5w40	Nissan
+3184	Nissan 5w30 1l (Розлив)	750.00	0.00	1	nissan-5w30-1l-rozliv	174	5w30	NULL
+2058	Nissan 5w30 5L	5390.00	0.00	1	nissan-5w30-5l	174	5w30	NULL
+2218	Nissan 5w40 1l (Розлив)	800.00	0.00	1	nissan-5w40-1l-rozliv	174	5w40	NULL
+3277	Subaru 5w30 4L	3990.00	0.00	1	subaru-5w30-4l	174	5w30	NULL
+3317	Suzuki ECSTAR 5w30 4L	4500.00	0.00	1	suzuki-ecstar-5w30-4l	174	5w30	NULL
+503	TOYOTA 0W-20 (синтетика) 4л	4490.00	0.00	1	toyota-sn-0w-20-4-l-sintetika	174	0w20	Toyota
+2198	Toyota 0w20 1l (Розлив)	900.00	0.00	1	toyota-0w20-1l-rozliv	174	0w20	NULL
+2066	Toyota 0w20 Пластик 5L	5690.00	0.00	1	toyota-0w20-plastik-5l	174	0w20	NULL
+348	Toyota 5W-30 5л	4990.00	0.00	1	toyota-08880-80845-engine-oil-5w-30-sintetika-5l	174	5w30	Toyota
+346	Toyota 5W-40 (синтетика) 5л.	5290.00	0.00	1	toyota-08880-80375-engine-oil-5w-40-sintetika-5l	174	5w40	Toyota
+2194	Toyota 5w30 1l (Розлив)	850.00	0.00	1	toyota-5w30-1l-rozliv	174	5w30	NULL
+851	Toyota 5W30 Ж/Б (синтетика) 4л	4490.00	0.00	1	akciya-toyota-5w30-08880-10705-zheleznaya-banka-sintetika-yaponiya-4l-originalnyy-maslyanyy-filtr-toyota-v-podarok.	174	5w30	Toyota
+2196	Toyota 5w40 1l (Розлив)	800.00	0.00	1	toyota-5w40-1l-rozliv	174	5w40	NULL
+2220	Volkswagen 5w30 1l (Розлив)	900.00	0.00	1	volkswagen-5w30-1l-rozliv	174	5w30	NULL
+2222	Volkswagen 5w40 1l (Розлив)	900.00	0.00	1	volkswagen-5w40-1l-rozliv	174	5w40	NULL
+3471	Volkswagen VAG 0w20 Пластик 5L	5590.00	0.00	1	volkswagen-vag-0w20-plastik-5l	174	NULL	NULL
+2062	Volkswagen VAG 0w30 Пластик 5L	5990.00	0.00	1	volkswagen-0w30-plastik-5l	174	0w30	NULL
+3946	G-Box ATF DX VI (Розлив)	590.00	0.00	1	g-box-atf-dx-vi-rozliv	203	NULL	NULL
+3588	GM DEX-VI (Розлив)	800.00	0.00	1	gm-dex-vi-rozliv	203	NULL	NULL
+3328	Honda ATF Z1 (розлив)	1150.00	0.00	1	honda-atf-z1-rozliv	203	NULL	NULL
+3966	Honda HCF-2 4l	8490.00	0.00	1	honda-hcf-2-4l	203	NULL	NULL
+3165	HONDA HMMF 1L (Розлив)	1290.00	0.00	1	honda-hmmf-1l-rozliv	203	NULL	NULL
+663	HONDA Масло трансмиссионное АКПП 0826099904 HMMF 4L	5990.00	0.00	1	honda-maslo-transmissionnoe-akpp-0826099904-hmmf-4l	203	NULL	NULL
+3311	Kia/Hyundai ATF SP-III (Розлив)	800.00	0.00	1	hyundai-sp-iii-rozliv	203	NULL	NULL
+3469	Mazda ATF M-III (Розлив)	990.00	0.00	1	mazda-atf-m-iii-rozliv	203	NULL	NULL
+3470	Mazda ATF M-V (Розлив)	1090.00	1290.00	1	mazda-atf-m-v-rozliv	203	NULL	NULL
+3367	Mitsubishi ATF SP3 4 л	3790.00	0.00	1	mitsubishi-atf-sp3-4-l	203	NULL	NULL
+3109	Mobil ATF 3309 (Розлив)	1200.00	0.00	1	mobil-atf-3309-rozliv	203	NULL	NULL
+3803	NGN A-Line CVTF HMMF 4L	5500.00	0.00	1	ngn-a-line-cvtf-hmmf-4l	203	NULL	NULL
+629	NGN ATF Dexron VI 4L	4390.00	0.00	1	ngn-atf-dexron-vi-4l	203	NULL	NGN
+3665	Nissan ATF Matic-S (розлив)	1250.00	0.00	1	nissan-atf-matic-s-rozliv	203	NULL	NULL
+3451	Nissan NS-2 (Розлив)	1150.00	1350.00	1	nissan-ns-2-rozliv	203	NULL	NULL
+3365	Nissan NS-2 5L	6990.00	0.00	1	nissan-ns-2-5l	203	NULL	NULL
+3664	Nissan NS-3 CVT (Розлив)	1250.00	0.00	1	nissan-ns-3-cvt-rozliv	203	NULL	NULL
+3289	Ravenol ATF T-WS 4l	6900.00	0.00	1	ravenol-atf-t-ws	203	NULL	NULL
+3619	Tauberg CVT (Розлив)	650.00	0.00	1	tauberg-cvt-rozliv	203	NULL	NULL
+3617	Totachi DEXRON 3 (Розлив)	390.00	0.00	1	totachi-dexron-3-rozliv	203	NULL	NULL
+3725	Toyota CVT FE (розлив) 1L	1100.00	0.00	1	toyota-cvt-fe-rozliv-1l	203	NULL	NULL
+625	ZIC ATF Dexron VI 4L	3590.00	0.00	1	zic-atf-dexron-vi-4l	203	NULL	ZIC
+3499	Zic ATF Multi HT 4L	3790.00	0.00	1	zic-atf-multi-ht-4l	203	NULL	NULL
+3313	ZIC ATF MULTI LF 4л.	3590.00	0.00	1	zic-atf-multi-lf-4l.	203	NULL	NULL
+3839	Zic GFT 75w90 4L	3790.00	0.00	1	zic-gft-75w90-4l	203	NULL	NULL
+3985	Лукойл Gear GL-4 75w90 4l	2390.00	0.00	1	lukoyl-gear-gl-4-75w90-4l	203	NULL	NULL
+3986	Лукойл Gear GL-5 75w90 4l	1990.00	0.00	1	lukoyl-gear-gl-5-75w90-4l	203	NULL	NULL
+671	Масло трансмисионное CVT Nissan NS-2 4L	5890.00	0.00	1	maslo-transmisionnoe-cvt-ns-2-4l	203	NULL	Nissan
+3274	Масло трансмисионное CVT Nissan NS-3 4L	5990.00	0.00	1	maslo-transmisionnoe-cvt-nissan-ns-3-4l	203	NULL	NULL
+571	Масло трансмиссионное MITSUBISHI АКПП DiaQeen SP III 4L	4390.00	0.00	1	maslo-transmissionnoe-mitsubishi-akpp-diaqeen-sp-iii-4l	203	NULL	NULL
+1644	Масло трансмиссионное MITSUBISHI АКПП DiaQeen SP III Розлив, 1L	700.00	0.00	1	maslo-transmissionnoe-mitsubishi-akpp-diaqeen-sp-iii-rozliv-1l	203	NULL	NULL
+3977	Масло трансмиссионное Pemco 450 JWS 3309 1l (розлив)	600.00	0.00	1	maslo-transmissionnoe-pemco-450-jws-3309-1l-rozliv	203	NULL	NULL
+519	Масло трансмиссионное TOYOTA ATF Type-T IV 4л арт. 08886 01705	4690.00	0.00	1	maslo-transmissionnoe-toyota-atf-type-t-iv-4l-art.-08886-01705-yaponiya	203	NULL	NULL
+3724	Масло трансмиссионное Toyota CVTF FE 4L	6490.00	0.00	1	toyota-cvtf-fe-4l	203	NULL	NULL
+284	shell helix hx7 10w-40, (п/синтетика) 4л.	2690.00	0.00	1	shell-helix-hx7-10w-40-p-sintetika-4l.	234	10w40	Shell
+282	shell helix hx7 5w-40, (п/синтетика) 4л.	2990.00	0.00	1	shell-helix-hx7-5w-40-p-sintetika-4l.	234	5w40	Shell
+3070	Shell Helix HX8  5w40 (розлив)	690.00	0.00	1	shell-helix-hx8-rozliv	234	5w40	NULL
+3659	Shell Helix HX8 5W-30 (Розлив)	690.00	0.00	1	shell-helix-hx8-5w-30-rozliv	234	NULL	NULL
+853	SHELL HELIX ULTRA 0W-40	5390.00	0.00	1	shell-helix-ultra-0w-40	234	0w40	Shell
+288	Shell helix ultra 5w40, (синтетика) 4л.	4490.00	0.00	1	shell-helix-ultra-5w40-sintetika-4l.	234	5w40	Shell
+617	Shell helix ultra ect 0w30, (синтетика) 4л.	5190.00	0.00	1	shell-helix-ultra-0w30-sintetika-4l.	234	0w30	Shell
+3122	Shell HX7 5w40 (Розлив)	490.00	0.00	1	shell-helix-hx7-10w-40-rozliv	234	5w40	NULL
+3053	Shell hx8 ECT Synthetic 5W30, (синтетика) 4л	4290.00	0.00	1	shell-hx8-ect-synthetic-5w30-sintetika-4l	234	5w30	NULL
+453	Shell hx8 Synthetic 5W30, (синтетика) 4л	3490.00	0.00	1	shell-hx8-synthetic-5w30-sintetika-4l	234	5w30	Shell
+286	Shell hx8 Synthetic 5W40, (синтетика) 4л	3590.00	0.00	1	shell-hx8-synthetic-5w40-sintetika-4l	234	5w40	Shell
+2228	Shell Ultra 5w40 1l (Розлив)	890.00	0.00	1	shell-ultra-5w40-1l-rozliv	234	5w40	NULL
+2230	Shell Ultra ECT C3 5w30 1l (Розлив)	890.00	0.00	1	shell-ultra-5w30-1l-rozliv	234	5w30	NULL
+3816	Tubor Classic 60Ah (прямая, обратная полярность)	6300.00	0.00	1	tubor-classic-60ah-obratnaya-polyarnost	250	NULL	NULL
+3817	Tubor Classic 75Ah (прямая, обратная полярность)	7600.00	0.00	1	tubor-classic-75ah-pryamaya-obratnaya-polyarnost	250	NULL	NULL
+3111	Аккумулятор Dominator 60ah 540А (прямая и обратная)	6800.00	0.00	1	akkumulyator-dominator-60ah	250	NULL	NULL
+3957	Аккумулятор FORSE 60 Ah низкий (Обратная)	7700.00	0.00	1	akkumulyator-forse-60-ah-nizkiy-obratnaya	250	NULL	NULL
+3958	Аккумулятор FORSE 70 Ah (Обратная)	8100.00	0.00	1	akkumulyator-forse-70-ah-obratnaya	250	NULL	NULL
+3956	Аккумулятор FORSE Asia 40Ah (Обратная)	5600.00	0.00	1	akkumulyator-forse-asia-40ah-obratnaya	250	NULL	NULL
+3960	Аккумулятор Sebang Asia 65Ah (Обратная)	12400.00	0.00	1	akkumulyator-sebang-asia-65ah-obratnaya	250	NULL	NULL
+3955	Аккумулятор TITAN ARCTIC 60Ah (Прямой и Обратный)	9200.00	0.00	1	akkumulyator-titan-arctic-60ah-pryamoy-i-obratnyy	250	NULL	NULL
+567	Аккумулятор TOPLA Energy 60Аh (Прямая и обратная)	10600.00	0.00	1	akkumulyator-topla-60ach-600a-l-obratnaya-energy-242x175x190	250	NULL	NULL
+3961	Аккумулятор TUBOR Classic Asia 70 Ah (Обратная)	8000.00	0.00	1	akkumulyator-tubor-classic-asia-70-ah-obratnaya	250	NULL	NULL
+541	Аккумулятор TYUMEN 55 а/ч 525А (обратная и прямая) 242x175x190мм	5900.00	0.00	1	akkumulyator-tyumen-55ach-500a-r-pryamaya-apz-standart-242x175x190	250	NULL	NULL
+533	Аккумулятор TYUMEN 60 а/ч 550А (обратная и прямая) 242x175x190мм	6200.00	0.00	1	akkumulyator-tyumen-60ach-520a-r-pryamaya-apz-standart-242x175x190	250	NULL	NULL
+565	Аккумулятор TYUMEN 75А*ч 630А R (прямая и обратная) АПЗ Стандарт 306x175x190	8100.00	0.00	1	akkumulyator-tyumen-75ach-630a-r-pryamaya-apz-standart-306x175x190	250	NULL	NULL
+537	Аккумулятор TYUMEN ASIA 50 а/ч 440А (обратная и прямая) 236x128x223мм	5700.00	0.00	1	akkumulyator-tyumen-asia-50ach-410a-r-obratnaya-apz-aziya-236x128x223	250	NULL	NULL
+3112	Аккумулятор UNO 60ah 510А (прямой) 242x175x190мм	4800.00	0.00	1	akkumulyator-uno-60ah-510a-pryamoy-242x175x190mm	250	NULL	NULL
+2236	Лукойл Genesis 5w40 1l (Розлив)	590.00	0.00	1	lukoyl-genesis-5w40-1l-rozliv	270	5w40	NULL
+3195	Лукойл GENESIS ARMORTECH  DX1 5W-30 4л	2990.00	0.00	1	lukoyl-genesis-armortech-dx1-5w-30-4l	270	5w30	NULL
+290	Лукойл GENESIS ARMORTECH 5W-40, (синтетика) 4л.	2990.00	0.00	1	lukoyl-genesis-armortech-5w-40-sintetika-4l.	270	5w40	Лукойл
+3336	Лукойл GENESIS ARMORTECH 5W-50 4л	4190.00	0.00	1	lukoyl-genesis-armortech-5w-50-4l	270	5w40	NULL
+3335	Лукойл GENESIS ARMORTECH Disel 5W-30 4л	3490.00	0.00	1	lukoyl-genesis-armortech-disel-5w-30-4l	270	5w30	NULL
+3333	Лукойл GENESIS ARMORTECH FD 5W-30 4л	2990.00	0.00	1	lukoyl-genesis-armortech-fd-5w-30-4l	270	5w30	NULL
+3334	Лукойл GENESIS ARMORTECH GC 5W-30 4л	3390.00	0.00	1	lukoyl-genesis-armortech-gc-5w-30-4l	270	5w30	NULL
+3194	Лукойл GENESIS ARMORTECH JP  0W-20 4л	3290.00	0.00	1	lukoyl-genesis-armortech-jp-0w-20-4l	270	0w20	NULL
+3332	Лукойл Genesis HK 5w30 (синтетика) 5W-30 4л.	2990.00	0.00	1	lukoyl-genesis-hk-5w30-sintetika-5w-30-4l.	270	5w30	NULL
+292	Лукойл Genesis JP (синтетика) 5W-30 4л.	2990.00	0.00	1	lukoyl-genesis-glidetech-sintetika-5w-30-4l.	270	5w30	Лукойл
+302	Лукойл Genesis Polartech (синтетика) 0w40	3990.00	0.00	1	lukoyl-genesis-polartech-sintetika-0w40	270	0w40	Лукойл
+3312	Лукойл Genesis Special C3X 5w30 (Розлив)	590.00	0.00	1	lukoyl-genesis-special-c3x-5w30-rozliv	270	5w30	NULL
+3350	Лукойл GENESIS Universal 5W-30 4л	2490.00	0.00	1	lukoyl-genesis-universal-5w-30-4l	270	5w30	NULL
+3348	Лукойл GENESIS Universal 5W-40 4л	2590.00	0.00	1	lukoyl-genesis-universal-5w-40-4l	270	5w40	NULL
+378	Лукойл Genesis Universal П/Синт 10w40 4 л.	2190.00	0.00	1	lukoyl-genesis-advanced-10w40-p-sintetika-4-l	270	10w40	Лукойл
+3197	Лукойл Super 5w40 (полусинтетика) 4л.	1590.00	0.00	1	lukoyl-super-5w40-polusintetika-4l.	270	5w40	NULL
+561	CASTROL 5W-30 MAGNATEC A5 4L	4490.00	0.00	1	castrol-5w-30-magnatec-a5-4l	276	5w30	Castrol
+799	CASTROL 5W-30 MAGNATEC AP 4L	4490.00	0.00	1	castrol-5w-30-magnatec-ap-4l-filtr-mann-v-podarok	276	5w30	Castrol
+665	Castrol Edge 0W-30 A3/B4 (синтетика) 4 л	4990.00	0.00	1	castrol-edge-0w-30-a3-b4-sintetika-4-l	276	0w30	NULL
+3230	Castrol Edge 0W-30 A5/B5 (синтетика) 4 л	4990.00	0.00	1	castrol-edge-0w-30-a5-b5-sintetika-4-l	276	0w30	NULL
+497	Castrol Edge 5W-30 LL (синтетика) 4 л	4990.00	0.00	1	castrol-edge-5w-30-ll-sintetika-4-l	276	5w30	Castrol
+300	castrol GTX 10w40 (А3/В4), (п/синтетика) 4л.	2390.00	0.00	1	castrol-magnatec-gtx-10w40-a3-v4-p-sintetika-4l.	276	10w40	Castrol
+797	Castrol GTX 5W-40 A3/B4 (синтетика) 4L	3490.00	0.00	1	castrol-gtx-5w-40-a3-b4-sintetika-4l	276	5w40	Castrol
+3363	Castrol Magnatec 5w30 C3 4L	3990.00	0.00	1	castrol-magnatec-5w30-c3-4l	276	5w30	NULL
+3077	Castrol Magnatec 5w40 A3/B4 (Розлив)	750.00	0.00	1	castrol-magnatec-5w40-a3-b4	276	5w40	NULL
+296	Castrol Magnatec 5W40 А3/В4, (синтетика) 4л	4290.00	0.00	1	castrol-magnatec-5w40-a3-v4-sintetika-4l	276	5w40	Castrol
+3083	NESTE CITY PRO (Розлив) 5w30	690.00	0.00	1	neste-city-pro-5w30	290	5w30	NULL
+3082	NESTE CITY PRO C3 5w40  (Розлив)	790.00	0.00	1	neste-city-pro-c3-5w40-rozliv	290	5w40	NULL
+356	NESTE CITY PRO C3 5w40 (синтетика) 4л	4290.00	0.00	1	neste-city-pro-5w40-sintetika-4l	290	5w40	Neste
+3641	Neste Premium + 5w50 4л	4290.00	0.00	1	neste-premium-5w50-4l	290	5w50	NULL
+374	Motul 8100 Eco-nergy 5W30 (синтетика) 4 л	4490.00	0.00	1	motul-8100-eco-nergy-5w30-sintetika-5-l	294	5w30	Motul
+1393	Motul 8100 Eco-nergy 5W30 (синтетика) 5 л	5490.00	0.00	1	motul-8100-eco-nergy-5w30-sintetika-5-l-clone	294	5w30	Motul
+372	Motul 8100 X-cess 5W40 (синтетика) 5 л	5990.00	0.00	1	motul-8100-x-cess-5w40-sintetika-5-l	294	5w40	Motul
+3190	Motul Eco-Lite 5w30 1l (Розлив)	1050.00	1050.00	1	motul-eco-lite-5w30-1l-rozliv	294	5w30	NULL
+2226	Motul Eco-Nergy 5w30 1l (Розлив)	1050.00	0.00	1	motul-eco-nergy-5w30-1l-rozliv	294	5w30	NULL
+2224	Motul X-Cess 5w40 1l (Розлив)	1100.00	0.00	1	motul-x-clean-fe-5w30-1l-rozliv	294	5w40	NULL
+3638	NGN Agate 5w30 (Розлив)	750.00	0.00	1	ngn-agate-5w30-rozliv	295	5w30	NULL
+3265	NGN EMERALD 5W-30 4L	5090.00	0.00	1	ngn-emerald-5w-30-4l	295	5w30	NULL
+3266	NGN EXCELLENCE DXS 5W-30 4L	4490.00	0.00	1	ngn-excellence-dxs-5w-30-4l	295	5w30	NULL
+411	NGN EXTRA 5W-50 (синтетика) 4 л	3890.00	0.00	1	ngn-extra-5w-50-sintetika-4-l	295	5w50	NGN
+3263	NGN FUSION 5W-20 4L	3890.00	0.00	1	ngn-fusion-5w-20-4l	295	5w20	NULL
+555	NGN FUTURE 0W-20 (синтетика) 4 л	4590.00	0.00	1	ngn-future-0w-20-sintetika-4-l	295	0w20	NGN
+387	NGN Gold 5W-40 (синтетика) 4 л	4390.00	0.00	1	ngn-gold-5w-40-sintetika-4-l	295	5w40	NGN
+2208	Ngn Gold 5w40 1l (Розлив)	690.00	0.00	1	ngn-gold-5w40-1l-rozliv	295	5w40	NULL
+399	NGN MAXI 5W-30 (п/синтетика) 4 л	2950.00	0.00	1	ngn-maxi-5w-30-p-sintetika-4-l	295	5w30	NGN
+603	NGN Nord 5w30 (синтетика) 4л	6290.00	0.00	1	ngn-nord-5w30-sintetika-4l	295	5w30	NGN
+389	NGN Premium 10W-40 (п/синтетика) 4 л	2890.00	0.00	1	ngn-premium-10w-40-p-sintetika-4-l	295	10w40	NGN
+385	NGN Profi 5W-30 (синтетика) 4 л	4190.00	0.00	1	ngn-profi-5w-30-sintetika-4-l	295	5w30	NGN
+2206	Ngn profi 5w30 1l (Розлив)	690.00	0.00	1	ngn-profi-5w30-1l-rozliv	295	5w30	NULL
+409	NGN SYNERGY 0W-40 (синтетика) 4 л	5190.00	0.00	1	ngn-synergy-0w-40-sintetika-4-l	295	0w40	NGN
+777	NGN SYNERGY PLUS 0W-30 (синтетика) 4 л	6390.00	0.00	1	ngn-synergy-plus-0w-30-sintetika-4-l	295	0w30	NGN
+3268	NGN SYNT-S 5W-40 4L	3190.00	0.00	1	ngn-synt-s-5w-40-4l	295	5w40	NULL
+1734	Масло NGN DIESEL SYN 5W-40 4л	4990.00	0.00	1	maslo-ngn-diesel-syn-5w-40-4l	295	5w40	NULL
+1736	Масло NGN FORMULA 10W-60 4л	6590.00	0.00	1	maslo-ngn-formula-10w-60-4l	295	10w60	NULL
+769	Масло моторное NGN Agate 5w30 A5/B5, 4L	4990.00	0.00	1	maslo-motornoe-ngn-agate-5w30-a5-b5-4l	295	5w30	NGN
+1748	Масло АКПП NGN CVT Fluid 1304 4л	4590.00	0.00	1	maslo-akpp-ngn-cvt-fluid-1304-4l	297	NULL	NULL
+1910	Масло в АКПП NGN ATF Dexron VI 4л	4390.00	0.00	1	maslo-akpp-atf-dexron-vi-4l	297	NULL	NULL
+401	Масло в АКПП NGN ATF Dexron3 4л	3290.00	0.00	1	maslo-akpp-atf-dexron3-4l	297	NULL	NULL
+415	Масло в АКПП NGN ATF Universal 4л	4490.00	0.00	1	maslo-akpp-atf-dexron-universal-4l	297	NULL	NULL
+419	Масло МКПП и приводных мостов NGN 75W-90 GL4/5 (синтетика) 4л.	4890.00	0.00	1	maslo-mkpp-i-privodnyh-mostov-ngn-75w-90-gl4-5-sintetika-4l.	297	NULL	NULL
+2234	Idemitsu Zepro 5w30 1l (Розлив)	850.00	0.00	1	idemitsu-zepro-5w30-1l-rozliv	301	5w30	NULL
+3129	Idemitsu Zepro 5w40 1l (Розлив)	850.00	0.00	1	idemitsu-zepro-5w40-1l-rozliv	301	5w40	NULL
+525	IDEMITSU Zepro Eco Medalist 0W-20 (синтетика) 4 л	5490.00	0.00	1	idemitsu-eco-medalist-0w-20-sintetika-4-l	301	0w20	Idemitsu
+473	IDEMITSU ZEPRO EURO SPEC 5W-40 (синтетика) 4 л	5990.00	0.00	1	idemitsu-euro-spec-5w-40-sintetika-4-l	301	5w40	Idemitsu
+2026	Idemitsu Zepro Racing 5w40 4L	8590.00	0.00	1	idemitsu-zepro-racing-5w40-4l	301	5w40	NULL
+475	IDEMITSU Zepro Touring 5W-30 (синтетика) 4 л	4990.00	0.00	1	idemitsu-zepro-touring-5w-30-sintetika-4-l	301	5w30	Idemitsu
+773	Масло Idemitsu 30011328746 5w30 4L	3990.00	0.00	1	maslo-idemitsu-30011328746-5w30-4l	301	5w30	Idemitsu
+771	Масло Idemitsu 30015048746 5w40 4L	3990.00	0.00	1	maslo-idemitsu-30015048746-5w40-4l	301	5w40	Idemitsu
+887	Масло Idemitsu 30021328746 0w20 4L	3990.00	0.00	1	maslo-idemitsu-30021328746-0w20-4l	301	0w20	Idemitsu
+795	Масло моторное IDEMITSU 0W-30 ZEPRO TOURING PRO SN/GF5 4L	5490.00	0.00	1	maslo-motornoe-idemitsu-0w-30-zepro-touring-pro-sn-gf5-4l	301	0w30	Idemitsu
+3189	Toyota CVT TC (Розлив )1L	1050.00	0.00	1	toyota-cvt-rozliv-1l	307	NULL	NULL
+1636	Масло трансмиссионное TOYOTA ATF Type-T IV Розлив, 1L	890.00	0.00	1	maslo-transmissionnoe-toyota-atf-type-t-iv-yaponiya-rozliv-1l	307	NULL	NULL
+521	Масло трансмиссионное TOYOTA ATF WS 4л арт. 08886 02305	5990.00	0.00	1	maslo-transmissionnoe-toyota-atf-ws-4l-art.-08886-02305-yaponiya	307	NULL	Toyota
+1640	Масло трансмиссионное TOYOTA ATF WS Розлив, 1L	990.00	0.00	1	maslo-transmissionnoe-toyota-atf-ws-yaponiya-rozliv-1l	307	NULL	Toyota
+643	Масло трансмиссионное Toyota CVT TC 4L	6190.00	0.00	1	maslo-toyota-cvt-0888602105-4l	307	NULL	Toyota
+3716	Tyumen 6 мтс 9 Лидер болт 45а	1700.00	0.00	1	tyumen-6-mts-9-lider-bolt-45a	317	NULL	NULL
+645	Аккумулятор TYUMEN PREMIUM 64 а/ч 620А (прямая и обратная ) 240x175x190мм	7100.00	0.00	1	akkumulyator-tyumen-premium-64ach-590a-r-obratnaya-apz-standart-242x175x190	317	NULL	NULL
+659	Аккумулятор 75 Mutlu SFB (прямая и обратная)	11800.00	0.00	1	akkumulyator-75-mutlu-sfb-pryamaya-polyarnost	321	NULL	NULL
+2126	KIA/Hyundai 26300 35504 Фильтр масляный	750.00	0.00	1	kia-hyundai-26300-35504-filtr-maslyanyy-ru	323	NULL	NULL
+2128	Toyota 04152-YZZA4 Фильтр масляный	890.00	0.00	1	toyota-04152-yzza4-filtr-maslyanyy	323	NULL	NULL
+1758	Фильтр масляный Renault 77 00 274 177	750.00	0.00	1	filtr-maslyanyy-renault-77-00-274-177-original-franciya	323	NULL	NULL
+875	Фильтр масляный Toyota 04152-YZZA1 (Mann Hu7019z)	790.00	0.00	1	filtr-maslyanyy-toyota-04152-yzza1-mann-hu7019z	323	NULL	NULL
+873	Фильтр масляный Toyota 04152-YZZA6 (Mann Hu6006z)	790.00	0.00	1	filtr-maslyanyy-toyota-04152-yzza6-mann-hu6006z	323	NULL	NULL
+871	Фильтр масляный Toyota 90915-YZZE1 (Mann 68/3, VIC-110)	750.00	0.00	1	filtr-maslyanyy-toyota-90915-yzze1-mann-68-3-vic-110	323	NULL	NULL
+869	Фильтр масляный Toyota 90915-YZZE2 (Mann 610/9, VIC-123)	800.00	0.00	1	filtr-maslyanyy-toyota-90915-yzze2-mann-610-9-vic-123	323	NULL	NULL
+877	Фильтр масляный Toyota 90915-YZZJ3 (Mann 712/83, C-111)	790.00	0.00	1	filtr-maslyanyy-toyota-90915-yzzj3-mann-712-83-c-111	323	NULL	NULL
+899	Фильтр масляный Volkswagen VAG 03C 115 561 H (Mann w712/94)	1200.00	0.00	1	filtr-maslyanyy-hyundai-26300-35504-mann-w811-80	323	NULL	NULL
+3316	MOLYGREEN CLEAN DIESEL 5W30 DL-1 4Л	4990.00	0.00	1	molygreen-clean-diesel-5w30-dl-1-4l	335	5w30	NULL
+3058	MOLYGREEN HYBRID 0W20 SN/GF-5, 4л	5690.00	0.00	0	molygreen-hybrid-0w20-sn-gf-5-4l	335	0w20	NULL
+3073	MOLYGREEN PREMIUM  5w30 GF-6A  (Розлив)	900.00	0.00	1	molygreen-premium-5w30-gf-6a-rozliv	335	5w30	NULL
+855	MOLYGREEN PREMIUM  SP/GF-6A 5W-30 4L	4990.00	0.00	1	molygreen-premium-black-sn-gf-5-5w-30-4l	335	5w30	Molygreen
+3193	MOLYGREEN PREMIUM SP/GF-6A 0W-20 4L	4990.00	0.00	1	molygreen-premium-sp-gf-6a-0w-20-4l	335	0w20	NULL
+3444	MolyGreen Pro S 0W-20 (Розлив) 1л.	900.00	0.00	1	molygreen-pro-s-0w-20-rozliv-1l.	335	0w20	NULL
+3323	MolyGreen Pro S 5W-30 (Розлив) 1л.	950.00	0.00	1	molygreen-pro-s-5w-30-rozliv-1l.	335	5w30	NULL
+3590	MOLYGREEN SELECTION 10w40 4L	4590.00	0.00	1	molygreen-selection-10w40-4l	335	10w40	NULL
+859	MOLYGREEN SELECTION SN/CF 5W40	4590.00	0.00	1	molygreen-selection-sn-cf-5w40	335	5w40	Molygreen
+857	MOLYGREEN SELECTION SN/GF-5 0W-20 4L	4590.00	0.00	1	molygreen-selection-sn-gf-5-0w-20-4l	335	0w20	Molygreen
+861	MOLYGREEN SELECTION SN/GF-5 5W30 4L	4590.00	0.00	1	molygreen-selection-sn-gf-5-5w30-4l	335	5w30	Molygreen
+3074	ENI I-Sint 5w40 (Розлив)	900.00	0.00	1	eni-i-sint-5w40-rozliv	337	5w40	NULL
+3426	ENI I-Sint TD DIESEL 5w40 4L	3200.00	0.00	1	eni-i-sint-td-diesel-5w40-4l	337	5w40	NULL
+913	Масло моторное Rosneft Magnum Maxtec 10W-40 п/синтетика 4L	1500.00	0.00	1	maslo-motornoe-rosneft-magnum-maxtec-10w-40-p-sintetika-4l	479	10w40	Роснефть
+915	Масло моторное Rosneft Magnum Maxtec 5W-40 п/синтетика 4L	1700.00	0.00	1	maslo-motornoe-rosneft-magnum-maxtec-5w-40-p-sintetika-4l	479	5w40	Роснефть
+903	Масло моторное Rosneft Magnum Ultratec 5W-40 синтетика 4L	2500.00	0.00	1	maslo-motornoe-rosneft-magnum-ultratec-5w-40-sintetika-4l	479	5w40	Роснефть
+909	Масло моторное Rosneft Maximum 10W-40 п/синтетика 4L	1350.00	0.00	1	maslo-motornoe-rosneft-maximum-10w-40-p-sintetika-4l	479	10w40	Роснефть
+3768	Xtreme 12V 9Ah VRLA	2100.00	0.00	1	xtreme-12v-9ah-vrla	493	NULL	NULL
+1884	Масло моторное Ravenol FO 5w30 4L	4790.00	0.00	1	maslo-motornoe-ravenol-fo-5w30-4l	518	5w30	NULL
+3374	Osram H4	300.00	0.00	1	osram-h4	526	NULL	NULL
+3378	Osram H7	350.00	0.00	1	osram-h7	526	NULL	NULL
+3204	Liqui Moly 5w30 Asia&America 1л (Розлив)	950.00	0.00	1	liquimoly-5w30-asia-and-america-1l-rozliv	528	5w30	NULL
+344	LIQUI MOLY 5W30 Leichtlauf high tech LL (синтетика), 4л.	4490.00	0.00	1	liqui-moly-5w30-leichtlauf-high-tech-ll-sintetika-4l.	528	5w30	Liqui Moly
+342	LIQUI MOLY 5W30 Optimal, (синтетика) 4л.	4490.00	0.00	1	liqui-moly-5w30-optimal-sintetika-4l.	528	5w30	Liqui Moly
+3205	Liqui Moly 5w40 Optimal 1л (Розлив)	850.00	0.00	1	liquimoly-5w40-optimal-1l-rozliv	528	5w40	NULL
+306	LIQUI MOLY 5W40 Optimal, (синтетика) 4л.	4490.00	0.00	1	liqui-moly-5w40-optimal-sintetika-4l.	528	5w40	Liqui Moly
+3362	Liqui Moly Leichtlauf Longtime 0W-30 4л	4190.00	0.00	1	liqui-moly-leichtlauf-longtime-0w-30-4l	528	0w30	NULL
+397	LIQUI MOLY Molygen New Generation 5W-30 4 л	5290.00	0.00	1	liqui-moly-molygen-new-generation-5w-30-4-l	528	5w30	Liqui Moly
+459	LIQUI MOLY Molygen New Generation 5W-30 5 л	6390.00	0.00	1	liqui-moly-molygen-new-generation-5w-30-5-l	528	5w30	Liqui Moly
+613	LIQUI MOLY Molygen New Generation 5W-40 4 л	5290.00	0.00	1	liqui-moly-molygen-new-generation-5w-40-4-l	528	5w40	Liqui Moly
+3067	LIQUI MOLY Molygen New Generation 5W-40 5 л	6190.00	0.00	1	liqui-moly-molygen-new-generation-5w-40-5-l	528	5w40	NULL
+531	LIQUI MOLY Special Tec AA 0W-20 (синтетика) 4 л	5790.00	0.00	1	liqui-moly-special-tec-aa-0w-20-sintetika-4-l	528	0w20	Liqui Moly
+3278	LIQUI MOLY Special Tec AA 5W-20 (синтетика) 4 л	4990.00	0.00	1	liqui-moly-special-tec-aa-5w-20-sintetika-4-l	528	5w20	NULL
+393	LIQUI MOLY Special Tec AA 5W-30 (синтетика) 4 л	5490.00	0.00	1	liqui-moly-special-tec-aa-5w-30-sintetika-4-l	528	5w30	Liqui Moly
+3361	Liqui Moly Special Tec LL 5W-30 4л	5490.00	0.00	1	liqui-moly-special-tec-ll-5w-30-4l	528	5w30	NULL
+463	LIQUI MOLY Synthoil High Tech 5W-30 (синтетика) 4 л	5990.00	0.00	1	liqui-moly-synthoil-high-tech-5w-30-sintetika-4-l	528	5w30	NULL
+391	LIQUI MOLY Synthoil High Tech 5W-40 (синтетика) 4 л	5990.00	0.00	1	liqui-moly-synthoil-high-tech-5w-40-sintetika-4-l	528	5w40	Liqui Moly
+529	LIQUI MOLY Synthoil High Tech 5W-50 (синтетика) 4 л	5990.00	0.00	1	liqui-moly-synthoil-high-tech-5w-50-sintetika-4-l	528	5w50	Liqui Moly
+513	LIQUI MOLY Synthoil Longtime 0W-30 5 л	5490.00	0.00	1	liqui-moly-synthoil-longtime-0w-30-5-l	528	0w30	NULL
+1728	LIQUI MOLY Top Tec 4100 5W-40 (синтетика) 4 л	5490.00	0.00	1	liqui-moly-top-tec-4100-5w-40-sintetika-4-l	528	5w40	Liqui Moly
+1756	LIQUI MOLY Top Tec 4200 5W-30 (синтетика) 4 л	5990.00	0.00	1	liqui-moly-top-tec-4200-5w-30-sintetika-4-l	528	5w30	Liqui Moly
+3284	LIQUI MOLY TOP TEC 4400 5W-30 5 л	5490.00	0.00	1	liqui-moly-top-tec-4400-5w-30-5-l	528	5w30	NULL
+3281	Liqui Moly TOP TEC 6300 0W-20 5L	6500.00	0.00	1	liqui-moly-top-tec-6300-0w-20-5l	528	0w20	NULL
+3310	Bardahl XTC 5w30 5l	6900.00	0.00	1	bardahl-xtc-5w30-5l	671	5w30	NULL
+3948	Bardahl XTC 5w40 1l (Розлив)	1200.00	0.00	1	bardahl-xtc-5w40-1l-rozliv	671	5w40	NULL
+3308	Bardahl XTC 5w40 4l	5200.00	0.00	1	bardahl-xtc-5w40-4l	671	5w40	NULL
+3245	Bardahl XTC 5w40 5l	5800.00	0.00	1	bardahl-xtc-5w40-5l	671	5w40	NULL
+3246	Bardahl XTRA 5w30 5l	6490.00	0.00	1	bardahl-xtra-5w30-5l	671	5w30	NULL
+3874	Bardahl XTS 5w30 5l	6700.00	0.00	1	bardahl-xts-5w30-5l	671	NULL	NULL
+3449	Bardahl XTS 5w40 5l	6200.00	0.00	1	bardahl-xts-5w40-5l	671	NULL	NULL
+3269	TCL Zero Line SP GF-6 0W30 4L	3990.00	0.00	1	tcl-zero-line-sp-gf-6a-0w30-4l	672	0w30	NULL
+3293	TCL Zero Line SP GF-6 5W30 4L	3990.00	0.00	1	tcl-zero-line-sp-gf-6a-5w30-4l	672	5w30	NULL
+3272	PROFIX 5w30 GF-6A 4L	3590.00	0.00	1	profix-5w30-gf-6a-4l	674	5w30	NULL
+3370	Total Ineo MDC 5w30 5L	4990.00	0.00	1	total-ineo-mdc-5w30-5l	675	5w30	NULL
+3144	TOTAL NFC 5W-30 (синтетика) (Розлив)	750.00	0.00	1	total-nfc-5w-30-sintetika-rozliv	675	5w30	NULL
+3079	TOTAL Quartz 9000  5W-40 (синтетика) (Розлив)	650.00	0.00	1	total-quartz-9000-5w-40-sintetika-rozliv	675	5w40	NULL
+491	TOTAL Quartz 9000 5W40 (синтетика) 4 л	3790.00	0.00	1	total-quartz-9000-5w40-sintetika-4-l	675	5w40	Elf/Total
+3078	TOTAL Quartz 9000 Energy HKS 5W-30 (синтетика) (Розлив)	1190.00	0.00	1	total-quartz-9000-energy-hks-5w-30-sintetika-rozliv	675	5w30	NULL
+493	TOTAL Quartz 9000 NFC 5W-30 (синтетика) 4 л	3990.00	0.00	1	total-quartz-9000-future-nfc-5w-30-sintetika-4-l	675	5w30	Elf/Total
+615	TOTAL Quartz ineo ECS 5W-30 (синтетика) 4 л	3790.00	0.00	1	total-quartz-ineo-ecs-5w-30-sintetika-4-l	675	5w30	Elf/Total
+563	ELF Evolution 700 STI 10W-40 (синтетика) 4 л	2490.00	0.00	1	elf-evolution-700-sti-10w-40-sintetika-4-l	676	10w40	Elf/Total
+487	ELF Evolution 900 NF 5W-40 (синтетика) 4 л	4290.00	0.00	1	elf-evolution-900-nf-5w-40-sintetika-4-l	676	5w40	Elf/Total
+3080	ELF Evolution 900 SXR 5W-30 (синтетика) (Розлив)	750.00	0.00	1	elf-evolution-900-sxr-5w-30-sintetika-rozliv	676	5w30	NULL
+1860	ELF Evolution 900 SXR 5W-30 (синтетика) 4 л	4390.00	0.00	1	elf-evolution-900-sxr-5w-30-sintetika-4-l	676	5w30	Elf/Total
+3081	ELF Evolution 900 SXR 5W-40 (синтетика) (Розлив)	750.00	0.00	1	elf-evolution-900-sxr-5w-40-sintetika-rozliv	676	5w40	NULL
+2232	Elf NF 5w40 1l (розлив)	650.00	0.00	1	elf-nf-5w40-1l-rozliv	676	5w40	NULL
+763	Масло Elf SXR 5w40 (синтетика) 4L	4390.00	0.00	1	maslo-elf-sxr-5w40-sintetika-4l	676	5w40	Elf/Total
+3440	Kixx 5w30 A3/B4 (Розлив)	690.00	0.00	1	kixx-5w30-a3-b4-rozliv	677	NULL	NULL
+3075	Kixx 5w40 A3/B4 (Розлив)	690.00	0.00	1	kixx-5w40-a3-b4-rozliv	677	5w40	NULL
+334	KIXX G1 5W40  (синтетика), 4л.	2690.00	0.00	1	kixx-g1-5w40-sn-cf-sintetika-4l.	677	5w40	Kixx
+3260	KIXX Pao 5w30 4л.	3490.00	0.00	1	kixx-pao-5w30-4l.	677	5w30	NULL
+3259	KIXX Pao 5w40 4л.	3990.00	0.00	1	kixx-pao-5w40-4l.	677	5w40	NULL
+3257	KIXX Pao C3 5w30 4л.	3490.00	0.00	1	kixx-pao-c3-5w30-4l.	677	5w30	NULL
+3258	KIXX Pao C3 5w40 4л.	3590.00	0.00	1	kixx-pao-c3-5w40-4l.	677	5w40	NULL
+3187	zic x9 5w30 4L	3800.00	0.00	1	zic-x9-5w30-4l	678	5w30	NULL
+3188	zic x9 ls 5w40	3800.00	0.00	1	zic-x9-ls-5w40	678	5w40	NULL
+3185	zic zero 0w20 4l	4200.00	0.00	1	zic-zero-0w20-4l	678	0w20	NULL
+781	ZIC Масло моторное 5W-40 X7 4L	3300.00	0.00	1	zic-maslo-motornoe-5w-40-x7-4l	678	5w40	ZIC
+783	ZIC Масло моторное 5W-40 X9 4L	3990.00	0.00	1	zic-maslo-motornoe-5w-40-x9-4l	678	5w40	ZIC
+3182	Rolf 5w30 1L (Розлив)	590.00	0.00	1	rolf-5w30-1l-rozliv	679	5w30	NULL
+3183	Rolf 5w40 1L (Розлив)	590.00	0.00	1	rolf-5w40-1l-rozliv	679	5w40	NULL
+2122	Rolf GT 5w30 (Синтетика) 4L	2890.00	0.00	1	rolf-gt-5w30-4l	679	5w30	NULL
+3441	Sintec Platinum 5w30 C2/C3 синтетика 1л (Розлив)	450.00	0.00	1	sintec-platinum-5w30-c2-c3-sintetika-1l-rozliv	680	5w30	NULL
+3143	Sintec Platinum 5w30 SL/CF синтетика 1л (Розлив)	450.00	0.00	1	sintec-platinum-5w30-sintetika-1l-rozliv	680	5w30	NULL
+3139	Sintec Platinum 5w40 синтетика 1л (Розлив)	450.00	0.00	1	sintec-platinum-5w40-sintetika-1l-rozliv	680	5w40	NULL
+3437	Totachi Grand Touring 5w40 4L	3490.00	0.00	1	totachi-grand-touring-5w40-4l	681	5w40	NULL
+3436	Totachi Light Vehicle 5w30 4L синтетика	2290.00	0.00	1	totachi-light-vehicle-5w30-4l-sintetika	681	5w30	NULL
+3435	Totachi Light Vehicle 5w40 4L синтетика	1990.00	0.00	1	totachi-light-vehicle-5w40-4l-sintetika	681	5w40	NULL
+3141	Totachi Niro LV ILSAC GF-5 5w30 (розлив) 1L	590.00	0.00	1	totachi-niro-optima-pro-5w30-a5-b5-sintetika-rozliv	681	5w30	NULL
+3140	Totachi Niro Optima Pro 5w40 (розлив) 1L	590.00	0.00	1	totachi-niro-optima-pro-5w40-sintetika-rozliv	681	5w40	NULL
+3877	ENEOS Premium Dieseil CI-4 5w40 4l	3590.00	0.00	1	eneos-premium-dieseil-ci-4-5w40-4l	682	NULL	NULL
+3631	Eneos Premium Touring 5w30 (Розлив)	690.00	650.00	1	eneos-premium-touring-5w30-rozliv	682	5w30	NULL
+3634	Eneos Premium Touring 5w40 (Розлив)	690.00	0.00	1	eneos-premium-touring-5w40-rozliv	682	5w40	NULL
+3871	Антифриз AGA (-65C) Желтый 5л	1150.00	0.00	1	antifriz-aga-65c-zheltyy-5l	683	NULL	NULL
+3298	Антифриз AGA L40 красный 5кг.	1050.00	0.00	1	antifriz-aga-l40-krasnyy-5kg.	683	NULL	NULL
+3296	Антифриз AGA L40 сине-зеленый 5кг.	990.00	0.00	1	antifriz-aga-l40-sine-zelenyy-5kg.	683	NULL	NULL
+3297	Антифриз AGA L42 зеленый 5кг.	1050.00	0.00	1	antifriz-aga-l42-zelenyy-5kg.	683	NULL	NULL
+3878	Антифриз CoolStream A-110 (Kia, Huindai) 5кг	1900.00	0.00	1	antifriz-coolstream-a-110-kia-huindai-5kg	683	NULL	NULL
+3879	Антифриз CoolStream JPN (красный) 5кг	2300.00	0.00	1	antifriz-coolstream-jpn-krasnyy-5kg	683	NULL	NULL
+3880	Антифриз CoolStream JPN (синий) 5кг	2300.00	0.00	1	antifriz-coolstream-jpn-siniy-5kg	683	NULL	NULL
+3884	Антифриз CoolStream Premium оранжевый 5кг	1900.00	0.00	1	antifriz-coolstream-premium-oranzhevyy-5kg	683	NULL	NULL
+3883	Антифриз CoolStream Standart зеленый 5кг	1300.00	0.00	1	antifriz-coolstream-standart-zelenyy-5kg	683	NULL	NULL
+3881	Антифриз CoolStream Standart, красный 5кг	1300.00	0.00	1	antifriz-coolstream-standart-krasnyy-5kg	683	NULL	NULL
+3299	Антифриз FELIX G11 зеленый 5кг.	1050.00	0.00	1	antifriz-felix-g11-zelenyy-5kg.	683	NULL	NULL
+3301	Антифриз FELIX G12 желтый 5кг.	1190.00	0.00	1	antifriz-felix-g12-zheltyy-5kg.	683	NULL	NULL
+3300	Антифриз FELIX G12+ красный 5кг.	1050.00	0.00	1	antifriz-felix-g12-krasnyy-5kg.	683	NULL	NULL
+3302	Антифриз Totachi Green 5L	1250.00	0.00	1	antifriz-totachi-green-4l	683	NULL	NULL
+3303	Антифриз Totachi RED 5L	1250.00	0.00	1	antifriz-totachi-red-4l	683	NULL	NULL
+3307	Тосол FELIX 10кг.	1690.00	0.00	1	tosol-felix-10kg.	683	NULL	NULL
+3306	Тосол FELIX 5кг.	890.00	0.00	1	tosol-felix-5kg.	683	NULL	NULL
+3381	Osram H1	250.00	0.00	1	osram-h1	685	NULL	NULL
+3375	Osram H4 Cool Blue	750.00	0.00	1	osram-h4-cool-blue	685	NULL	NULL
+3379	Osram H7 Cool Blue	850.00	0.00	1	osram-h7-cool-blue	685	NULL	NULL
+3380	Osram P21W	100.00	0.00	1	osram-p21w	685	NULL	NULL
+3383	Osram W16W	80.00	0.00	1	osram-w16w	685	NULL	NULL
+3382	Osram W21/5W	250.00	0.00	1	osram-w21-5w	685	NULL	NULL
+3384	osram W21W	120.00	0.00	1	osram-w21w	685	NULL	NULL
+3376	Osram w5w	60.00	0.00	1	osram-w5w	685	new	NULL
+3404	Champion Energy 5w40 4L	3690.00	0.00	1	champion-energy-5w40-4l	689	5w40	NULL
+3452	Nissan ATF Matic-D (розлив)	1100.00	1250.00	1	nissan-atf-matic-d-rozliv	691	NULL	NULL
+3500	Honda DW-1 (Розлив)	1250.00	1390.00	1	honda-dw-1-rozliv	692	NULL	NULL
+3635	Honda HCF-2 (розлив)	1500.00	2200.00	1	honda-hcf-2-rozliv	692	NULL	NULL
+3615	Kia/ Hyundai ATF SP- IV (розлив)	900.00	0.00	1	kia-hyundai-atf-sp-iv-rozliv	694	NULL	NULL
+3639	Cworks 5w30 синтетика  (Розлив)	690.00	0.00	1	cworks-5w30-rozliv	719	5w30	NULL
+3640	Cworks 5w40 синтетика (Розлив)	690.00	0.00	1	cworks-5w40-rozliv	719	5w40	NULL
+3717	Zeus super YT7B-BS AGM 7 А/ч Аккумулятор о/п 150*65*94	2500.00	0.00	1	zeus-super-yt7b-bs-agm-7-a-ch-akkumulyator-o-p-1506594	727	NULL	NULL
+3718	Zeus super YTX4L-BS AGM 4 А/ч Аккумулятор о/п 113*70*86	1700.00	0.00	1	zeus-super-ytx4l-bs-agm-4-a-ch-akkumulyator-o-p-1137086	727	NULL	NULL
+3980	Бампер передний Honda Crossroad	24500.00	0.00	1	bamper-peredniy-honda-crossrad	753	NULL	NULL
+3982	Вентилятор охлаждения Honda Crossroad	2000.00	0.00	1	ventilyatory-ohlazhdeniya-honda-crossroad	753	NULL	NULL
+3983	Вентилятор охлаждения с Расширительным бачком Honda Crossroad	3500.00	0.00	1	ventilyator-ohlazhdeniya-s-rasshiritelnym-bachkom-honda-crossroad	753	NULL	NULL
+3978	Решетка радиатора Honda Crossroad оригинал	10000.00	0.00	1	reshetka-radiatora-honda-crossroad-original	753	NULL	NULL
+3979	Телевизор в сборе для автомобиля Honda Crossroad	25000.00	0.00	1	televizor-v-sbore-dlya-avtomobilya-honda-crossroad	753	NULL	NULL
+3981	Фары honda crossroad правая левая koito	10000.00	0.00	2	fary-honda-crossroad-pravaya-levaya-koito	753	NULL	NULL
+

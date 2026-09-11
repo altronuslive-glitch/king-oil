@@ -78,16 +78,16 @@
           </div>
         </div>
         <nav class="header__top-nav">
-          <a class="link" href="about.html">О компании</a>
-          <a class="link" href="payment.html">Оплата</a>
+          <a class="link" href="about.html" data-cs-page="2">О компании</a>
+          <a class="link" href="payment.html" data-cs-page="22">Оплата</a>
           <a class="link" href="reviews.html">Отзывы</a>
-          <a class="link" href="contacts.html">Контакты</a>
-          <a class="link link--accent" href="loyalty.html">Бонусные баллы</a>
+          <a class="link" href="contacts.html" data-cs-page="20">Контакты</a>
+          <a class="link link--accent" href="loyalty.html" data-cs-page="23">Бонусные баллы</a>
         </nav>
       </div>
       <div class="header__top-right">
         <a class="link" href="tel:+73812475777" data-city-phone>8 (3812) 475-777</a>
-        <a class="link" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
+        <a class="link" href="mailto:king-oil@yandex.ru">king-oil@yandex.ru</a>
       </div>
     </div>
   </div>
@@ -137,31 +137,34 @@
             <!-- «Показать все» стоит строкой под списком, а не в заголовке группы:
                  при вводе запроса ссылка на полную выдачу выглядит именно так,
                  и два разных вида одной ссылки путали (10 сентября 2026) -->
+            <!-- Популярные товары — реальные позиции витрины «Омск», data-product-id —
+                 product_id CS-Cart, названия как в каталоге (снимок docs/data/, 11.09.2026).
+                 TODO: интеграция — список отдаёт бэкенд (хиты продаж / Searchanise) -->
             <div class="search__group" data-search-popular>
               <div class="search__group-head"><span>Популярные товары</span></div>
-              <a class="search__product" href="product.html">
+              <a class="search__product" href="product.html" data-product-id="3635">
                 <img src="img/products/p51.jpg" width="40" height="40" alt="" loading="lazy">
                 <span><span class="search__product-name">Honda HCF-2 (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
               </a>
-              <a class="search__product" href="product.html">
+              <a class="search__product" href="product.html" data-product-id="3470">
                 <img src="img/products/p52.jpg" width="40" height="40" alt="" loading="lazy">
-                <span><span class="search__product-name">Mazda ATF M-V (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
+                <span><span class="search__product-name">Mazda ATF M-V (Розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
               </a>
-              <a class="search__product" href="product.html">
+              <a class="search__product" href="product.html" data-product-id="3452">
                 <img src="img/products/p53.jpg" width="40" height="40" alt="" loading="lazy">
-                <span><span class="search__product-name">Nissan ATF Matic D (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
+                <span><span class="search__product-name">Nissan ATF Matic-D (розлив)</span><br><span class="search__product-cat">Трансмиссионные</span></span>
               </a>
               <!-- Шесть позиций — столько же, сколько живая выдача по запросу
                    (SEARCH_LIMIT в js/main.js). Просьба заказчика 10 сентября 2026 -->
-              <a class="search__product" href="product.html">
+              <a class="search__product" href="product.html" data-product-id="497">
                 <img src="img/products/p16.jpg" width="40" height="40" alt="" loading="lazy">
                 <span><span class="search__product-name">Castrol Edge 5W-30 LL (синтетика) 4 л</span><br><span class="search__product-cat">Моторные масла</span></span>
               </a>
-              <a class="search__product" href="product.html">
+              <a class="search__product" href="product.html" data-product-id="378">
                 <img src="img/products/p25.jpg" width="40" height="40" alt="" loading="lazy">
-                <span><span class="search__product-name">Лукойл Genesis Universal П/Синт 10w40 4 л</span><br><span class="search__product-cat">Моторные масла</span></span>
+                <span><span class="search__product-name">Лукойл Genesis Universal П/Синт 10w40 4 л.</span><br><span class="search__product-cat">Моторные масла</span></span>
               </a>
-              <a class="search__product" href="product.html">
+              <a class="search__product" href="product.html" data-product-id="799">
                 <img src="img/products/p14.jpg" width="40" height="40" alt="" loading="lazy">
                 <span><span class="search__product-name">CASTROL 5W-30 MAGNATEC AP 4L</span><br><span class="search__product-cat">Моторные масла</span></span>
               </a>
@@ -237,14 +240,16 @@
   <!-- Ряд 3: категории -->
   <nav class="header__nav">
     <div class="container">
-      <a href="category.html">Моторные масла</a>
-      <a href="category.html">Трансмиссионные</a>
-      <a href="category.html">Антифриз</a>
-      <a href="category.html">Аккумуляторы</a>
-      <a href="category.html">Фильтры</a>
-      <a href="category.html">Лампы</a>
-      <a href="promo.html">Акции</a>
-      <a href="contacts.html">Контакты</a>
+      <!-- data-cs-category / data-cs-page — ID категории и страницы в CS-Cart (витрина «Омск»,
+           company_id = 1), см. docs/28-admin-audit.md -->
+      <a href="category.html" data-cs-category="166">Моторные масла</a>
+      <a href="category.html" data-cs-category="203">Трансмиссионные</a>
+      <a href="category.html" data-cs-category="683">Антифриз</a>
+      <a href="category.html" data-cs-category="250">Аккумуляторы</a>
+      <a href="category.html" data-cs-category="323">Фильтры</a>
+      <a href="category.html" data-cs-category="526">Лампы</a>
+      <a href="promo.html" data-cs-page="66">Акции</a>
+      <a href="contacts.html" data-cs-page="20">Контакты</a>
     </div>
   </nav>
 
@@ -257,31 +262,34 @@
 <div class="mega" hidden data-panel="mega">
   <div class="mega__box">
     <div class="mega__aside">
-      <button class="mega__cat is-active" type="button" data-mega-cat="0">Моторные масла</button>
-      <button class="mega__cat" type="button" data-mega-cat="1">Трансмиссионные масла</button>
-      <button class="mega__cat" type="button" data-mega-cat="2">Антифриз</button>
-      <button class="mega__cat" type="button" data-mega-cat="3">Аккумуляторы</button>
-      <button class="mega__cat" type="button" data-mega-cat="4">Фильтры</button>
-      <button class="mega__cat" type="button" data-mega-cat="5">Лампы</button>
+      <button class="mega__cat is-active" type="button" data-mega-cat="0" data-cs-category="166">Моторные масла</button>
+      <button class="mega__cat" type="button" data-mega-cat="1" data-cs-category="203">Трансмиссионные масла</button>
+      <button class="mega__cat" type="button" data-mega-cat="2" data-cs-category="683">Антифриз</button>
+      <button class="mega__cat" type="button" data-mega-cat="3" data-cs-category="250">Аккумуляторы</button>
+      <button class="mega__cat" type="button" data-mega-cat="4" data-cs-category="323">Фильтры</button>
+      <button class="mega__cat" type="button" data-mega-cat="5" data-cs-category="526">Лампы</button>
     </div>
     <div class="mega__content">
-      <!-- Бренды взяты из меню тестового сайта kingoil.itb-dev.ru -->
+      <!-- Бренды — как в «Главном меню» боевого king-oil.ru (блок #9). data-cs-category — ID
+           подкатегории в CS-Cart. Пункты без атрибута в каталоге подкатегорий не имеют:
+           у «Антифриза» и «Фильтров» подразделов нет вообще, у «Ламп» нет «H4 / H7».
+           Их придётся либо завести, либо заменить фильтром — docs/28-admin-audit.md -->
       <div class="mega__group is-active" data-mega-panel="0">
         <h2 class="h3 mega__title">Моторные масла</h2>
         <div class="mega__links">
-          <a href="category.html">Оригинальные масла</a><a href="category.html">ЛУКОЙЛ</a><a href="category.html">BARDAHL</a>
-          <a href="category.html">CASTROL</a><a href="category.html">CHAMPION</a><a href="category.html">ENI</a>
-          <a href="category.html">ELF</a><a href="category.html">ENEOS</a><a href="category.html">FQ</a>
-          <a href="category.html">G-ENERGY</a><a href="category.html">IDEMITSU</a><a href="category.html">KIXX</a>
+          <a href="category.html" data-cs-category="174">Оригинальные масла</a><a href="category.html" data-cs-category="270">ЛУКОЙЛ</a><a href="category.html" data-cs-category="671">BARDAHL</a>
+          <a href="category.html" data-cs-category="276">CASTROL</a><a href="category.html" data-cs-category="689">CHAMPION</a><a href="category.html" data-cs-category="337">ENI</a>
+          <a href="category.html" data-cs-category="676">ELF</a><a href="category.html" data-cs-category="682">ENEOS</a><a href="category.html" data-cs-category="530">FQ</a>
+          <a href="category.html" data-cs-category="272">G-ENERGY</a><a href="category.html" data-cs-category="301">IDEMITSU</a><a href="category.html" data-cs-category="677">KIXX</a>
         </div>
       </div>
       <div class="mega__group" data-mega-panel="1">
         <h2 class="h3 mega__title">Трансмиссионные масла</h2>
         <div class="mega__links">
-          <a href="category.html">NGN</a><a href="category.html">TOYOTA</a><a href="category.html">TOTACHI</a>
-          <a href="category.html">NISSAN</a><a href="category.html">HONDA</a><a href="category.html">MITSUBISHI</a>
-          <a href="category.html">KIA / HYUNDAI</a><a href="category.html">MAZDA</a><a href="category.html">GM</a>
-          <a href="category.html">ZIC</a><a href="category.html">MERCEDES</a><a href="category.html">ЛУКОЙЛ</a>
+          <a href="category.html" data-cs-category="297">NGN</a><a href="category.html" data-cs-category="307">TOYOTA</a><a href="category.html" data-cs-category="331">TOTACHI</a>
+          <a href="category.html" data-cs-category="691">NISSAN</a><a href="category.html" data-cs-category="692">HONDA</a><a href="category.html" data-cs-category="693">MITSUBISHI</a>
+          <a href="category.html" data-cs-category="694">KIA / HYUNDAI</a><a href="category.html" data-cs-category="706">MAZDA</a><a href="category.html" data-cs-category="707">GM</a>
+          <a href="category.html" data-cs-category="708">ZIC</a><a href="category.html" data-cs-category="709">MERCEDES</a><a href="category.html" data-cs-category="738">ЛУКОЙЛ</a>
         </div>
       </div>
       <div class="mega__group" data-mega-panel="2">
@@ -294,9 +302,9 @@
       <div class="mega__group" data-mega-panel="3">
         <h2 class="h3 mega__title">Аккумуляторы</h2>
         <div class="mega__links">
-          <a href="category.html">Tubor</a><a href="category.html">Topla</a><a href="category.html">Tyumen</a>
-          <a href="category.html">Mutlu</a><a href="category.html">BORG / UNO / Dominator</a><a href="category.html">Zeus</a>
-          <a href="category.html">XTREME</a><a href="category.html">Forse / Sebang</a>
+          <a href="category.html" data-cs-category="494">Tubor</a><a href="category.html" data-cs-category="313">Topla</a><a href="category.html" data-cs-category="317">Tyumen</a>
+          <a href="category.html" data-cs-category="321">Mutlu</a><a href="category.html" data-cs-category="327">BORG / UNO / Dominator</a><a href="category.html" data-cs-category="727">Zeus</a>
+          <a href="category.html" data-cs-category="737">XTREME</a><a href="category.html" data-cs-category="752">Forse / Sebang</a>
         </div>
       </div>
       <div class="mega__group" data-mega-panel="4">
@@ -308,7 +316,7 @@
       <div class="mega__group" data-mega-panel="5">
         <h2 class="h3 mega__title">Лампы</h2>
         <div class="mega__links">
-          <a href="category.html">Галогеновые</a><a href="category.html">LED</a><a href="category.html">Ксенон</a><a href="category.html">H4 / H7</a>
+          <a href="category.html" data-cs-category="685">Галогеновые</a><a href="category.html" data-cs-category="684">LED</a><a href="category.html" data-cs-category="688">Ксенон</a><a href="category.html">H4 / H7</a>
         </div>
       </div>
     </div>
@@ -324,15 +332,15 @@
   <button class="mobile-menu__close" type="button" data-close aria-label="Закрыть меню"><svg><use href="#i-close"></use></svg></button>
   <!-- Заказы, избранное и каталог из меню убраны: в таббаре у них свои кнопки,
        а «Каталог» ещё и отдельной кнопкой в шапке. Решение от 10 сентября -->
-  <a class="mobile-menu__link" href="promo.html">Акции</a>
-  <a class="mobile-menu__link" href="about.html">О компании</a>
-  <a class="mobile-menu__link" href="delivery.html">Доставка</a>
-  <a class="mobile-menu__link" href="payment.html">Оплата</a>
-  <a class="mobile-menu__link" href="how-to-buy.html">Как купить</a>
-  <a class="mobile-menu__link" href="returns.html">Возврат и обмен</a>
-  <a class="mobile-menu__link" href="loyalty.html">Бонусные баллы</a>
+  <a class="mobile-menu__link" href="promo.html" data-cs-page="66">Акции</a>
+  <a class="mobile-menu__link" href="about.html" data-cs-page="2">О компании</a>
+  <a class="mobile-menu__link" href="delivery.html" data-cs-page="22">Доставка</a>
+  <a class="mobile-menu__link" href="payment.html" data-cs-page="22">Оплата</a>
+  <a class="mobile-menu__link" href="how-to-buy.html" data-cs-page="49">Как купить</a>
+  <a class="mobile-menu__link" href="returns.html" data-cs-page="21">Возврат и обмен</a>
+  <a class="mobile-menu__link" href="loyalty.html" data-cs-page="23">Бонусные баллы</a>
   <a class="mobile-menu__link" href="reviews.html">Отзывы</a>
-  <a class="mobile-menu__link" href="contacts.html">Контакты</a>
+  <a class="mobile-menu__link" href="contacts.html" data-cs-page="20">Контакты</a>
   <div class="mobile-menu__contacts">
     <a class="mobile-menu__phone" href="tel:+73812475777" data-city-phone>8 (3812) 475-777</a>
     <a class="text-small text-accent" href="tel:+78007007874">8 800 700 7874 — по РФ бесплатно</a>
@@ -366,7 +374,7 @@
           <p class="contacts__note">Бесплатно по России — <a href="tel:+78007007874">8 800 700 7874</a></p>
         </li>
         <li>
-          <a class="contacts__value" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
+          <a class="contacts__value" href="mailto:king-oil@yandex.ru">king-oil@yandex.ru</a>
           <p class="contacts__note">Ответим в течение рабочего дня</p>
         </li>
         <li>
@@ -482,7 +490,7 @@
         <p class="footer__about">Оригинальные моторные масла, антифризы и автотовары. Прямые поставки от авторизованных дистрибьюторов.</p>
         <div class="footer__contacts">
           <a class="footer__phone" href="tel:+73812475777" data-city-phone>8 (3812) 475-777</a>
-          <a class="footer__mail" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
+          <a class="footer__mail" href="mailto:king-oil@yandex.ru">king-oil@yandex.ru</a>
         </div>
         <p class="footer__hours">Пн–Сб 9–20, Вс 10–19</p>
       </div>
@@ -490,27 +498,30 @@
       <nav class="footer__col">
         <p class="footer__col-title">Каталог</p>
         <ul class="footer__links">
-          <li><a href="category.html">Моторные масла</a></li>
-          <li><a href="category.html">Трансмиссионные масла</a></li>
-          <li><a href="category.html">Антифриз</a></li>
-          <li><a href="category.html">Аккумуляторы</a></li>
-          <li><a href="category.html">Фильтры</a></li>
-          <li><a href="category.html">Лампы</a></li>
+          <!-- data-cs-category / data-cs-page — ID в CS-Cart, см. docs/28-admin-audit.md -->
+          <li><a href="category.html" data-cs-category="166">Моторные масла</a></li>
+          <li><a href="category.html" data-cs-category="203">Трансмиссионные масла</a></li>
+          <li><a href="category.html" data-cs-category="683">Антифриз</a></li>
+          <li><a href="category.html" data-cs-category="250">Аккумуляторы</a></li>
+          <li><a href="category.html" data-cs-category="323">Фильтры</a></li>
+          <li><a href="category.html" data-cs-category="526">Лампы</a></li>
         </ul>
       </nav>
 
       <nav class="footer__col">
         <p class="footer__col-title">Покупателям</p>
         <ul class="footer__links">
-          <li><a href="about.html">О компании</a></li>
-          <li><a href="how-to-buy.html">Как купить</a></li>
-          <li><a href="loyalty.html">Бонусные баллы</a></li>
-          <li><a href="delivery.html">Доставка</a></li>
-          <li><a href="payment.html">Оплата</a></li>
-          <li><a href="returns.html">Возврат и обмен</a></li>
+          <!-- «Доставка» и «Оплата» в CS-Cart — одна страница «Оплата и доставка» (#22).
+               «Отзывов» среди страниц нет: их нужно завести -->
+          <li><a href="about.html" data-cs-page="2">О компании</a></li>
+          <li><a href="how-to-buy.html" data-cs-page="49">Как купить</a></li>
+          <li><a href="loyalty.html" data-cs-page="23">Бонусные баллы</a></li>
+          <li><a href="delivery.html" data-cs-page="22">Доставка</a></li>
+          <li><a href="payment.html" data-cs-page="22">Оплата</a></li>
+          <li><a href="returns.html" data-cs-page="21">Возврат и обмен</a></li>
           <li><a href="reviews.html">Отзывы</a></li>
-          <li><a href="promo.html">Акции</a></li>
-          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="promo.html" data-cs-page="66">Акции</a></li>
+          <li><a href="contacts.html" data-cs-page="20">Контакты</a></li>
         </ul>
       </nav>
 
@@ -533,7 +544,7 @@
 
     <div class="footer__copy">
       <span>© 2004–<span data-year>2026</span> King-Oil. Все права защищены.</span>
-      <a href="legal.html">Политика конфиденциальности</a>
+      <a href="legal.html" data-cs-page="3">Политика конфиденциальности</a>
       <!-- Реквизиты сверены с king-oil.ru (страница «Контакты», блок «О нас») -->
       <span class="footer__legal">ООО «Сити Ойл» · ОГРН 1205500020318 · ИНН 5503193478</span>
     </div>

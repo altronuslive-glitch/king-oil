@@ -293,6 +293,8 @@ textarea.input { min-height: 96px; resize: vertical; }
 }
 .chip:hover { background: var(--ko-bg-2); }
 
+/* Вкладка объёма в карточке товара. С 11.09.2026 чужой объём — ссылка <a> на соседний
+   товар CS-Cart, текущий — <span class="is-active">; правило одинаково для обоих */
 .tabs-border {
   display: inline-flex;
   align-items: center;
@@ -418,9 +420,14 @@ textarea.input { min-height: 96px; resize: vertical; }
 }
 .product-card__title:hover { color: var(--ko-text-accent); }
 
-/* Выбор объёма: варианты одного товара, клик меняет цену на месте */
+/* Чипсы объёма: соседние товары CS-Cart (каждый объём — отдельный товар, решение
+   заказчика 11.09.2026). Чужой объём — ссылка <a>, свой — <span class="is-active">;
+   раньше это были <button>, которые меняли цену на месте. inline-flex центрирует
+   подпись так же, как это делала кнопка, — габарит 28 px не меняется */
 .product-card__volumes { display: flex; gap: var(--ko-space-8); margin-top: var(--ko-space-20); }
 .volume {
+  display: inline-flex;
+  align-items: center;
   height: 28px;
   padding: 0 var(--ko-space-10);
   border: 2px solid var(--ko-border-1);

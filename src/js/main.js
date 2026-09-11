@@ -270,16 +270,16 @@
   /* ---------------------------------------------------------
      «Купить в 1 клик»: сразу на оформление заказа с этим товаром
      --------------------------------------------------------- */
-  // TODO: интеграция — на бэкенде по этим параметрам собирается заказ из одной позиции
+  // TODO: интеграция — на бэкенде по этим параметрам собирается заказ из одной позиции.
+  // Товар задаёт product_id CS-Cart (data-product-id на .product-info): объём — часть
+  // товара, а артикулов в каталоге нет (docs/28-admin-audit.md), поэтому других параметров нет
   $$('[data-buy-now]').forEach((link) => {
     link.addEventListener('click', (e) => {
       const info = link.closest('.product-info') || document;
       const qty = $('.stepper__input', info);
-      const volume = $('[data-tabs] .is-active', info);
+      const product = link.closest('[data-product-id]');
       const params = new URLSearchParams({ mode: 'buy-now' });
-      const sku = (volume && volume.dataset.sku) || link.dataset.sku;
-      if (sku) params.set('sku', sku);
-      if (volume) params.set('volume', volume.textContent.trim());
+      if (product) params.set('product_id', product.dataset.productId);
       if (qty) params.set('qty', qty.value || '1');
       e.preventDefault();
       location.href = `${link.getAttribute('href')}?${params}`;
@@ -831,28 +831,19 @@
     filters: {},
   };
 
-  /* Цена карточки — у выбранного объёма: чипсы меняют её на месте */
+  /* Цена карточки. Чипсы объёма — ссылки на соседние товары и цену на месте
+     не меняют (решение заказчика 11.09.2026), поэтому цена всегда в .product-card__price */
   function cardPrice(card) {
-    const active = $('.product-card__volumes .volume.is-active', card);
-    if (active && active.dataset.price) return KO.money.parse(active.dataset.price);
     const box = $('.product-card__price', card);
     return box ? KO.money.parse(box.textContent) : 0;
-  }
-
-  /* Объёмы карточки — из чипсов, отдельного атрибута для них не нужно */
-  function cardVolumes(card) {
-    return $$('.product-card__volumes .volume', card).map((v) => v.textContent.trim());
   }
 
   function matchesFilters(card) {
     return Object.keys(catalog.filters).every((group) => {
       const picked = catalog.filters[group];
       if (!picked.length) return true;
-      // Внутри группы — «или», между группами — «и»
-      if (group === 'volume') {
-        const volumes = cardVolumes(card);
-        return picked.some((v) => volumes.indexOf(v) !== -1);
-      }
+      // Внутри группы — «или», между группами — «и». Объём тоже лежит в data-volume:
+      // чипсы карточки — соседние товары, фильтровать по ним нельзя
       return picked.indexOf(card.dataset[group] || '') !== -1;
     });
   }
@@ -1072,18 +1063,14 @@
   });
 
   /* ---------------------------------------------------------
-     Табы-переключатели (выбор объёма в карточке товара)
+     Объём в карточке товара. В CS-Cart каждый объём — отдельный товар, поэтому
+     чужие объёмы — ссылки на свои страницы, и переключать на месте нечего
+     (решение заказчика 11.09.2026; раньше вкладка меняла цену и артикул без перехода —
+     решение №37 от 4 сентября). Текущий объём — [data-tab] с ценой и наличием,
+     из него данные подставляются один раз при загрузке
      --------------------------------------------------------- */
-  $$('[data-tabs]').forEach((group) => {
-    group.addEventListener('click', (e) => {
-      const tab = e.target.closest('[data-tab]');
-      if (!tab) return;
-      $$('[data-tab]', group).forEach((t) => t.classList.toggle('is-active', t === tab));
-      if (tab.dataset.stock !== undefined) applyStock(tab);
-    });
-  });
 
-  /* Цена, старая цена, скидка, артикул и единица — свои у каждого объёма */
+  /* Цена, старая цена, скидка и единица — у текущего объёма */
   function applyVolumePrice(tab, info) {
     const volume = tab.textContent.trim();
     const now = tab.dataset.price;
@@ -1093,13 +1080,11 @@
     const oldEl   = $('.product-info__price-old', info);
     const unitEl  = $('.product-info__price-unit', info);
     const badgeEl = $('[data-sale-badge]', info);
-    const skuEl   = $('[data-sku-value]', info);
     const tagEl   = $('[data-volume-tag]', info);
 
     if (nowEl && now) nowEl.textContent = now;
     if (unitEl) unitEl.textContent = '/ ' + volume;
     if (tagEl) tagEl.textContent = volume.toUpperCase();
-    if (skuEl && tab.dataset.sku) skuEl.textContent = tab.dataset.sku;
 
     if (oldEl) {
       oldEl.textContent = old || '';
@@ -1115,10 +1100,10 @@
     }
   }
 
-  /* Объём — вариант одного товара: клик меняет цену, артикул, единицу и наличие
-     на месте, без перехода на другую страницу (решение №37 от 4 сентября).
-     У закончившегося варианта строка наличия становится серой, «В корзину»
-     и степпер прячутся, вместо них — «Уведомить о поступлении».
+  /* Наличие текущего объёма. У закончившегося товара строка наличия становится
+     серой, «В корзину» и степпер прячутся, вместо них — «Уведомить о поступлении».
+     Остаток в CS-Cart — признак «есть / нет» (почти у всех товаров стоит 1), а не
+     склад: число штук не показываем и степпер им не ограничиваем (docs/28-admin-audit.md).
      Состояния «нет в наличии» в макете нет — см. docs/22-stock-states.md */
   function applyStock(tab) {
     const info = tab.closest('.product-info');
@@ -1126,8 +1111,7 @@
 
     applyVolumePrice(tab, info);
 
-    const left    = Number(tab.dataset.stock);
-    const inStock = left > 0;
+    const inStock = Number(tab.dataset.stock) > 0;
     const line    = $('[data-stock-line]', info);
     const buy     = $('[data-add-to-cart]', info);
     const notify  = $('[data-notify]', info);
@@ -1135,22 +1119,13 @@
     const oneClick = $('[data-buy-now]', info);
 
     if (line) {
-      line.textContent = inStock
-        ? `В наличии — ${left} шт на складе`
-        : 'Нет в наличии — привезём под заказ';
+      line.textContent = inStock ? 'В наличии' : 'Нет в наличии — привезём под заказ';
       line.classList.toggle('product-info__stock--out', !inStock);
     }
     if (buy) buy.hidden = !inStock;
     if (oneClick) oneClick.hidden = !inStock;
     if (stepper) stepper.hidden = !inStock;
     if (notify) notify.hidden = inStock;
-
-    // Верхнюю границу степпера держим равной остатку
-    const qty = stepper && $('.stepper__input', stepper);
-    if (qty && inStock) {
-      qty.max = String(left);
-      if (Number(qty.value) > left) qty.value = String(left);
-    }
   }
 
   const activeVolume = $('[data-tabs] [data-tab].is-active[data-stock]');
@@ -1250,8 +1225,9 @@
   }
 
   /* Карточка товара в разметке → позиция корзины.
-     Читаем из DOM, а не из data-атрибутов: карточка одна и та же
-     на главной, в каталоге, в избранном и в «похожих» */
+     Читаем из DOM: карточка одна и та же на главной, в каталоге, в избранном
+     и в «похожих». Идентификатор — product_id CS-Cart из data-product-id
+     (11.09.2026); «название + объём» остаётся запасным для карточек без ID */
   function cardData(card) {
     const titleEl = $('.product-card__title', card);
     const title = (titleEl ? titleEl.textContent : '').trim();
@@ -1263,13 +1239,13 @@
     const priceNode = priceBox && [...priceBox.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
     const old = priceBox && $('.product-card__price-old', priceBox);
     return {
-      id: KO.productId(title, volume),
+      id: card.dataset.productId || KO.productId(title, volume),
       title,
       volume,
-      // Чипсы объёма нужны, чтобы карточку можно было нарисовать заново
-      // на странице избранного
+      // Чипсы объёма нужны, чтобы карточку можно было нарисовать заново на странице
+      // избранного. Чужой объём — ссылка на соседний товар, поэтому храним его ID
       volumes: $$('.product-card__volumes .volume', card)
-        .map((v) => ({ label: v.textContent.trim(), price: v.dataset.price || '' })),
+        .map((v) => ({ label: v.textContent.trim(), id: v.dataset.productId || '' })),
       price: priceNode ? priceNode.textContent.trim() : (priceBox ? priceBox.textContent.trim() : '0'),
       old: old ? old.textContent.trim() : '',
       img: img ? img.getAttribute('src') : '',
@@ -1282,11 +1258,14 @@
      поэтому у него data-wish-remove и класс is-active */
   function favCardHtml(item) {
     const href = escapeHtml(item.href || 'product.html');
-    const volumes = (item.volumes || []).map((v) =>
-      '<button class="volume' + (v.label === item.volume ? ' is-active' : '') + '" type="button"'
-      + (v.price ? ' data-price="' + escapeHtml(v.price) + '"' : '') + '>'
-      + escapeHtml(v.label) + '</button>').join('');
-    return '<article class="product-card" data-fav-id="' + escapeHtml(item.id) + '">'
+    const volumes = (item.volumes || []).map((v) => (v.label === item.volume
+      ? '<span class="volume is-active">' + escapeHtml(v.label) + '</span>'
+      : '<a class="volume" href="' + href + '" data-product-id="' + escapeHtml(v.id || '') + '">'
+        + escapeHtml(v.label) + '</a>')).join('');
+    // data-product-id нужен, чтобы «В корзину» с этой страницы дал ту же позицию,
+    // что и с каталога; у записей старого формата (название + объём) его нет
+    const productId = /^\d+$/.test(String(item.id)) ? ' data-product-id="' + item.id + '"' : '';
+    return '<article class="product-card" data-fav-id="' + escapeHtml(item.id) + '"' + productId + '>'
       + '<a class="product-card__media" href="' + href + '">'
       + '<img src="' + escapeHtml(item.img) + '" width="560" height="560" alt="'
       + escapeHtml(item.title) + '" loading="lazy"></a>'
@@ -1367,14 +1346,13 @@
     const card = opener.closest('.product-card');
     const info = opener.closest('.product-info');
     let name = '';
+    // Объём — часть названия товара в CS-Cart, отдельно его не дописываем
     if (card) {
       const title = $('.product-card__title', card);
-      const volume = $('.product-card__volumes .volume.is-active', card);
-      name = (title ? title.textContent.trim() : '') + (volume ? ', ' + volume.textContent.trim() : '');
+      name = title ? title.textContent.trim() : '';
     } else if (info) {
       const heading = $('h1');
-      const tab = $('[data-tabs] [data-tab].is-active', info);
-      name = (heading ? heading.textContent.trim() : '') + (tab ? ', ' + tab.textContent.trim() : '');
+      name = heading ? heading.textContent.trim() : '';
     }
     $$('[data-notify-product]').forEach((el) => { el.textContent = name || 'товар'; });
   });
@@ -1434,34 +1412,35 @@
     toastTimer = setTimeout(hideToast, 5000);
   }
 
-  /* Карточка товара: «В корзину» берёт выбранный объём и количество */
+  /* Карточка товара: «В корзину» берёт текущий товар (product_id CS-Cart) и количество */
   const productAdd = $('[data-add-to-cart]');
   if (productAdd) {
     productAdd.addEventListener('click', () => {
       const info = productAdd.closest('.product-info') || document;
+      const product = productAdd.closest('[data-product-id]');
       const tab = $('[data-tabs] [data-tab].is-active', info);
       const qty = $('.stepper__input', info);
       const priceNow = $('.product-info__price-now', info);
       const priceOld = $('.product-info__price-old', info);
       const heading = $('h1');
       const img = $('.gallery__main img');
-      const oneClick = $('[data-buy-now]', info);
       const title = (heading ? heading.textContent : '').trim();
       const item = {
-        id: KO.productId(title, tab ? tab.textContent.trim() : ''),
+        id: (product && product.dataset.productId) || KO.productId(title, tab ? tab.textContent.trim() : ''),
         title,
         volume: tab ? tab.textContent.trim() : '',
-        sku: (tab && tab.dataset.sku) || (oneClick && oneClick.dataset.sku) || '',
         price: priceNow ? priceNow.textContent.trim() : '0',
         old: priceOld ? priceOld.textContent.trim() : '',
         img: img ? img.getAttribute('src') : '',
         href: 'product.html',
-        max: tab && tab.dataset.stock ? Number(tab.dataset.stock) : 99,
+        // Остаток в CS-Cart — признак «есть / нет», предел количества задаёт степпер
+        max: (qty && Number(qty.max)) || 99,
         qty: qty ? Number(qty.value) || 1 : 1,
       };
       KO.cart.add(item);
-      // Подпись кнопки не трогаем: обратную связь даёт плашка внизу экрана
-      showToast(item.title + (item.volume ? ', ' + item.volume : ''));
+      // Подпись кнопки не трогаем: обратную связь даёт плашка внизу экрана.
+      // Объём в названии уже есть — так товары названы в CS-Cart
+      showToast(item.title);
     });
   }
 
@@ -1476,14 +1455,15 @@
     const cartRowHtml = (item) => {
       const sum = KO.money.format(KO.money.parse(item.price) * item.qty);
       const stockClass = item.stockLow ? ' cart-row__stock--low' : '';
-      const name = item.title + (item.volume ? ', ' + item.volume : '');
+      // Объём — часть названия (так товары названы в CS-Cart); артикулов в каталоге
+      // нет, строки «Артикул …» под названием больше нет (решение заказчика 11.09.2026)
+      const name = item.title;
       const href = escapeHtml(item.href || 'product.html');
       return '<article class="cart-row" data-cart-id="' + escapeHtml(item.id) + '">'
         + '<a class="cart-row__media" href="' + href + '"><img src="' + escapeHtml(item.img)
         + '" width="560" height="560" alt="' + escapeHtml(name) + '" loading="lazy"></a>'
         + '<div class="cart-row__info">'
         + '<a class="cart-row__title" href="' + href + '">' + escapeHtml(name) + '</a>'
-        + '<p class="cart-row__meta">' + (item.sku ? 'Артикул ' + escapeHtml(item.sku) : '') + '</p>'
         + '<p class="cart-row__stock' + stockClass + '">' + escapeHtml(item.stock || 'В наличии') + '</p>'
         + '</div>'
         + '<p class="cart-row__unit"><span class="cart-row__label">Цена</span>' + escapeHtml(item.price) + '</p>'
@@ -1578,8 +1558,7 @@
     // Состав заказа на оформлении
     $$('[data-cart-items]').forEach((box) => {
       box.innerHTML = items.map((i) => {
-        const name = i.title + (i.volume ? ', ' + i.volume : '');
-        return '<li><span>' + escapeHtml(name) + ' × ' + i.qty + '</span>'
+        return '<li><span>' + escapeHtml(i.title) + ' × ' + i.qty + '</span>'
           + '<span>' + KO.money.format(KO.money.parse(i.price) * i.qty) + '</span></li>';
       }).join('');
     });
@@ -1686,31 +1665,36 @@
      Выбор города: подставляет телефон, адрес, часы и точки на карте.
      Данные — с king-oil.ru, координаты точек получены геокодером по адресам.
      --------------------------------------------------------- */
-  // Точки самовывоза с king-oil.ru. Координаты получены геокодером по адресам
-  // (Енисейская, 1 — под вопросом, см. docs/13-open-questions.md).
+  // Точки самовывоза — из модуля «Магазины и пункты самовывоза» админки king-oil.ru
+  // (11.09.2026): координаты, телефоны точек и store — ID точки в CS-Cart (store_location_id).
+  // Енисейская, 1 раньше стояла по геокодеру (54.9877, 73.3314), теперь — как в админке.
+  // Часы Тюмени в админке «Пн–Вс 09:00–20:00» — расходится с этим файлом, вопрос №50
+  // в docs/13-open-questions.md. Подробности — docs/28-admin-audit.md.
   const CITIES = {
     omsk: {
       name: 'Омск',
       dative: 'Омску',
+      csCompany: 1,  // витрина CS-Cart «Омск» — www.king-oil.ru
       phone: '8 (3812) 475-777',
       tel: '+73812475777',
       center: [55.02, 73.33],
       zoom: 11,
       points: [
-        { address: 'г. Омск, ул. Герцена, 197А',   hours: 'Пн–Сб 9:00–20:00, Вс 10:00–19:00', coords: [55.0176798, 73.3748215], main: true },
-        { address: 'г. Омск, ул. Енисейская, 1',    hours: 'Пн–Сб 9:00–20:00, Вс 10:00–19:00', coords: [54.9877034, 73.3313739] },
-        { address: 'г. Омск, ул. Энтузиастов, 2/2', hours: 'Пн–Сб 9:00–20:00, Вс 10:00–19:00', coords: [55.0473865, 73.2796678] }
+        { store: 10, address: 'г. Омск, ул. Герцена, 197А',   hours: 'Пн–Сб 9:00–20:00, Вс 10:00–19:00', coords: [55.017694, 73.374797], phone: '8 (3812) 475-777', tel: '+73812475777', main: true },
+        { store: 9,  address: 'г. Омск, ул. Енисейская, 1',    hours: 'Пн–Сб 9:00–20:00, Вс 10:00–19:00', coords: [54.975357, 73.341828], phone: '8 (3812) 50-89-35', tel: '+73812508935' },
+        { store: 32, address: 'г. Омск, ул. Энтузиастов, 2/2', hours: 'Пн–Сб 9:00–20:00, Вс 10:00–19:00', coords: [55.0473868, 73.2798427], phone: '8 (960) 999-57-57', tel: '+79609995757' }
       ]
     },
     tyumen: {
       name: 'Тюмень',
       dative: 'Тюмени',
+      csCompany: 7,  // отдельная витрина CS-Cart «Тюмень» — www.72.king-oil.ru
       phone: '8 (3452) 931-444',
       tel: '+73452931444',
-      center: [57.1203743, 65.6285146],
+      center: [57.1204275, 65.628305],
       zoom: 14,
       points: [
-        { address: 'г. Тюмень, ул. 50 лет Октября, 211', hours: 'Пн–Пт 9:00–20:00, Сб–Вс 10:00–19:00', coords: [57.1203743, 65.6285146], main: true }
+        { store: 37, address: 'г. Тюмень, ул. 50 лет Октября, 211', hours: 'Пн–Пт 9:00–20:00, Сб–Вс 10:00–19:00', coords: [57.1204275, 65.628305], main: true }
       ]
     }
   };
@@ -1754,8 +1738,9 @@
       const value = $('.select__value', sel);
       if (!panel || !value) return;
       const label = (p) => p.address.replace(/^г\.\s*/, '');
+      // data-cs-store — ID пункта самовывоза в CS-Cart, уйдёт в заказ вместе со способом «Самовывоз»
       panel.innerHTML = city.points.map((p, i) =>
-        '<button class="select__option' + (i ? '' : ' is-active') + '" type="button">'
+        '<button class="select__option' + (i ? '' : ' is-active') + '" type="button" data-cs-store="' + p.store + '">'
         + label(p) + '</button>').join('');
       value.textContent = label(city.points[0]);
     });
@@ -1801,7 +1786,8 @@
     return '<div class="map-balloon">'
       + '<strong class="map-balloon__title">' + p.address + '</strong>'
       + '<span class="map-balloon__row">' + p.hours + '</span>'
-      + '<a class="map-balloon__row" href="tel:' + city.tel + '">' + city.phone + '</a>'
+      // У точки свой телефон (из админки), если не задан — общий городской
+      + '<a class="map-balloon__row" href="tel:' + (p.tel || city.tel) + '">' + (p.phone || city.phone) + '</a>'
       + '</div>';
   }
 
@@ -1885,7 +1871,7 @@
       box.classList.add('contacts__map--fallback');
       box.innerHTML = '<ul class="map-fallback">' + city.points.map((p) =>
         '<li><strong>' + p.address + '</strong><span>' + p.hours + '</span>'
-        + '<a href="tel:' + city.tel + '">' + city.phone + '</a></li>').join('') + '</ul>';
+        + '<a href="tel:' + (p.tel || city.tel) + '">' + (p.phone || city.phone) + '</a></li>').join('') + '</ul>';
     });
   }
 
@@ -1895,68 +1881,51 @@
     applyCity(CITIES[saved] ? saved : 'omsk');
   }
 
-  /* ---------------------------------------------------------
-     Чипсы объёма в плитке каталога.
-     Объём — вариант одного товара, поэтому цена меняется на месте,
-     без перехода на другую страницу (решение от 4 сентября).
-     --------------------------------------------------------- */
-  document.addEventListener('click', (e) => {
-    const chip = e.target.closest('.volume');
-    if (!chip) return;
-    const row = chip.closest('.product-card__volumes');
-    $$('.volume', row).forEach((b) => b.classList.toggle('is-active', b === chip));
-    const card = chip.closest('.product-card');
-    const price = card && $('.product-card__price', card);
-    if (price && chip.dataset.price) {
-      // цену держим в первом текстовом узле, чтобы не потерять зачёркнутую старую
-      const node = [...price.childNodes].find((n) => n.nodeType === 3 && n.textContent.trim());
-      if (node) node.textContent = chip.dataset.price + ' ';
-    }
-    // У каждого объёма своя позиция в корзине и своё избранное — пересобираем состояния
-    renderBuyState();
-    renderFavState();
-  });
+  /* Чипсы объёма в плитке — ссылки на соседние товары (каждый объём — отдельный
+     товар CS-Cart, решение заказчика 11.09.2026). Раньше клик менял цену на месте
+     (решение от 4 сентября) — обработчик убран, переход делает сама ссылка */
 
   /* ---------------------------------------------------------
      Каталог для поиска.
-     Статике неоткуда взять товары, поэтому список зашит здесь:
-     названия, цены и картинки — те же, что в разметке каталога.
+     Статике неоткуда взять товары, поэтому список зашит здесь: id — product_id
+     CS-Cart, названия и цены — из снимка витрины «Омск» (docs/data/, 11.09.2026),
+     картинки — те же, что в разметке каталога.
      При переносе в CS-Cart этот массив заменяется выдачей бэкенда
      (решение от 7 сентября, макета страницы поиска нет — см. docs/21-search.md)
      --------------------------------------------------------- */
   const KO_PRODUCTS = [
-    { t: 'CASTROL 5W-30 MAGNATEC AP 4L',                 c: 'Моторные масла',      p: '3 750 ₽', i: 'p14.jpg' },
-    { t: 'Castrol Magnatec C3 5W40 4l',                  c: 'Моторные масла',      p: '4 190 ₽', i: 'p15.jpg' },
-    { t: 'Castrol Edge 5W-30 LL (синтетика) 4 л',        c: 'Моторные масла',      p: '3 990 ₽', i: 'p16.jpg' },
-    { t: 'Castrol Edge 0W-30 A3/B4 (синтетика) 4 л',     c: 'Моторные масла',      p: '3 450 ₽', i: 'p17.jpg' },
-    { t: 'Castrol Edge 0W-30 A5/B5 (синтетика) 4 л',     c: 'Моторные масла',      p: '2 690 ₽', i: 'p18.jpg' },
-    { t: 'Лукойл Genesis Armortech JP 5w30 (розлив)',    c: 'Моторные масла',      p: '4 850 ₽', i: 'p19.jpg', old: '5 700 ₽' },
-    { t: 'Лукойл Genesis Armortech 0w-40 1л (розлив)',   c: 'Моторные масла',      p: '2 350 ₽', i: 'p20.jpg' },
-    { t: 'Лукойл Супер 10w40 4L',                        c: 'Моторные масла',      p: '5 490 ₽', i: 'p21.jpg' },
-    { t: 'Лукойл Super 5w40 (полусинтетика) 4 л',        c: 'Моторные масла',      p: '3 150 ₽', i: 'p22.jpg' },
-    { t: 'Лукойл Люкс П/Синт 10w40 4L',                  c: 'Моторные масла',      p: '2 890 ₽', i: 'p23.jpg' },
-    { t: 'Лукойл Люкс П/Синт 5w40 4L',                   c: 'Моторные масла',      p: '3 290 ₽', i: 'p24.jpg' },
-    { t: 'Лукойл Genesis Universal П/Синт 10w40 4 л',    c: 'Моторные масла',      p: '4 450 ₽', i: 'p25.jpg' },
-    { t: 'ZIC X7 5W-30 SP синтетическое 4 л',            c: 'Моторные масла',      p: '3 640 ₽', i: 'p31.jpg' },
-    { t: 'ENEOS Premium Touring 5W-40 4 л',              c: 'Моторные масла',      p: '4 120 ₽', i: 'p36.jpg' },
-    { t: 'G-Energy Synthetic Super Start 5W-30 4 л',     c: 'Моторные масла',      p: '3 380 ₽', i: 'p42.jpg' },
-    { t: 'Honda HCF-2 (розлив)',                         c: 'Трансмиссионные',     p: '1 190 ₽', i: 'p51.jpg' },
-    { t: 'Mazda ATF M-V (розлив)',                       c: 'Трансмиссионные',     p: '1 090 ₽', i: 'p52.jpg' },
-    { t: 'Nissan ATF Matic D (розлив)',                  c: 'Трансмиссионные',     p: '1 150 ₽', i: 'p53.jpg' },
-    { t: 'Toyota ATF WS (розлив)',                       c: 'Трансмиссионные',     p: '1 240 ₽', i: 'p54.jpg' },
-    { t: 'NGN Synth 75W-90 GL-4/5 1 л',                  c: 'Трансмиссионные',     p: '1 480 ₽', i: 'p55.jpg' },
-    { t: 'Антифриз Sintec Unlimited G12++ 5 кг',         c: 'Антифриз',            p: '1 690 ₽', i: 'p61.jpg' },
-    { t: 'Антифриз Felix Carbox G12 10 кг',              c: 'Антифриз',            p: '2 340 ₽', i: 'p62.jpg' },
-    { t: 'Антифриз ЛУКОЙЛ G11 зелёный 5 кг',             c: 'Антифриз',            p: '1 180 ₽', i: 'p63.jpg' },
-    { t: 'Аккумулятор Tubor Standart 60 А·ч',            c: 'Аккумуляторы',        p: '6 490 ₽', i: 'p71.jpg' },
-    { t: 'Аккумулятор Topla Energy 74 А·ч',              c: 'Аккумуляторы',        p: '9 150 ₽', i: 'p72.jpg' },
-    { t: 'Аккумулятор Tyumen Battery Premium 64 А·ч',    c: 'Аккумуляторы',        p: '7 200 ₽', i: 'p73.jpg' },
-    { t: 'Фильтр масляный MANN W 914/2',                 c: 'Фильтры',             p: '540 ₽',   i: 'p81.jpg' },
-    { t: 'Фильтр воздушный MANN C 25 114/1',             c: 'Фильтры',             p: '820 ₽',   i: 'p82.jpg' },
-    { t: 'Фильтр салонный MANN CU 2545',                 c: 'Фильтры',             p: '690 ₽',   i: 'p83.jpg' },
-    { t: 'Лампа Osram Night Breaker H4 12V 60/55W',      c: 'Лампы',               p: '1 320 ₽', i: 'p91.jpg' },
-    { t: 'Лампа Philips X-tremeVision H7 12V 55W',       c: 'Лампы',               p: '1 480 ₽', i: 'p92.jpg' },
-    { t: 'Лампа Osram LEDriving HL H4',                  c: 'Лампы',               p: '3 950 ₽', i: 'p93.jpg' },
+    { id: 799, t: 'CASTROL 5W-30 MAGNATEC AP 4L', c: 'Моторные масла', p: '4 490 ₽', i: 'p14.jpg' },
+    { id: 3949, t: 'Castrol Magnatec C3 5W40 4l', c: 'Моторные масла', p: '4 490 ₽', i: 'p15.jpg' },
+    { id: 497, t: 'Castrol Edge 5W-30 LL (синтетика) 4 л', c: 'Моторные масла', p: '4 990 ₽', i: 'p16.jpg' },
+    { id: 665, t: 'Castrol Edge 0W-30 A3/B4 (синтетика) 4 л', c: 'Моторные масла', p: '4 990 ₽', i: 'p17.jpg' },
+    { id: 3230, t: 'Castrol Edge 0W-30 A5/B5 (синтетика) 4 л', c: 'Моторные масла', p: '4 990 ₽', i: 'p18.jpg' },
+    { id: 3666, t: 'Лукойл Genesis Armortech JP 5w30 (Розлив)', c: 'Моторные масла', p: '590 ₽', i: 'p19.jpg' },
+    { id: 3964, t: 'Лукойл Genesisc Armortech 0w-40 1l (Розлив)', c: 'Моторные масла', p: '750 ₽', i: 'p20.jpg' },
+    { id: 3812, t: 'Лукойл Супер 10w40 4L', c: 'Моторные масла', p: '1 490 ₽', i: 'p21.jpg' },
+    { id: 3197, t: 'Лукойл Super 5w40 (полусинтетика) 4л.', c: 'Моторные масла', p: '1 590 ₽', i: 'p22.jpg' },
+    { id: 3810, t: 'Лукойл Люкс П/Синт 10w40 4L', c: 'Моторные масла', p: '1 590 ₽', i: 'p23.jpg' },
+    { id: 3808, t: 'Лукойл Люкс П/Синт 5w40 4L', c: 'Моторные масла', p: '1 790 ₽', i: 'p24.jpg' },
+    { id: 378, t: 'Лукойл Genesis Universal П/Синт 10w40 4 л.', c: 'Моторные масла', p: '2 190 ₽', i: 'p25.jpg' },
+    { id: 781, t: 'ZIC Масло моторное 5W-40 X7 4L', c: 'Моторные масла', p: '3 300 ₽', i: 'p31.jpg' },
+    { id: 3877, t: 'ENEOS Premium Dieseil CI-4 5w40 4l', c: 'Моторные масла', p: '3 590 ₽', i: 'p36.jpg' },
+    { id: 3326, t: 'G-ENERGY SYNTHETIC ACTIVE 5W-30 (Розлив)', c: 'Моторные масла', p: '490 ₽', i: 'p42.jpg' },
+    { id: 3635, t: 'Honda HCF-2 (розлив)', c: 'Трансмиссионные', p: '1 500 ₽', i: 'p51.jpg', old: '2 200 ₽' },
+    { id: 3470, t: 'Mazda ATF M-V (Розлив)', c: 'Трансмиссионные', p: '1 090 ₽', i: 'p52.jpg', old: '1 290 ₽' },
+    { id: 3452, t: 'Nissan ATF Matic-D (розлив)', c: 'Трансмиссионные', p: '1 100 ₽', i: 'p53.jpg', old: '1 250 ₽' },
+    { id: 1640, t: 'Масло трансмиссионное TOYOTA ATF WS Розлив, 1L', c: 'Трансмиссионные', p: '990 ₽', i: 'p54.jpg' },
+    { id: 419, t: 'Масло МКПП и приводных мостов NGN 75W-90 GL4/5 (синтетика) 4л.', c: 'Трансмиссионные', p: '4 890 ₽', i: 'p55.jpg' },
+    { id: 3300, t: 'Антифриз FELIX G12+ красный 5кг.', c: 'Антифриз', p: '1 050 ₽', i: 'p61.jpg' },
+    { id: 3301, t: 'Антифриз FELIX G12 желтый 5кг.', c: 'Антифриз', p: '1 190 ₽', i: 'p62.jpg' },
+    { id: 3299, t: 'Антифриз FELIX G11 зеленый 5кг.', c: 'Антифриз', p: '1 050 ₽', i: 'p63.jpg' },
+    { id: 3816, t: 'Tubor Classic 60Ah (прямая, обратная полярность)', c: 'Аккумуляторы', p: '6 300 ₽', i: 'p71.jpg' },
+    { id: 567, t: 'Аккумулятор TOPLA Energy 60Аh (Прямая и обратная)', c: 'Аккумуляторы', p: '10 600 ₽', i: 'p72.jpg' },
+    { id: 645, t: 'Аккумулятор TYUMEN PREMIUM 64 а/ч 620А (прямая и обратная ) 240x175x190мм', c: 'Аккумуляторы', p: '7 100 ₽', i: 'p73.jpg' },
+    { id: 871, t: 'Фильтр масляный Toyota 90915-YZZE1 (Mann 68/3, VIC-110)', c: 'Фильтры', p: '750 ₽', i: 'p81.jpg' },
+    { id: 899, t: 'Фильтр масляный Volkswagen VAG 03C 115 561 H (Mann w712/94)', c: 'Фильтры', p: '1 200 ₽', i: 'p82.jpg' },
+    { id: 2126, t: 'KIA/Hyundai 26300 35504 Фильтр масляный', c: 'Фильтры', p: '750 ₽', i: 'p83.jpg' },
+    { id: 3375, t: 'Osram H4 Cool Blue', c: 'Лампы', p: '750 ₽', i: 'p91.jpg' },
+    { id: 3379, t: 'Osram H7 Cool Blue', c: 'Лампы', p: '850 ₽', i: 'p92.jpg' },
+    { id: 3374, t: 'Osram H4', c: 'Лампы', p: '300 ₽', i: 'p93.jpg' },
   ];
 
   /* Поиск нестрогий: запрос бьётся на слова, товар подходит,
@@ -1998,9 +1967,18 @@
     /* Подсказки-чипсы над результатами: категории и бренды, попавшие в выдачу.
        В макете это варианты уточнения запроса (26886 mobile-search-process) */
     function suggestFor(found) {
-      const cats = [...new Set(found.map((p) => p.c))];
-      const brands = [...new Set(found.map((p) => p.t.split(/\s+/)[0]))];
-      return [...cats, ...brands.filter((x) => !cats.includes(x))].slice(0, 3);
+      // Бренд — первое слово названия. В CS-Cart регистр гуляет («CASTROL» и «Castrol»),
+      // поэтому повторы отсеиваем без учёта регистра, оставляя первое написание
+      const seen = new Set();
+      const unique = (list) => list.filter((x) => {
+        const key = x.toLowerCase();
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+      const cats = unique(found.map((p) => p.c));
+      const brands = unique(found.map((p) => p.t.split(/\s+/)[0]));
+      return [...cats, ...brands].slice(0, 3);
     }
 
     function renderSearch() {
@@ -2039,7 +2017,7 @@
 
       if (resultsBox) {
         resultsBox.innerHTML = found.slice(0, SEARCH_LIMIT).map((prod) => `
-          <a class="search__product" href="product.html">
+          <a class="search__product" href="product.html" data-product-id="${prod.id}">
             <img src="img/products/${prod.i}" width="40" height="40" alt="" loading="lazy">
             <span><span class="search__product-name">${escapeHtml(prod.t)}</span><br><span class="search__product-cat">${escapeHtml(prod.c)}</span></span>
           </a>`).join('');
@@ -2128,7 +2106,7 @@
     if (grid) {
       grid.hidden = found.length === 0;
       grid.innerHTML = found.map((prod) => `
-        <article class="product-card">
+        <article class="product-card" data-product-id="${prod.id}">
           <a class="product-card__media" href="product.html">
             <img src="img/products/${prod.i}" width="560" height="560" alt="${escapeHtml(prod.t)}" loading="lazy">
           </a>

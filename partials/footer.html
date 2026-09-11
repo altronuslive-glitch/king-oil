@@ -7,7 +7,7 @@
         <p class="footer__about">Оригинальные моторные масла, антифризы и автотовары. Прямые поставки от авторизованных дистрибьюторов.</p>
         <div class="footer__contacts">
           <a class="footer__phone" href="tel:+73812475777" data-city-phone>8 (3812) 475-777</a>
-          <a class="footer__mail" href="mailto:info@king-oil.ru">info@king-oil.ru</a>
+          <a class="footer__mail" href="mailto:king-oil@yandex.ru">king-oil@yandex.ru</a>
         </div>
         <p class="footer__hours">Пн–Сб 9–20, Вс 10–19</p>
       </div>
@@ -15,27 +15,30 @@
       <nav class="footer__col">
         <p class="footer__col-title">Каталог</p>
         <ul class="footer__links">
-          <li><a href="category.html">Моторные масла</a></li>
-          <li><a href="category.html">Трансмиссионные масла</a></li>
-          <li><a href="category.html">Антифриз</a></li>
-          <li><a href="category.html">Аккумуляторы</a></li>
-          <li><a href="category.html">Фильтры</a></li>
-          <li><a href="category.html">Лампы</a></li>
+          <!-- data-cs-category / data-cs-page — ID в CS-Cart, см. docs/28-admin-audit.md -->
+          <li><a href="category.html" data-cs-category="166">Моторные масла</a></li>
+          <li><a href="category.html" data-cs-category="203">Трансмиссионные масла</a></li>
+          <li><a href="category.html" data-cs-category="683">Антифриз</a></li>
+          <li><a href="category.html" data-cs-category="250">Аккумуляторы</a></li>
+          <li><a href="category.html" data-cs-category="323">Фильтры</a></li>
+          <li><a href="category.html" data-cs-category="526">Лампы</a></li>
         </ul>
       </nav>
 
       <nav class="footer__col">
         <p class="footer__col-title">Покупателям</p>
         <ul class="footer__links">
-          <li><a href="about.html">О компании</a></li>
-          <li><a href="how-to-buy.html">Как купить</a></li>
-          <li><a href="loyalty.html">Бонусные баллы</a></li>
-          <li><a href="delivery.html">Доставка</a></li>
-          <li><a href="payment.html">Оплата</a></li>
-          <li><a href="returns.html">Возврат и обмен</a></li>
+          <!-- «Доставка» и «Оплата» в CS-Cart — одна страница «Оплата и доставка» (#22).
+               «Отзывов» среди страниц нет: их нужно завести -->
+          <li><a href="about.html" data-cs-page="2">О компании</a></li>
+          <li><a href="how-to-buy.html" data-cs-page="49">Как купить</a></li>
+          <li><a href="loyalty.html" data-cs-page="23">Бонусные баллы</a></li>
+          <li><a href="delivery.html" data-cs-page="22">Доставка</a></li>
+          <li><a href="payment.html" data-cs-page="22">Оплата</a></li>
+          <li><a href="returns.html" data-cs-page="21">Возврат и обмен</a></li>
           <li><a href="reviews.html">Отзывы</a></li>
-          <li><a href="promo.html">Акции</a></li>
-          <li><a href="contacts.html">Контакты</a></li>
+          <li><a href="promo.html" data-cs-page="66">Акции</a></li>
+          <li><a href="contacts.html" data-cs-page="20">Контакты</a></li>
         </ul>
       </nav>
 
@@ -58,7 +61,7 @@
 
     <div class="footer__copy">
       <span>© 2004–<span data-year>2026</span> King-Oil. Все права защищены.</span>
-      <a href="legal.html">Политика конфиденциальности</a>
+      <a href="legal.html" data-cs-page="3">Политика конфиденциальности</a>
       <!-- Реквизиты сверены с king-oil.ru (страница «Контакты», блок «О нас») -->
       <span class="footer__legal">ООО «Сити Ойл» · ОГРН 1205500020318 · ИНН 5503193478</span>
     </div>

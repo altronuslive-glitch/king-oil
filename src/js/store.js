@@ -58,8 +58,10 @@ window.KO = (function () {
     return forms[2];
   }
 
-  /* Идентификатор позиции: название + объём. Разные объёмы одного
-     товара — разные позиции корзины (решение №37 от 4 сентября) */
+  /* Запасной идентификатор позиции: название + объём. Основной — product_id
+     CS-Cart из data-product-id (11.09.2026): каждый объём в каталоге — отдельный
+     товар, поэтому разные объёмы и так разные позиции. Сюда попадают только
+     карточки без ID */
   function productId(title, volume) {
     const base = String(title || '').toLowerCase().replace(/\s+/g, ' ').trim();
     return (volume ? base + ' | ' + String(volume).toLowerCase().trim() : base);
@@ -198,36 +200,41 @@ window.KO = (function () {
      разметкой wishlist.html: пока туда не зайдёшь, счётчик в шапке
      на остальных страницах показывал пустоту. Теперь набор один
      и не зависит от точки входа.
+     Товары — реальные позиции витрины «Омск»: id — product_id CS-Cart, названия
+     и цены — из снимка docs/data/ (11.09.2026). Артикулов в каталоге нет, остаток —
+     признак «есть / нет», поэтому строк «Артикул» и «Осталось N шт.» больше нет.
      TODO: интеграция — блок удаляется целиком, состав приходит с бэкенда
      --------------------------------------------------------- */
   const DEMO_CART = [
-    { id: 'лукойл супер 10w40 4l', title: 'Лукойл Супер 10w40 4L', volume: '',
-      sku: '15C9C3', price: '2 990 ₽', old: '', img: 'img/products/p21.jpg',
-      href: 'product.html', stock: 'В наличии', stockLow: false, max: 18, qty: 2 },
-    { id: 'лукойл super 5w40 (полусинтетика) 4л.', title: 'Лукойл Super 5w40 (полусинтетика) 4л.', volume: '',
-      sku: '44A1B7', price: '1 340 ₽', old: '', img: 'img/products/p22.jpg',
-      href: 'product.html', stock: 'В наличии', stockLow: false, max: 24, qty: 1 },
-    { id: 'лукойл люкс п/синт 10w40 4l', title: 'Лукойл Люкс П/Синт 10w40 4L', volume: '',
-      sku: '08F2D5', price: '690 ₽', old: '', img: 'img/products/p23.jpg',
-      href: 'product.html', stock: 'Осталось 3 шт.', stockLow: true, max: 3, qty: 1 },
+    { id: '3812', title: 'Лукойл Супер 10w40 4L', volume: '4 л',
+      price: '1 490 ₽', old: '', img: 'img/products/p21.jpg',
+      href: 'product.html', stock: 'В наличии', stockLow: false, max: 99, qty: 2 },
+    { id: '3197', title: 'Лукойл Super 5w40 (полусинтетика) 4л.', volume: '4 л',
+      price: '1 590 ₽', old: '', img: 'img/products/p22.jpg',
+      href: 'product.html', stock: 'В наличии', stockLow: false, max: 99, qty: 1 },
+    { id: '3810', title: 'Лукойл Люкс П/Синт 10w40 4L', volume: '4 л',
+      price: '1 590 ₽', old: '', img: 'img/products/p23.jpg',
+      href: 'product.html', stock: 'В наличии', stockLow: false, max: 99, qty: 1 },
   ];
 
+  /* Чипсы объёма — соседние товары: у чужого объёма хранится его product_id,
+     на странице избранного из него рисуется ссылка (js/main.js → favCardHtml) */
   const DEMO_FAV = [
-    { id: 'тосол felix 5кг. | 3 л', title: 'Тосол FELIX 5кг.', volume: '3 л',
-      price: '2 990 \u20bd', old: '', img: 'img/products/p54.jpg', href: 'product.html',
-      volumes: [{ label: '1 л', price: '1 140 \u20bd' }, { label: '3 л', price: '2 990 \u20bd' }, { label: '4 л', price: '3 800 \u20bd' }] },
-    { id: 'антифриз aga l40 сине-зеленый 5кг. | 3 л', title: 'Антифриз AGA L40 сине-зеленый 5кг.', volume: '3 л',
-      price: '1 500 \u20bd', old: '', img: 'img/products/p55.jpg', href: 'product.html',
-      volumes: [{ label: '1 л', price: '570 \u20bd' }, { label: '3 л', price: '1 500 \u20bd' }, { label: '4 л', price: '1 900 \u20bd' }] },
-    { id: 'антифриз aga l42 зеленый 5кг. | 3 л', title: 'Антифриз AGA L42 зеленый 5кг.', volume: '3 л',
-      price: '1 340 \u20bd', old: '', img: 'img/products/p56.jpg', href: 'product.html',
-      volumes: [{ label: '1 л', price: '510 \u20bd' }, { label: '3 л', price: '1 340 \u20bd' }, { label: '4 л', price: '1 700 \u20bd' }] },
-    { id: 'антифриз aga l40 красный 5кг. | 3 л', title: 'Антифриз AGA L40 красный 5кг.', volume: '3 л',
-      price: '690 \u20bd', old: '', img: 'img/products/p57.jpg', href: 'product.html',
-      volumes: [{ label: '1 л', price: '260 \u20bd' }, { label: '3 л', price: '690 \u20bd' }, { label: '4 л', price: '880 \u20bd' }] },
+    { id: '3306', title: 'Тосол FELIX 5кг.', volume: '5 кг',
+      price: '890 \u20bd', old: '', img: 'img/products/p54.jpg', href: 'product.html',
+      volumes: [{ label: '5 кг', id: '' }, { label: '10 кг', id: '3307' }] },
+    { id: '3296', title: 'Антифриз AGA L40 сине-зеленый 5кг.', volume: '5 кг',
+      price: '990 \u20bd', old: '', img: 'img/products/p55.jpg', href: 'product.html',
+      volumes: [{ label: '5 кг', id: '' }] },
+    { id: '3297', title: 'Антифриз AGA L42 зеленый 5кг.', volume: '5 кг',
+      price: '1 050 \u20bd', old: '', img: 'img/products/p56.jpg', href: 'product.html',
+      volumes: [{ label: '5 кг', id: '' }] },
+    { id: '3298', title: 'Антифриз AGA L40 красный 5кг.', volume: '5 кг',
+      price: '1 050 \u20bd', old: '', img: 'img/products/p57.jpg', href: 'product.html',
+      volumes: [{ label: '5 кг', id: '' }] },
   ];
 
-  const DEMO_RECENT = ['Моторное масло 5W-30', 'Castrol EDGE', 'Антифриз G12'];
+  const DEMO_RECENT = ['Моторное масло 5W-30', 'Castrol Magnatec', 'Антифриз G12'];
 
   /* ---------------------------------------------------------
      Профиль покупателя. Своей авторизации в статике нет: прототип
@@ -249,14 +256,17 @@ window.KO = (function () {
 
   const user = { get: () => DEMO_USER };
 
-  /* Формат избранного сменился: раньше хранились только идентификаторы,
-     по ним карточку не нарисовать — счётчик показывал число, а страница
-     избранного оставалась пустой. Старые данные сбрасываем, вернётся демо-набор */
-  const savedFav = read(KEY.fav, null);
-  if (Array.isArray(savedFav) && savedFav.some((x) => typeof x === 'string')) {
-    delete memory[KEY.fav];
-    try { localStorage.removeItem(KEY.fav); } catch (err) { /* приватный режим */ }
-  }
+  /* Формат хранилища менялся дважды: сначала избранное хранило одни идентификаторы
+     (по ним карточку не нарисовать), потом ключом позиции стал product_id CS-Cart
+     вместо «название + объём» (11.09.2026). Записи старого формата сбрасываем —
+     вернётся демо-набор, иначе одна и та же позиция задваивалась бы под двумя ключами */
+  const outdated = (list) => Array.isArray(list)
+    && list.some((x) => typeof x === 'string' || !/^\d+$/.test(String(x && x.id)));
+  [KEY.cart, KEY.fav].forEach((key) => {
+    if (!outdated(read(key, null))) return;
+    delete memory[key];
+    try { localStorage.removeItem(key); } catch (err) { /* приватный режим */ }
+  });
 
   cart.seed(DEMO_CART);
   fav.seed(DEMO_FAV);
